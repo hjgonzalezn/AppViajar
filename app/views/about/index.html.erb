@@ -1,0 +1,399 @@
+	<!-- gray bg -->	
+	<section class="container tm-home-section-1" id="more">
+		<div class="row">
+			<div class="col-lg-4 col-md-4 col-sm-6">
+				<!-- Nav tabs -->
+				<div class="tm-home-box-1">
+					<ul class="nav nav-tabs tm-white-bg" role="tablist" id="hotelCarTabs">
+					    <li role="presentation" class="active">
+							<a href="#flight" aria-controls="flight" role="tab" data-toggle="tab">Vuelos</a>
+					    </li>
+					    <li role="presentation">
+					    	<a href="#hotel" aria-controls="hotel" role="tab" data-toggle="tab">Hotel</a>
+					    </li>
+					</ul>
+
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="flight">
+							<div class="tm-search-box effect2">
+								<form id="frmReservarVuelo" action="accions/datos_reserva" method="post" class="hotel-search-form">
+									<div class="tm-form-inner">
+										<div class="form-group">
+											<%= select_tag(:cboOrigen, options_for_select([["-- Origen --", ""],["Bahía Solano", "BSC"],["Bogotá D.C.", "BOG"],["Cali", "CLO"],["Medellín", "EOH"],["Nuquí", "NQU"], ["Quibdó", "UIB"]]), class:"form-control" , required: :required)%>
+							          	</div>
+										<div class="form-group">
+											<%= select_tag(:cboDestino, options_for_select([["-- Destino --", ""],["Bahía Solano", "BSC"],["Bogotá D.C.", "BOG"],["Cali", "CLO"],["Medellín", "EOH"],["Nuquí", "NQU"],["Quibdó", "UIB"]]), class:"form-control", required: :required)%> 
+							          	</div>										
+							          	<div class="form-group">
+							                <div class='input-group date' id='datetimepicker3'>
+							                    <%= text_field_tag "txtFechaIda", nil, options = {class:"form-control", placeholder:"Fecha de ida", required: :required} %>
+							                    <span class="input-group-addon">
+							                        <span class="fa fa-calendar"></span>
+							                    </span>
+							                </div>
+							            </div>
+							          	<div class="form-group">
+							                <div class='input-group date' id='datetimepicker4'>
+							                	<%= text_field_tag "txtFechaRegreso", nil, options = {class:"form-control", placeholder:"Fecha de regreso"} %>
+							                    <span class="input-group-addon">
+							                        <span class="fa fa-calendar"></span>
+							                    </span>
+							                </div>
+							            </div>
+							            <div class="form-group">
+											<div class="row">
+												<div class="col-xs-4">
+													<%= label_tag nil, "Adultos", title: "12 años o más"%>
+												</div>
+												<div class="col-xs-4">
+													<%= label_tag nil, "Menores", title: "2 a 11 años"%>
+												</div>
+												<div class="col-xs-4">
+													<%= label_tag nil, "Infantes", title: "0 a 23 meses"%>
+												</div>				
+											</div>
+											<div class="row">
+												<div class="col-xs-4">
+													<%= select_tag "cboAdultos", options_for_select( (1..10).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"12 años o más", class:"form-control" %>
+												</div>
+												<div class="col-xs-4">
+													<%= select_tag "cboMenores", options_for_select( (0..5).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"2 a 11 años", class:"form-control" %> 
+												</div>
+												<div class="col-xs-4">
+													<%= select_tag "cboInfantes", options_for_select( (0..5).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"0 a 23 meses", class:"form-control" %>
+												</div>
+											</div>
+							          	</div>							           
+									</div>							
+						            <div class="form-group tm-yellow-gradient-bg text-center">
+						            	<input type="button" id="cmdReservarVuelo" class="tm-orange-btn" value="Reservar">
+						            </div>  
+								</form>
+							</div>
+					    </div>				    
+					
+					    <div role="tabpanel" class="tab-pane fade tm-white-bg" id="hotel">
+					    	<div class="tm-search-box effect2">
+								<form action="#" method="post" class="hotel-search-form">
+									<div class="tm-form-inner">
+										<div class="form-group">
+							            	 <select class="form-control">
+							            	 	<option value="">-- Hotel -- </option>
+							            	 	<option value="shangrila">Shangri-La</option>
+												<option value="chatrium">Chatrium</option>
+												<option value="fourseasons">Four Seasons</option>
+												<option value="hilton">Hilton</option>
+											</select> 
+							          	</div>
+							          	<div class="form-group">
+							                <div class='input-group date' id='datetimepicker1'>
+							                    <input type='text' class="form-control" placeholder="Fecha de ingreso" />
+							                    <span class="input-group-addon">
+							                        <span class="fa fa-calendar"></span>
+							                    </span>
+							                </div>
+							            </div>
+							          	<div class="form-group">
+							                <div class='input-group date' id='datetimepicker2'>
+							                    <input type='text' class="form-control" placeholder="Fecha de salida" />
+							                    <span class="input-group-addon">
+							                        <span class="fa fa-calendar"></span>
+							                    </span>
+							                </div>
+							            </div>
+							            <div class="form-group margin-bottom-0">
+							                <select class="form-control">
+							            	 	<option value="">-- Personas -- </option>
+							            	 	<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5p">5+</option>
+											</select> 
+							            </div>
+									</div>							
+						            <div class="form-group tm-yellow-gradient-bg text-center">
+						            	<button type="submit" name="submit" class="tm-orange-btn">Reservar</button>
+						            </div>  
+								</form>
+							</div>
+					    </div>
+
+					</div>
+				</div>								
+			</div>
+
+			<div class="col-lg-4 col-md-4 col-sm-6">
+				<div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-center">
+					<%= image_tag("sitios/index-01.jpg", alt:"Bahía Solano", class: "img-responsive") %>
+					<a href="#">
+						<div class="tm-green-gradient-bg tm-city-price-container">
+							<span>Bahía Solano</span>
+							<span>Desde COP 1.200.000</span>
+						</div>	
+					</a>			
+				</div>				
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-6">
+				<div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-right">
+					<%= image_tag("sitios/index-02.jpg", alt: "Nuquí", class: "img-responsive") %>
+					<a href="#">
+						<div class="tm-red-gradient-bg tm-city-price-container">
+							<span>Nuquí</span>
+							<span>Desde COP 1.100.000</span>
+						</div>	
+					</a>					
+				</div>				
+			</div>
+		</div>
+		
+		<div class="section-margin-top">
+			<div class="row">				
+				<div class="tm-section-header">
+					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
+					<div class="col-lg-6 col-md-6 col-sm-6"><h2 class="tm-section-title">Planes de la temporada</h2></div>
+					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="tm-home-box-3">
+						<div class="tm-home-box-3-img-container">
+							<%= image_tag("sitios/index-07.jpg", alt: "image", class: "img-responsive") %>	
+						</div>						
+						<div class="tm-home-box-3-info">
+							<h3>Bahía Solano</h3>
+							<h4>Semana Santa</h4>
+							<p class="tm-home-box-3-description">En la Semana Mayor recarga tus energías y restaura tu espíritu.</p>
+							<h5>COP 1.500.000</h5>
+					        <div class="tm-home-box-2-container">
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
+							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s</span></a>
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
+						</div>
+						</div>						
+					</div>					
+			     </div>
+			     <div class="col-lg-6">
+			        <div class="tm-home-box-3">
+						<div class="tm-home-box-3-img-container">
+							<%= image_tag("sitios/index-08.jpg", alt: "image", class: "img-responsive") %>	
+						</div>						
+						<div class="tm-home-box-3-info">
+							<h3>Caño Cristales</h3>
+							<h4>La Macarena, Meta</h4> 
+							<p class="tm-home-box-3-description">Visita el "río de los 5 colores", hermoso lienzo natural.</p>
+							<h5>COP 650.000</h5>
+					        <div class="tm-home-box-2-container">
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
+							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s </span></a>
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
+						</div>
+						</div>						
+					</div>
+				</div>
+				<div class="col-lg-6">
+				    <div class="tm-home-box-3">
+						<div class="tm-home-box-3-img-container">
+							<%= image_tag("sitios/index-09.jpg", alt: "image", class: "img-responsive") %>
+						</div>						
+						<div class="tm-home-box-3-info">
+							<h3>Eje Cafetero</h3>
+							<h4>Terrestre</h4>
+							<p class="tm-home-box-3-description">Conoce la tradicional cultura cafetera de Colombia, patrimonio de la humanidad</p>
+							<h5>COP 450.000</h5>
+					        <div class="tm-home-box-2-container">
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
+							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s </span></a>
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
+						</div>
+						</div>						
+					</div>
+			    </div>
+			    <div class="col-lg-6">
+			        <div class="tm-home-box-3">
+						<div class="tm-home-box-3-img-container">
+							<%= image_tag("sitios/index-10.jpg", alt: "image", class: "img-responsive") %>	
+						</div>						
+						<div class="tm-home-box-3-info">
+							<h3>Bahía Solano</h3>
+							<h4>Avistamiento de Ballenas</h4>
+							<p class="tm-home-box-3-description">Proin gravida nibhvell velit auctor aliquet. Aenean sollicitudin</p>
+							<h5>COP 1.350.000</h5>
+					        <div class="tm-home-box-2-container">
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
+							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s </span></a>
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
+						</div>
+						</div>						
+					</div>
+			   	</div>
+			</div>
+		</div>
+	</section>
+	
+	<!-- white bg -->
+	<section class="tm-white-bg section-margin-bottom">
+		<div class="container">
+			<div class="row">				
+				<div class="tm-section-header">
+					<h6>&nbsp;</h6>
+					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
+					<div class="col-lg-6 col-md-6 col-sm-6"><h2 class="tm-section-title">Paquetes Especiales</h2></div>
+					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="tm-tours-box-1">
+						<%= image_tag("sitios/tours-03.jpg", alt:"image", class:"img-responsive") %>
+						<div class="tm-tours-box-1-info">
+							<div class="tm-tours-box-1-info-left">
+								<p class="text-uppercase margin-bottom-20">Cruceros</p>	
+								<p class="gray-text">2016</p>
+							</div>
+							<div class="tm-tours-box-1-info-right">
+								<p class="gray-text tours-1-description">Visita destinos increíbles del Caribe saliendo desde Cartagena.</p>	
+							</div>							
+						</div>
+						<div class="tm-tours-box-1-link">
+							<div class="tm-tours-box-1-link-left">
+								Duraci&oacute;n: 8 días
+							</div>
+							<a href="#" class="tm-tours-box-1-link-right">
+								$2,200								
+							</a>							
+						</div>
+					</div>					
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="tm-tours-box-1">
+						<%= image_tag("sitios/tours-04.jpg", alt:"image", class:"img-responsive")%>
+						<div class="tm-tours-box-1-info">
+							<div class="tm-tours-box-1-info-left">
+								<p class="text-uppercase margin-bottom-20">Quinceañeras</p>	
+								<p class="gray-text">2016</p>
+							</div>
+							<div class="tm-tours-box-1-info-right">
+								<p class="gray-text tours-1-description">Tenemos un plan para que celebrar tus 15 sea una experiencia inolvidable.</p>	
+							</div>							
+						</div>
+						<div class="tm-tours-box-1-link">
+							<div class="tm-tours-box-1-link-left">
+								Duraci&oacuten: 9 días
+							</div>
+							<a href="#" class="tm-tours-box-1-link-right">
+								$1,800								
+							</a>							
+						</div>
+					</div>					
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="tm-tours-box-1">
+						<%= image_tag("sitios/tours-05.jpg", alt:"image", class:"img-responsive") %>
+						<div class="tm-tours-box-1-info">
+							<div class="tm-tours-box-1-info-left">
+								<p class="text-uppercase margin-bottom-20">Walt Disney World</p>	
+								<p class="gray-text">2016</p>
+							</div>
+							<div class="tm-tours-box-1-info-right">
+								<p class="gray-text tours-1-description">Te ofrecemos un plan familiar que de seguro cumplirá los sueños de grandes y chicos.</p>	
+							</div>							
+						</div>
+						<div class="tm-tours-box-1-link">
+							<div class="tm-tours-box-1-link-left">
+								Duraci&oacuten: 8 días
+							</div>
+							<a href="#" class="tm-tours-box-1-link-right">
+								$1,600								
+							</a>							
+						</div>
+					</div>					
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="tm-tours-box-1">
+						<%= image_tag("sitios/tours-06.jpg", alt:"image", class:"img-responsive") %>
+						<div class="tm-tours-box-1-info">
+							<div class="tm-tours-box-1-info-left">
+								<p class="text-uppercase margin-bottom-20">Pesca Deportiva</p>	
+								<p class="gray-text">2016</p>
+							</div>
+							<div class="tm-tours-box-1-info-right">
+								<p class="gray-text tours-1-description">Asume el reto con especies del Pacífico colombiano: marlin, atún, entre otros.</p>	
+							</div>							
+						</div>
+						<div class="tm-tours-box-1-link">
+							<div class="tm-tours-box-1-link-left">
+								Duraci&oacuten: 5 días
+							</div>
+							<a href="#" class="tm-tours-box-1-link-right">
+								$1,200								
+							</a>							
+						</div>
+					</div>					
+				</div>
+			</div>		
+		</div>
+	</section>
+	
+	<script>
+		
+		$(document).on('page:load', function() {
+			$('.flexslider').flexslider({
+			    controlNav: false,
+			    prevText: "",           //String: Set the text for the "previous" directionNav item
+				nextText: ""               //String: Set the text for the "next" directionNav item
+		    });
+		});
+		
+		$(function() {
+			$('.date').datetimepicker({
+            	format: 'DD/MM/YYYY',
+            	defaultDate:false,
+            	minDate: moment()
+            	
+            });
+            $('.date-time').datetimepicker();
+            $("#txtFechaIda").val("");
+            $("#txtFechaRegreso").val("");
+			
+			$("#cmdReservarVuelo").click(function() {
+				
+				if($("#cboOrigen").val() == ""){
+	     			swal("Error", "Por favor seleccione la ciudad de origen de su viaje","error");
+	     			$("#cboOrigen").focus();
+	     			return;					
+				}
+				
+				if($("#cboDestino").val() == ""){
+	     			swal("Error", "Por favor seleccione la ciudad de destino de su viaje","error");
+	     			$("#cboDestino").focus();
+	     			return;					
+				}				
+				
+				if ($("#txtFechaIda").val().length > 0){
+	     			var arrFecha = $("#txtFechaIda").val().split("/");
+	     			var dtFechaIda = parseInt(arrFecha[2] + "" + arrFecha[1] + "" + arrFecha[0]);
+	     		}
+	     		else{
+	     			swal("Error", "Por favor seleccione la fecha de salida viaje","error");
+	     			$("#txtFechaIda").focus();
+	     			return;
+	     		}
+	     		if ($("#txtFechaRegreso").val().length > 0){
+	     			arrFecha = $("#txtFechaRegreso").val().split("/");
+	     			var dtFechaRegreso = parseInt(arrFecha[2] + "" + arrFecha[1] + "" + arrFecha[0]);
+	 			}
+	     		
+	     		if (dtFechaRegreso > 0){
+		     		if(	dtFechaRegreso <= dtFechaIda ){
+		            	swal("Error","La fecha de regreso debe ser posterior a la fecha de ida", "error");
+		            	return;
+		            }	
+	           }
+	           
+	           $("#frmReservarVuelo").submit();
+	     	});
+	   });
+	</script>

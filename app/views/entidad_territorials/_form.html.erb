@@ -1,0 +1,160 @@
+<%= form_for(@entidad_territorial) do |f| %>
+	<% if @entidad_territorial.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@entidad_territorial.errors.count, "error") %> prohibited this entidad_territorial from being saved:</h2>
+			<ul>
+      			<% @entidad_territorial.errors.full_messages.each do |message| %>
+        			<li><%= message %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+  	<% end %>
+	
+	<div class="col-lg-6 col-md-6" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+			<div class="form-group">
+				<%= text_field_tag(:parents_path, @parentalPath, options={size: 60, readonly: true}) %>
+				<p>&nbsp;</p>
+				<%= select_tag(:continentes, options_from_collection_for_select(@continentes, :id , :enter_nombreOficial), class:"entidadTerr", prompt: "-- CONTINENTE --")%>
+				<%= select_tag(:entidadTerr1, nil, class:"entidadTerr", prompt: "-- SELECCIONE --")%>
+				<%= select_tag(:entidadTerr2, nil, class:"entidadTerr", prompt: "-- SELECCIONE --")%>
+				<%= hidden_field_tag(:controlAnterior, options={value:""}) %>
+				<%= hidden_field_tag(:valorAnterior, options={value:""}) %>
+			    <%= f.hidden_field :enter_padreId, options={value: @padreId} %>
+			</div>
+	  		<div class="form-group">
+		    	<%= f.label :enter_codigoOficial, "Código oficial*" %><br>
+		    	<%= f.text_field :enter_codigoOficial, options={size: 10, maxlength: 10} %>
+		  	</div>
+	  		<div class="form-group">
+		    	<%= f.label :enter_nombreOficial, "Nombre oficial*" %><br>
+		    	<%= f.text_field :enter_nombreOficial, options={size: 60, required: :required} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :enter_presentacion, "Presentación" %><br>
+		    	<%= f.text_area :enter_presentacion, options={cols:62, rows:5} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :enter_nivel, "Nivel*" %><br>
+		    	<%= f.number_field :enter_nivel, options={readonly: true, value: @enter_nivel } %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :region_id, "Región" %><br>
+		    	<%= f.select(:region_id, options_for_select(@regiones, @entidad_territorial.region_id)) %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :division_pais_id, "Categoría*" %><br>
+		    	<!-- Default: CONTINENTE -->
+		    	<%= f.select(:division_pais_id, options_for_select(@unidadesTerritoriales)) %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :enter_estadoRegistro, "Estado*" %><br>
+		    	<%= f.select(:enter_estadoRegistro, options_for_select(@estados.invert)) %>
+		  	</div>
+  		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<%= link_to 'Regresar', entidad_territorials_path , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					| <%= link_to 'Consultar', @entidad_territorial, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+<script>
+
+$(document).on('page:load', function() {
+	var boClicked = false;
+	
+	$("#cmd_aceptar").click(function(e){
+		<% if params[:action] == "edit" then %>
+			$('#<%= params[:action] %>_entidad_territorial_<%= @entidad_territorial.id %>').submit();
+		<% elsif params[:action] == "new" or params[:action] == "create"%>
+			$('#<%= params[:action] %>_entidad_territorial').submit();
+		<% end %>
+		e.preventDefault();
+	});
+	
+	$(".entidadTerr").click(function(){
+		boClicked = true;
+		/*$("#controlAnterior").val("");*/
+	});
+	
+	$(".entidadTerr").change(function(){
+		var valorActual, varCadena, varLong, varSelectedText;
+		var varAux;
+		var switchControl = new Object();
+		var index;
+		
+		varSelectedText = $("option:selected", this).text();
+		
+		if (boClicked){
+			switchControl["continentes"] = "entidadTerr1";
+			switchControl["entidadTerr1"] = "entidadTerr2";
+			switchControl["entidadTerr2"] = "entidadTerr1";
+			
+			if ($("#controlAnterior").val() == $(this).attr("id")){
+				varCadena = $("#parents_path").val();
+				index = varCadena.indexOf($("#valorAnterior").val());
+				if (index > 0 || $("#valorAnterior").val() != varSelectedText){
+					varLong = varCadena.length;
+					varCadena = varCadena.substring(0, index);
+					varCadena = varCadena + varSelectedText + " | ";
+					$("#parents_path").val(varCadena);
+				}
+				
+				$("#valorAnterior").val(varSelectedText);
+			}
+			else{
+	
+		
+				if($(this).attr("id") == "continentes"){
+					if (varSelectedText.length > 0 ){
+						$("#parents_path").val(varSelectedText + " | ");
+					}
+					$("#entidadTerr1").find("option:not(:first)").remove();
+					$("#entidadTerr2").find("option:not(:first)").remove();
+				}
+				
+				valorActual = $("#parents_path").val();
+				
+				if($(this).val != "" && $(this).val != "-- SELECCIONE --"){
+					
+					$("#valorAnterior").val(varSelectedText);
+							
+					if (valorActual == ""){
+						valorActual = varSelectedText + " | ";
+					}
+					else if(varSelectedText != "-- SELECCIONE --" && valorActual.indexOf(varSelectedText) < 0){
+						valorActual = valorActual + varSelectedText + " | ";
+					}
+					
+					$("#parents_path").val(valorActual);
+					$("#entidad_territorial_enter_padreId").val($(this).val());
+					
+				} /* Valor permitido */
+			} /* Control anterior*/
+			if ($(this).val != "-- SELECCIONE --"){
+				$.ajax({
+						url: "<%= actualizar_lista_dependiente_path %>",
+						data: {
+								enter_padre_id: $(this).val(),
+								control_id: switchControl[$(this).attr('id')]
+					  		  },
+						dataType: "script"
+				});
+			}
+		}
+		
+		boClicked = false;
+		$("#" + switchControl[$(this).attr("id")]).find("option:not(:first)").remove();
+		$("#controlAnterior").val($(this).attr("id"));
+		
+	});
+});
+</script>

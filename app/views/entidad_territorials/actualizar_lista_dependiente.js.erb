@@ -1,0 +1,61 @@
+<% unless params[:enter_padre_id].blank? %>
+	$("#entidad_territorial_division_pais_id").empty();
+	$("#region_id").empty();
+	$("#<%= params[:control_id]%>").empty();
+	<% idPadre = params[:enter_padre_id] %>
+	<% entidadPadre = EntidadTerritorial.find(idPadre) %>
+	$("#entidad_territorial_enter_nivel").val("<%= entidadPadre.enter_nivel + 1 %>");
+	
+	<% @entidadesTerritoriales = EntidadTerritorial.select("id codigo, enter_nombreOficial descripcion").where("enter_padreId = #{params[:enter_padre_id]}").order(:enter_nombreOficial) %>
+	<% if @entidadesTerritoriales.size > 0 then %>
+		<% @entidadesTerritoriales = @entidadesTerritoriales.map{|a| [a.descripcion, a.codigo]}.insert(nil.to_f, "-- SELECCIONE --") %>
+		$("#<%= params[:control_id] %>").html("<%= escape_javascript(options_for_select(@entidadesTerritoriales)) %>");
+	<% else %>
+		$("#<%= params[:control_id] %>").html("<%= escape_javascript(options_for_select([["-- SELECCIONE --",""]])) %>");
+	<% end %>
+	
+	<% if entidadPadre.enter_nivel == 1 then %>
+		<% @unidadesTerritoriales = UnidadTerritorial.select("id codigo, undter_nombre descripcion").where(undter_nombre:"PAIS") %> 
+	<% else %>
+		<% if entidadPadre.enter_nivel > 1 then %>
+			<% entePais = entidadPadre %>
+			<% until entePais.enter_nivel == 2 %>
+				<% entePais = EntidadTerritorial.find(entePais.enter_padreId) %>
+			<% end %>
+		<% end %>
+		<% @unidadesTerritoriales = UnidadTerritorial.select("id codigo, undter_nombre descripcion").where("id IN (SELECT unidad_territorial_id FROM division_pais WHERE entidad_territorial_id = #{entePais.id} AND divpais_nivel = '#{entidadPadre.enter_nivel + 1}' AND divpais_estadoRegistro = 'A')") %>
+	<% end %>
+	
+	<% if @unidadesTerritoriales.size > 0 then %>
+		<% @unidadesTerritoriales = @unidadesTerritoriales.map{|a| [a.descripcion, a.codigo]}.insert(nil.to_f, "-- SELECCIONE --") %>
+		$("#entidad_territorial_division_pais_id").html("<%= escape_javascript(options_for_select(@unidadesTerritoriales)) %>");
+	<% else %>
+		$("#entidad_territorial_division_pais_id").html("<%= escape_javascript(options_for_select([["-- SELECCIONE --",""]])) %>");
+	<% end %>
+	
+	<% if controller_name.downcase == "entidad_territorials" then %>
+		<% @regiones = Region.select("id codigo, reg_nombre descripcion").where("reg_entidad_territorial_id = #{params[:enter_padre_id]} AND reg_estadoRegistro = 'A'") %>
+		<% if @regiones.size > 0 then %>
+			<% @regiones = @regiones.map{|r| [r.descripcion, r.codigo]}.insert(nil.to_f, "-- SELECCIONE --") %>
+			$("#entidad_territorial_region_id").html("<%= escape_javascript(options_for_select(@regiones)) %>");
+		<% else %>
+			<% if entidadPadre.enter_nivel > 2 %>
+				<% enteNivel3 = entidadPadre %>
+				<% until enteNivel3.enter_nivel == 3 %>
+					<% enteNivel3 = EntidadTerritorial.find(enteNivel3.enter_padreId) %>
+				<% end %>
+				
+				<% hshRegion = [["-- SELECCIONE --",""]] %>
+				<% unless enteNivel3.region_id.nil? %>
+					<% region = Region.find(enteNivel3.region_id) %>
+					<% hshRegion = [[region.reg_nombre, region.id]]%>
+				<% end %>
+			<% end %>
+			$("#entidad_territorial_region_id").html("<%= escape_javascript(options_for_select(hshRegion)) %>");
+		<% end %>
+	<% end %>
+<% else %>
+	$("#<%= params[:control_id] %>").html("<%= escape_javascript(options_for_select([["-- SELECCIONE --",""]])) %>");
+	$("#entidad_territorial_division_pais_id").html("<%= escape_javascript(options_for_select([["-- SELECCIONE --",""]])) %>");
+	$("#entidad_territorial_region_id").html("<%= escape_javascript(options_for_select([["-- SELECCIONE --",""]])) %>");
+<% end %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ctlg_categoria: MyString
+  ctlg_subcategoria: MyString
+  ctlg_valorCdg: MyString
+  ctlg_valorDesc: MyString
+  ctlg_observacion: MyString
+  ctlg_estadoRegistro: MyString
+
+two:
+  ctlg_categoria: MyString
+  ctlg_subcategoria: MyString
+  ctlg_valorCdg: MyString
+  ctlg_valorDesc: MyString
+  ctlg_observacion: MyString
+  ctlg_estadoRegistro: MyString

@@ -1,0 +1,113 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<br>
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p id="notice"><%= notice %></p>
+					</div>
+				<% end %>
+				<div class="tableWrapper">
+					<div class="section-header">
+						<h1>Entidades Territoriales</h1>
+					</div>
+					
+					<table id="indexTable" class="stripe hover">
+					  <thead>
+					    <tr>
+					      <th>Categoría</th>
+					      <th>Nombre Oficial</th>
+					      <th>Padre</th>
+					      <th>Nivel</th>
+					      <th>Region</th>
+					      <th>Estado</th>
+					      <th colspan="3"></th>
+					    </tr>
+					  </thead>
+					
+					  <tbody>
+					    <% @entidad_territorials.each do |entidad_territorial| %>
+					      <tr>
+					        	<% if entidad_territorial.enter_nivel == 0 or entidad_territorial.enter_nivel == 1 or entidad_territorial.enter_nivel == 2 then %>
+					        		<td><%= @hshUnidadesTer[entidad_territorial.division_pais_id] %></td>
+					        	<% else %>
+					        		<% enterPais = set_pais(entidad_territorial.id)%>
+					        		<% unidadTerr = @division_pais.select{|h| h.entidad_territorial_id == enterPais.id && h.divpais_nivel == entidad_territorial.enter_nivel && h.divpais_estadoRegistro == "A" }%>
+					        		<td>
+					        			<%= @hshUnidadesTer[unidadTerr.first.unidad_territorial_id] %>
+					        		</td>
+					        	<% end %>
+					        <td><%= entidad_territorial.enter_nombreOficial %></td>	
+					        <td>
+					        	<% padre = "" %>
+					        	<% if entidad_territorial.enter_nivel > 0 then %>
+					        		<%padre = @entidad_territorials.find(entidad_territorial.enter_padreId) %>
+					        		<%padre = padre.enter_nombreOficial %>
+					        	<% end %>
+					        	<%= padre %>
+					        </td>
+					        <td><%= entidad_territorial.enter_nivel %></td>
+					        <td>
+				        		<% region = set_region(entidad_territorial.id) %>
+				        		<% unless region.nil? %>
+				        			<%= region.reg_nombre %>
+				        		<% end %>
+					        </td>
+					        <td><%= @estados[entidad_territorial.enter_estadoRegistro] %></td>
+			        		<td><%= link_to(entidad_territorial, class:"btn btn-info") do %>
+			        				<i class="fa fa-book"></i>
+			        			<% end %>
+			        		</td>
+			        		<td><a href="<%= edit_entidad_territorial_path(entidad_territorial) %>" class="btn btn-warning">
+			        				<i class="fa fa-edit"></i>
+			        			</a>
+			        		</td>
+			        		<td>
+			        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/entidad_territorials/#{entidad_territorial.id}"%> >
+			        				<i class="fa fa-trash"></i>
+			        			</a>
+			        		</td>
+					      </tr>
+					    <% end %>
+					  </tbody>
+					</table>
+					<div class="section-footer">
+						<%= link_to 'Regresar', administracion_path , class:"button back" %>
+						<%= link_to 'Nuevo registro', new_entidad_territorial_path, class:"button add" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script>
+
+	$(document).on('page:load', function() {
+			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
+			    table = $('#indexTable').DataTable();
+			}
+			else {
+			    table = $('#indexTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+		});
+		
+	$(function() {
+		$('#indexTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "35%" },
+							{ sWidth : "20%" },
+							{ sWidth : "25%" },
+							{ sWidth : "5%" },
+							{ sWidth : "15%" },
+							{ sWidth : "5%" }
+						]
+    		});
+	});
+</script>

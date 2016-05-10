@@ -1,0 +1,73 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-6 col-md-6" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Entidad Territorial</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-3 col-md-3">
+							<p><strong>Código:</strong></p>
+							<p><strong>Nombre:</strong></p>
+							<p><strong>Presentacion:</strong></p>
+							<p><strong>Padre:</strong></p>
+							<p><strong>Nivel:</strong></p>
+							<p><strong>Region:</strong></p>
+							<p><strong>Categoría:</strong></p>
+							<p><strong>Estado:</strong></p>
+							<p>&nbsp;</p>
+  						</div>
+  											        	
+  						<div class="col-lg-9 col-md-9">
+  							<p><%= @entidad_territorial.enter_codigoOficial %>&nbsp;</p>
+  							<p><%= @entidad_territorial.enter_nombreOficial %></p>
+  							<p><%= @entidad_territorial.enter_presentacion %>&nbsp;</p>
+				        	<% padre = "" %>
+					        	<% if @entidad_territorial.enter_nivel > 0 then %>
+					        		<%padre = @entidad_territorials.find(@entidad_territorial.enter_padreId) %>
+					        		<%padre = padre.enter_nombreOficial %>
+					        	<% end %>
+  							<p><%= padre %>&nbsp;</p>
+  							<p><%= @entidad_territorial.enter_nivel %>&nbsp;</p>
+  							<p>
+	  							<!-- Descripción Región-->
+	  							<% region = set_region(@entidad_territorial.id)%>
+	  							<% unless region.nil? %>
+	  								<%= region.reg_nombre %>
+	  							<% end %>
+  							&nbsp;</p>
+  							<!-- Buscando Entidad Territorial -->
+  							<% if @entidad_territorial.enter_nivel == 0 or @entidad_territorial.enter_nivel == 1 or @entidad_territorial.enter_nivel == 2 then %>
+  								<p><%= @hshUnidadesTer[@entidad_territorial.division_pais_id] %></p>
+				        	<% else %>
+				        		<% enterPais = set_pais(@entidad_territorial.id)%>
+				        		<% unidadTerr = @division_pais.select{|h| h.entidad_territorial_id == enterPais.id && h.divpais_nivel == @entidad_territorial.enter_nivel && h.divpais_estadoRegistro == "A" }%>
+				        		<p><%= @hshUnidadesTer[unidadTerr.first.unidad_territorial_id] %></p>
+				        	<% end %>
+				        	
+  							<p><%= @estados[@entidad_territorial.enter_estadoRegistro] %></p>
+  							<p>&nbsp;</p>
+  						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', entidad_territorials_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_entidad_territorial_path(@entidad_territorial), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

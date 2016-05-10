@@ -1,0 +1,49 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-6 col-md-6" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Registro</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-3 col-md-3">
+							<p><strong>Categoria:</strong></p>
+							<p><strong>Subcategoria:</strong>&nbsp;</p>
+							<p><strong>Código:</strong></p>
+							<p><strong>Descripción:</strong></p>
+							<p><strong>Observación:</strong></p>
+							<p><strong>Estado:</strong></p>
+							<p>&nbsp;</p>
+						</div>
+						<div class="col-lg-9 col-md-9">
+							<p><%= @catalogo.ctlg_categoria %></p>
+					  		<p><%= @catalogo.ctlg_subcategoria %>&nbsp;</p>
+					  		<p><%= @catalogo.ctlg_valorCdg %></p>
+					  		<p><%= @catalogo.ctlg_valorDesc %></p>
+					  		<p><%= @catalogo.ctlg_observacion %>&nbsp;</p>
+					  		<p><%= @estados[@catalogo.ctlg_estadoRegistro] %></p>
+					  		<p>&nbsp;</p>	
+						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', catalogos_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_catalogo_path(@catalogo), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  aeropt_nombre: MyString
+  aeropt_codigoIATA: MyString
+  aeropt_ciudadCdg: MyString
+  aeropt_estadoRegistro: MyString
+
+two:
+  aeropt_nombre: MyString
+  aeropt_codigoIATA: MyString
+  aeropt_ciudadCdg: MyString
+  aeropt_estadoRegistro: MyString

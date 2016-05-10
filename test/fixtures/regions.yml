@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reg_nombre: MyString
+  reg_presentacion: MyText
+  reg_entidad_territorial_id: 1
+  reg_estadoRegistro: MyString
+
+two:
+  reg_nombre: MyString
+  reg_presentacion: MyText
+  reg_entidad_territorial_id: 1
+  reg_estadoRegistro: MyString
