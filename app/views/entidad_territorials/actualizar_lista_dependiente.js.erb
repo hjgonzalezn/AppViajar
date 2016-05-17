@@ -1,4 +1,4 @@
-<% unless params[:enter_padre_id].blank? %>
+<% unless params[:enter_padre_id].blank? && params[:enter_padre_id] == "-- SELECCIONE --" %>
 	$("#entidad_territorial_division_pais_id").empty();
 	$("#region_id").empty();
 	$("#<%= params[:control_id]%>").empty();

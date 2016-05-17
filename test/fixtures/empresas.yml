@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  empr_documentoIdentidad: MyString
+  empr_razonSocial: MyString
+  empr_tipoEmpresa: MyString
+  empr_sectorEconomico: MyString
+  empr_docIdentReprLegal: MyString
+  empr_sitioWeb: MyString
+  empr_otrosDatos: MyString
+  empr_estadoRegistro: MyString
+
+two:
+  empr_documentoIdentidad: MyString
+  empr_razonSocial: MyString
+  empr_tipoEmpresa: MyString
+  empr_sectorEconomico: MyString
+  empr_docIdentReprLegal: MyString
+  empr_sitioWeb: MyString
+  empr_otrosDatos: MyString
+  empr_estadoRegistro: MyString

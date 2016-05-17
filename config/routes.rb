@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
-  
+
   get 'entidad_territorials/actualizar_lista_dependiente' => 'entidad_territorials#actualizar_lista_dependiente', as: :actualizar_lista_dependiente
+  get 'empresas/buscar_datos_empresa' => 'empresas#buscar_datos_empresa', as: :buscar_datos_empresa
+  get 'personas/buscar_datos_persona' => 'personas#buscar_datos_persona', as: :buscar_datos_persona
   
+  resources :sucursal_empresas
+  resources :sucursal_empresas
+  resources :personas
+  resources :empresas
+  resources :vehiculos
+
   resources :entidad_territorials
   resources :division_pais
   resources :regions

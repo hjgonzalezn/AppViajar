@@ -1,0 +1,1 @@
+json.extract! @empresa, :id, :empr_documentoIdentidad, :empr_razonSocial, :empr_tipoEmpresa, :empr_sectorEconomico, :empr_docIdentReprLegal, :empr_sitioWeb, :empr_otrosDatos, :empr_estadoRegistro, :created_at, :updated_at

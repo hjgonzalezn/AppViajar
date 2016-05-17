@@ -1,0 +1,1 @@
+json.extract! @sucursal_empresa, :id, :empr_documentoIdentidad, :sucEmpr_ciudadDomicilio, :sucEmpr_direccion, :sucEmpr_telefono1, :sucEmpr_telefono2, :sucEmpr_correoElectronico, :sucEmpr_docIdentContacto1, :docIdentContacto2, :sucEmpr_TipoSucursal, :sucEmpr_horarioAtencion, :sucEmp_estadoRegistro, :created_at, :updated_at

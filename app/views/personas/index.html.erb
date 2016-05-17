@@ -1,0 +1,88 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<br>
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p id="notice"><%= notice %></p>
+					</div>
+				<% end %>
+				<div class="tableWrapper">
+					<div class="section-header">
+						<h1>Personas</h1>
+					</div>
+					
+					<table id="indexTable" class="stripe hover">
+				  	<thead>
+				    	<tr>
+				      		<th>Docum. Identidad</th>
+				      		<th>Nombre Completo</th>
+				      		<th>Teléfono 1</th>
+				      		<th>Correo Electrónico</th>
+				      		<th>Estado</th>
+				      		<th colspan="3"></th>
+				    	</tr>
+				  	</thead>
+
+  					<tbody>
+						<% @personas.each do |persona| %>
+					      <tr>
+					        <td><%= persona.pers_documentoIdentidad %></td>
+					        <td><%= persona.pers_nombreCompleto %></td>
+					        <td><%= persona.pers_telefonoPersonal1 %></td>
+					        <td><%= persona.pers_correoElectrPersonal %></td>
+					        <td><%= @estados[persona.pers_estadoRegistro] %></td>
+					        		<td><%= link_to(persona, class:"btn btn-info") do %>
+					        				<i class="fa fa-book"></i>
+					        			<% end %>
+					        		</td>
+					        		<td><a href="<%= edit_persona_path(persona) %>" class="btn btn-warning">
+					        				<i class="fa fa-edit"></i>
+					        			</a>
+					        		</td>
+					        		<td>
+					        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/personas/#{persona.id}"%> >
+					        				<i class="fa fa-trash"></i>
+					        			</a>
+					        		</td>
+					      		</tr>
+					    	<% end %>
+					  	</tbody>
+					</table>
+					<div class="section-footer">
+						<%= link_to 'Regresar', administracion_path , class:"button back" %>
+						<%= link_to 'Nuevo registro', new_persona_path, class:"button add" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script>
+
+	$(document).on('page:load', function() {
+			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
+			    table = $('#indexTable').DataTable();
+			}
+			else {
+			    table = $('#indexTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+		});
+		
+	$(function() {
+		$('#indexTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "45%" },
+							{ sWidth : "45%" },
+							{ sWidth : "10%" }
+						]
+    		});
+	});
+</script>

@@ -1,0 +1,124 @@
+<%= form_for(@persona) do |f| %>
+  <% if @persona.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@persona.errors.count, "error") %> prohibited this persona from being saved:</h2>
+
+      <ul>
+      <% @persona.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div class="col-lg-11 col-md-11" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+			<div class="col-lg-6 col-md-6">
+				<div class="form-group">
+    				<%= f.label :pers_documentoIdentidad, "Docum. Identidad" %><br>
+    				<%= f.text_field :pers_documentoIdentidad %>
+  				</div>
+  				<div class="field">
+    				<%= f.label :pers_nombreCompleto, "Nombre Completo" %><br>
+    				<%= f.text_field :pers_nombreCompleto, options={size: 60, maxlength: 60} %>
+  				</div>
+		  		<div class="field">
+		    		<%= f.label :pers_alias, "Alias" %><br>
+		    		<%= f.text_field :pers_alias, options={size: 30, maxlength: 30} %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_sexo, "Sexo" %><br>
+		    		<%= f.text_field :pers_sexo %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_fechaNacimiento, "Fecha de Nacimiento" %><br>
+		    		<%= f.date_select :pers_fechaNacimiento %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_estadoCivil, "Estado Civil" %><br>
+		    		<%= f.text_field :pers_estadoCivil %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_direccionDomicilio, "Dirección Domicilio" %><br>
+		    		<%= f.text_field :pers_direccionDomicilio, options={size: 60, maxlength: 60} %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_ciudadDomicilio, "Ciudad Domicilio" %><br>
+		    		<%= f.number_field :pers_ciudadDomicilio %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_telefonoPersonal1, "Teléfono Personal 1" %><br>
+		    		<%= f.text_field :pers_telefonoPersonal1 %>
+		  		</div>
+			</div>
+			<div class="col-lg-6 col-md-6">
+		  		<div class="field">
+		    		<%= f.label :pers_telefonoPersonal2, "Teléfono Personal 2" %><br>
+		    		<%= f.text_field :pers_telefonoPersonal2 %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_correoElectrPersonal, "Correo Electrónico Personal" %><br>
+		    		<%= f.text_field :pers_correoElectrPersonal, options={size: 60, maxlength: 60} %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_correoElectrLaboral, "Correo Electrónico Laboral" %><br>
+		    		<%= f.text_field :pers_correoElectrLaboral, options={size: 60, maxlength: 60} %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_perfilLaboral, "Perfil Laboral" %><br>
+		    		<%= f.text_field :pers_perfilLaboral %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :sucursalEmpresaId, "Sucursal Empresa" %><br>
+		    		<%= f.number_field :sucursalEmpresaId %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :empresaCargo, "Cargo" %><br>
+		    		<%= f.text_field :empresaCargo %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_telefonoLaboral1, "Teléfono Laboral 1" %><br>
+		    		<%= f.text_field :pers_telefonoLaboral1 %>
+		  		</div>
+		 	 	<div class="field">
+		    		<%= f.label :pers_telefonoLaboral2, "Teléfono Laboral 2" %><br>
+		    		<%= f.text_field :pers_telefonoLaboral2 %>
+		  		</div>
+		  		<div class="field">
+		    		<%= f.label :pers_estadoRegistro, "Estado" %><br>
+		    		<%= f.text_field :pers_estadoRegistro %>
+		  		</div>
+		  	</div>
+  		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:load', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_persona_<%= @persona.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_persona').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+				
+				<%= link_to 'Regresar', personas_path , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					| <%= link_to 'Consultar', @persona, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+<script>
+	$(function(){
+		 $( document ).trigger( "page:load" );
+	});
+</script>

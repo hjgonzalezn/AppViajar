@@ -5,8 +5,17 @@ class ApplicationController < ActionController::Base
   
   def initialize_vars_global
     @estados = Hash.new
-    Catalogo.where("ctlg_categoria = ? AND ctlg_estadoRegistro = ? ", "ESTADO DE REGISTRO", "A").find_each do |estado|
-      @estados[estado.ctlg_valorCdg] = estado.ctlg_valorDesc 
-    end
+    @tiposDocumIdent = Hash.new
+    
+    todoCatalogo = Catalogo.where("ctlg_estadoRegistro = ?", "A")
+    
+    todoCatalogo.each do |h|
+      if h.ctlg_categoria == "ESTADO DE REGISTRO" then
+        @estados[h.ctlg_valorCdg] = h.ctlg_valorDesc
+      elsif h.ctlg_categoria == "TIPO DE DOCUMENTO DE IDENTIDAD" then
+        # Tipos de documento de identidad
+        @tiposDocumIdent[h.ctlg_valorCdg] = h.ctlg_valorDesc
+      end
+    end   
   end  
 end

@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pers_documentoIdentidad: MyString
+  pers_nombreCompleto: MyString
+  pers_alias: MyString
+  pers_sexo: MyString
+  pers_fechaNacimiento: 2016-05-10
+  pers_estadoCivil: MyString
+  pers_direccionDomicilio: MyString
+  pers_ciudadDomicilio: 1
+  pers_telefonoPersonal1: MyString
+  pers_telefonoPersonal2: MyString
+  pers_correoElectrPersonal: MyString
+  pers_correoElectrLaboral: MyString
+  pers_perfilLaboral: MyString
+  sucursalEmpresaId: 1
+  empresaCargo: MyString
+  pers_telefonoLaboral1: MyString
+  pers_telefonoLaboral2: MyString
+  pers_estadoRegistro: MyString
+
+two:
+  pers_documentoIdentidad: MyString
+  pers_nombreCompleto: MyString
+  pers_alias: MyString
+  pers_sexo: MyString
+  pers_fechaNacimiento: 2016-05-10
+  pers_estadoCivil: MyString
+  pers_direccionDomicilio: MyString
+  pers_ciudadDomicilio: 1
+  pers_telefonoPersonal1: MyString
+  pers_telefonoPersonal2: MyString
+  pers_correoElectrPersonal: MyString
+  pers_correoElectrLaboral: MyString
+  pers_perfilLaboral: MyString
+  sucursalEmpresaId: 1
+  empresaCargo: MyString
+  pers_telefonoLaboral1: MyString
+  pers_telefonoLaboral2: MyString
+  pers_estadoRegistro: MyString

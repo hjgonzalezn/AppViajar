@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507005750) do
+ActiveRecord::Schema.define(version: 20160516001725) do
 
   create_table "aeropuertos", force: :cascade do |t|
     t.string   "aeropt_nombre",         limit: 255
@@ -42,6 +42,21 @@ ActiveRecord::Schema.define(version: 20160507005750) do
     t.datetime "updated_at",                         null: false
   end
 
+  create_table "empresas", force: :cascade do |t|
+    t.string   "empr_documentoIdentidad", limit: 255
+    t.string   "empr_razonSocial",        limit: 255
+    t.string   "empr_tipoEmpresa",        limit: 255
+    t.string   "empr_sectorEconomico",    limit: 255
+    t.string   "empr_docIdentReprLegal",  limit: 255
+    t.string   "empr_sitioWeb",           limit: 255
+    t.string   "empr_otrosDatos",         limit: 255
+    t.string   "empr_estadoRegistro",     limit: 255
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "empr_nombreCorto",        limit: 255
+    t.string   "empr_correoElectronico",  limit: 255
+  end
+
   create_table "entidad_territorials", force: :cascade do |t|
     t.string   "enter_nombreOficial",  limit: 255
     t.text     "enter_presentacion",   limit: 65535
@@ -55,6 +70,29 @@ ActiveRecord::Schema.define(version: 20160507005750) do
     t.string   "enter_codigoOficial",  limit: 255
   end
 
+  create_table "personas", force: :cascade do |t|
+    t.string   "pers_documentoIdentidad",   limit: 255
+    t.string   "pers_nombreCompleto",       limit: 255
+    t.string   "pers_alias",                limit: 255
+    t.string   "pers_sexo",                 limit: 255
+    t.date     "pers_fechaNacimiento"
+    t.string   "pers_estadoCivil",          limit: 255
+    t.string   "pers_direccionDomicilio",   limit: 255
+    t.integer  "pers_ciudadDomicilio",      limit: 4
+    t.string   "pers_telefonoPersonal1",    limit: 255
+    t.string   "pers_telefonoPersonal2",    limit: 255
+    t.string   "pers_correoElectrPersonal", limit: 255
+    t.string   "pers_correoElectrLaboral",  limit: 255
+    t.string   "pers_perfilLaboral",        limit: 255
+    t.integer  "sucursalEmpresaId",         limit: 4
+    t.string   "empresaCargo",              limit: 255
+    t.string   "pers_telefonoLaboral1",     limit: 255
+    t.string   "pers_telefonoLaboral2",     limit: 255
+    t.string   "pers_estadoRegistro",       limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
   create_table "regions", force: :cascade do |t|
     t.string   "reg_nombre",                 limit: 255
     t.text     "reg_presentacion",           limit: 65535
@@ -64,11 +102,46 @@ ActiveRecord::Schema.define(version: 20160507005750) do
     t.datetime "updated_at",                               null: false
   end
 
+  create_table "sucursal_empresas", force: :cascade do |t|
+    t.string   "empr_documentoIdentidad",   limit: 255
+    t.integer  "sucEmpr_ciudadDomicilio",   limit: 4
+    t.string   "sucEmpr_direccion",         limit: 255
+    t.string   "sucEmpr_telefono1",         limit: 255
+    t.string   "sucEmpr_telefono2",         limit: 255
+    t.string   "sucEmpr_correoElectronico", limit: 255
+    t.string   "sucEmpr_docIdentContacto1", limit: 255
+    t.string   "sucEmpr_docIdentContacto2", limit: 255
+    t.string   "sucEmpr_TipoSucursal",      limit: 255
+    t.string   "sucEmpr_horarioAtencion",   limit: 255
+    t.string   "sucEmp_estadoRegistro",     limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.string   "sucEmpr_nombreSucursal",    limit: 255
+  end
+
   create_table "unidad_territorials", force: :cascade do |t|
     t.string   "undter_nombre",         limit: 255
     t.string   "undter_estadoRegistro", limit: 255
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+  end
+
+  create_table "vehiculos", force: :cascade do |t|
+    t.string   "vehi_tipo",                  limit: 255
+    t.string   "vehi_modeloCodigo",          limit: 255
+    t.string   "vehi_medioCodigo",           limit: 255
+    t.string   "vehi_nombre",                limit: 255
+    t.string   "vehi_matricula",             limit: 255
+    t.integer  "vehi_propietarioId",         limit: 4
+    t.string   "vehi_tipoPropietario",       limit: 255
+    t.integer  "vehi_sucursalEmpresaPropId", limit: 4
+    t.float    "vehi_capacPesoMaximo",       limit: 24
+    t.float    "vehi_capacPesoPasajeros",    limit: 24
+    t.float    "vehi_capacCargaBodega",      limit: 24
+    t.integer  "vehi_capacPasajeros",        limit: 4
+    t.string   "vehi_estadoRegistro",        limit: 255
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
 end

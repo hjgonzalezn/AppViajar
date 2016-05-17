@@ -27,7 +27,8 @@
 					  	<tbody>
 					    	<% @aeropuertos.each do |aeropuerto| %>
 					      		<tr>
-					        		<td><%= aeropuerto.aeropt_ciudadCdg %></td>
+					      			<% ciudad = @ciudadesColombia.find(aeropuerto.aeropt_ciudadCdg) %>
+					        		<td><%= ciudad.enter_nombreOficial %></td>
 					        		<td><%= aeropuerto.aeropt_nombre %></td>
 					        		<td><%= aeropuerto.aeropt_codigoIATA %></td>
 					        		<td><%= @estados[aeropuerto.aeropt_estadoRegistro] %></td>

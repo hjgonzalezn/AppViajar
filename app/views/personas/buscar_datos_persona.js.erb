@@ -1,0 +1,12 @@
+<% unless params[:id].blank? || params[:dato_requerido].blank? || params[:nombre_control].blank? %>
+	var varDatoPersona;
+	<% persona = Persona.where(pers_documentoIdentidad: "#{params[:id]}").take %>
+	<% unless persona.nil? %>
+		<% case params[:dato_requerido] %>
+			<% when "nombre" %>
+				varDatoPersona = "<%= persona.pers_nombreCompleto %>";
+		<% end %>
+		$("#<%= params[:nombre_control]%>").val(varDatoPersona);
+	<% end %>
+<% end %>
+	

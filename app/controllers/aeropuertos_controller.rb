@@ -1,7 +1,10 @@
 class AeropuertosController < ApplicationController
+  
+  include EntidadTerritorialsHelper
   before_action :set_aeropuerto, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
-    
+  before_action :initialize_vars, only: [:new, :edit, :update, :create, :index, :show]
+      
   # GET /aeropuertos
   # GET /aeropuertos.json
   def index
@@ -65,6 +68,11 @@ class AeropuertosController < ApplicationController
   end
 
   private
+    
+    def initialize_vars
+      @ciudadesColombia = set_ciudades_colombia  
+    end
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_aeropuerto
       @aeropuerto = Aeropuerto.find(params[:id])

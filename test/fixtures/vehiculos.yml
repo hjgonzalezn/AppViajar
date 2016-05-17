@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vehi_tipo: MyString
+  vehi_modeloCodigo: MyString
+  vehi_medioCodigo: MyString
+  vehi_nombre: MyString
+  vehi_matricula: MyString
+  vehi_propietarioId: 1
+  vehi_tipoPropietario: MyString
+  vehi_sucursalEmpresaPropId: 1
+  vehi_capacPesoMaximo: 1.5
+  vehi_capacPesoPasajeros: 1.5
+  vehi_capacCargaBodega: 1.5
+  vehi_capacPasajeros: 1
+  vehi_estadoRegistro: MyString
+
+two:
+  vehi_tipo: MyString
+  vehi_modeloCodigo: MyString
+  vehi_medioCodigo: MyString
+  vehi_nombre: MyString
+  vehi_matricula: MyString
+  vehi_propietarioId: 1
+  vehi_tipoPropietario: MyString
+  vehi_sucursalEmpresaPropId: 1
+  vehi_capacPesoMaximo: 1.5
+  vehi_capacPesoPasajeros: 1.5
+  vehi_capacCargaBodega: 1.5
+  vehi_capacPasajeros: 1
+  vehi_estadoRegistro: MyString

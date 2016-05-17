@@ -1,0 +1,56 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-6 col-md-6" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Registro</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-4 col-md-4">
+							<p><strong>Doc. Identidad:</strong></p>
+							<p><strong>Razón Social:</strong></p>
+							<p><strong>Nombre Corto:</strong></p>
+							<p><strong>Tipo Empresa:</strong></p>
+							<p><strong>Tipo de capital:</strong></p>
+							<p><strong>Repres. legal:</strong></p>
+							<p><strong>Sitio web:</strong></p>
+							<p><strong>Correo Electrónico:</strong></p>
+							<p><strong>Otros datos:</strong></p>
+							<p><strong>Estado registro:</strong></p>
+						</div>
+						<div class="col-lg-8 col-md-8">
+  							<p><%= @tiposDocumIdent[@empresa.empr_documentoIdentidad[-2,2]] + " - " + @empresa.empr_documentoIdentidad[0,@empresa.empr_documentoIdentidad.length - 2] %></p>
+  							<p><%= @empresa.empr_razonSocial %></p>
+  							<p><%= @empresa.empr_nombreCorto %></p>
+  							<p><%= @tiposEmpresa[@empresa.empr_tipoEmpresa] %>&nbsp;</p>
+  							<p><%= @tiposCapital[@empresa.empr_sectorEconomico] %></p>
+  							<p><%= @empresa.empr_docIdentReprLegal %>&nbsp;</p>
+							<p><a href="<%= @empresa.empr_sitioWeb %>" target="_blank"><%= @empresa.empr_sitioWeb %></a>&nbsp;</p>
+							<p><%= @empresa.empr_correoElectronico %>&nbsp;</p>
+  							<p><%= @empresa.empr_otrosDatos %>&nbsp;</p>
+  							<p><%= @estados[@empresa.empr_estadoRegistro] %></p>
+  							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', empresas_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_empresa_path(@empresa), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

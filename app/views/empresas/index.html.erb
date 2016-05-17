@@ -1,0 +1,95 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<br>
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p id="notice"><%= notice %></p>
+					</div>
+				<% end %>
+				<div class="tableWrapper">
+					<div class="section-header">
+						<h1>Empresas</h1>
+					</div>
+					
+					<table id="indexTable" class="stripe hover">
+						<thead>
+					    	<tr>
+					    		<th>Tipo Doc. Ident.</th>
+						      	<th>Docum. Identidad</th>
+							    <th>Razon Social</th>
+							    <th>Nombre Corto</th>
+							    <th>Tipo Empresa</th>
+							    <th>Sector</th>
+							    <th>Estado</th>
+							    <th colspan="3"></th>
+					    	</tr>
+					  	</thead>
+					
+					  	<tbody>
+					    	<% @empresas.each do |empresa| %>
+					      		<tr>
+							      	<td><%= @tiposDocumIdent[empresa.empr_documentoIdentidad[-2,2]] %></td>
+							        <td><%= empresa.empr_documentoIdentidad[0,empresa.empr_documentoIdentidad.length - 2] %></td>
+							        <td><%= link_to empresa.empr_razonSocial, empresa.empr_sitioWeb, target: "_blank" %></td>
+							        <td><%= empresa.empr_nombreCorto %></td>
+							        <td><%= @tiposEmpresa[empresa.empr_tipoEmpresa] %></td>
+							        <td><%= @tiposCapital[empresa.empr_sectorEconomico] %></td>
+							        <td><%= @estados[empresa.empr_estadoRegistro] %></td>
+					        		<td><%= link_to(empresa, class:"btn btn-info") do %>
+					        				<i class="fa fa-book"></i>
+					        			<% end %>
+					        		</td>
+					        		<td><a href="<%= edit_empresa_path(empresa) %>" class="btn btn-warning">
+					        				<i class="fa fa-edit"></i>
+					        			</a>
+					        		</td>
+					        		<td>
+					        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/empresas/#{empresa.id}"%> >
+					        				<i class="fa fa-trash"></i>
+					        			</a>
+					        		</td>
+					      		</tr>
+					    	<% end %>
+					  	</tbody>
+					</table>
+					<div class="section-footer">
+						<%= link_to 'Regresar', administracion_path , class:"button back" %>
+						<%= link_to 'Nuevo registro', new_empresa_path, class:"button add" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script>
+
+	$(document).on('page:load', function() {
+			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
+			    table = $('#indexTable').DataTable();
+			}
+			else {
+			    table = $('#indexTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+		});
+		
+	$(function() {
+		$('#indexTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "5%" },
+							{ sWidth : "10%" },
+							{ sWidth : "40%" },
+							{ sWidth : "20%" },
+							{ sWidth : "20%" },
+							{ sWidth : "5%" }
+						]
+    		});
+	});
+</script>

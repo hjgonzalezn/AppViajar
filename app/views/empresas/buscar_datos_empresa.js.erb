@@ -1,0 +1,12 @@
+<% unless params[:id].blank? || params[:dato_requerido].blank? || params[:nombre_control].blank? %>
+	var varDatoEmpresa;
+	<% empresa = Empresa.where(empr_documentoIdentidad: "#{params[:id]}").take %>
+	<% unless empresa.nil? %>
+		<% case params[:dato_requerido] %>
+			<% when "razon_social" %>
+				varDatoEmpresa = "<%= empresa.empr_nombreCorto %>";
+		<% end %>
+		$("#<%= params[:nombre_control]%>").val(varDatoEmpresa);
+	<% end %>
+<% end %>
+	

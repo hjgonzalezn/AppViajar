@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  empr_documentoIdentidad: MyString
+  sucEmpr_ciudadDomicilio: 1
+  sucEmpr_direccion: MyString
+  sucEmpr_telefono1: MyString
+  sucEmpr_telefono2: MyString
+  sucEmpr_correoElectronico: MyString
+  sucEmpr_docIdentContacto1: MyString
+  docIdentContacto2: MyString
+  sucEmpr_TipoSucursal: MyString
+  sucEmpr_horarioAtencion: MyString
+  sucEmp_estadoRegistro: MyString
+
+two:
+  empr_documentoIdentidad: MyString
+  sucEmpr_ciudadDomicilio: 1
+  sucEmpr_direccion: MyString
+  sucEmpr_telefono1: MyString
+  sucEmpr_telefono2: MyString
+  sucEmpr_correoElectronico: MyString
+  sucEmpr_docIdentContacto1: MyString
+  docIdentContacto2: MyString
+  sucEmpr_TipoSucursal: MyString
+  sucEmpr_horarioAtencion: MyString
+  sucEmp_estadoRegistro: MyString

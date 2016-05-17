@@ -1,0 +1,193 @@
+<%= form_for(@sucursal_empresa) do |f| %>
+  <% if @sucursal_empresa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sucursal_empresa.errors.count, "error") %> prohibited this sucursal_empresa from being saved:</h2>
+
+      <ul>
+      <% @sucursal_empresa.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<div class="col-lg-11 col-md-11" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+			
+			<div class="col-lg-6 col-md-6">
+				<label><strong>Ciudad</strong></label>
+				<!--++++++++++++++++++++++++++++++++++++++++++++-->
+				<%= render 'entidad_territorials/jerarquia_form'%>
+				<!--++++++++++++++++++++++++++++++++++++++++++++-->
+			
+				<div class="form-group">
+				    <% tipoDocumEmpresa = nil %>
+				    <% nroDocumEmpresa = nil %>
+				    <% razonSocialEmpr = nil %>
+				    <% unless @sucursal_empresa.empr_documentoIdentidad.nil? %>
+				    	<% tipoDocumEmpresa = @empresa.empr_documentoIdentidad[-2,2] %>
+				    	<% nroDocumEmpresa = @empresa.empr_documentoIdentidad[0,@sucursal_empresa.empr_documentoIdentidad.length - 2] %>
+				    	<% razonSocialEmpr = @empresa.empr_nombreCorto %>
+				    <% end %>
+				    <%= f.label :empr_documentoIdentidad, "Empresa" %><br>
+				    <%= f.hidden_field :empr_documentoIdentidad %>			     
+				    <%= select_tag(:empr_tipoIdent, options_for_select(@tiposIdentEmpresa.invert, tipoDocumEmpresa), prompt: "-- TIPO DOC. IDENT --") %> | 
+				    <%= text_field_tag(:empr_numeroIdent, nroDocumEmpresa, options={required: :required, placeholder: "Nro de identificación"}) %> <p>&nbsp;</p>
+				    <%= text_field_tag(:empr_razonSocial, razonSocialEmpr, options={placeholder:"Razón Social", size: 60, readonly: true}) %>
+				</div>
+			
+			  	<div class="form-group">
+			    	<%= f.label :sucEmpr_nombreSucursal, "Nombre Sucursal*" %><br>
+			    	<%= f.hidden_field :sucEmpr_ciudadDomicilio %>
+			    	<%= f.text_field(:sucEmpr_nombreSucursal, options={ size: 60, maxlength:60}) %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= f.label :sucEmpr_direccion, "Dirección*" %><br>
+			    	<%= f.text_field :sucEmpr_direccion, options={size: 60, maxlength: 60} %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= f.label :sucEmpr_telefono1, "Teléfono 1" %><br>
+			    	<%= f.text_field :sucEmpr_telefono1, options={maxlength: 15} %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= f.label :sucEmpr_telefono2, "Teléfono 2" %><br>
+			    	<%= f.text_field :sucEmpr_telefono2, options={maxlength: 15} %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= f.label :sucEmpr_correoElectronico, "Correo Electrónico" %><br>
+			    	<%= f.email_field :sucEmpr_correoElectronico, options={size: 60, maxlength: 60} %>
+			  	</div>
+		  	</div><!-- Columna izquierda -->
+		  	<div class="col-lg-6 col-md-6"> <!-- Columna derecha -->
+			  	<div class="form-group">
+			    	<% tipoDocumPersona = nil %>
+			    	<% nroDocumPersona = nil %>
+			    	<% nombrePersona = nil %>
+			    	<% unless @sucursal_empresa.sucEmpr_docIdentContacto1.blank? %>
+			    		<% persona = Persona.where(pers_documentoIdentidad: @sucursal_empresa.sucEmpr_docIdentContacto1).take %>
+			    		<% tipoDocumPersona = persona.pers_documentoIdentidad[-2,2]%>
+			    		<% nroDocumPersona = persona.pers_documentoIdentidad[0, persona.pers_documentoIdentidad.length - 2] %>
+			    		<% nombrePersona = persona.pers_nombreCompleto %>
+			    	<% end %>
+			    	
+			    	<%= f.label :sucEmpr_docIdentContacto1, "Contacto 1" %><br>
+			    	<%= f.hidden_field :sucEmpr_docIdentContacto1 %>
+				    <%= select_tag(:cont1_tipoIdent, options_for_select(@tiposIdentPersona.invert, tipoDocumPersona), prompt: "-- TIPO DOC. IDENT --") %> | 
+				    <%= text_field_tag(:cont1_numeroIdent, nroDocumPersona, options={class:"documPersona", placeholder: "Nro de identificación"}) %> <p>&nbsp;</p>
+				    <%= text_field_tag(:cont1_nombreCompleto, nombrePersona, options={placeholder:"Nombre Completo", size: 60, readonly: true}) %>
+			  	</div>
+			  	<div class="form-group">
+			    	<% tipoDocumPersona = nil %>
+			    	<% nroDocumPersona = nil %>
+			    	<% nombrePersona = nil %>
+			    	<% unless @sucursal_empresa.sucEmpr_docIdentContacto2.blank? %>
+			    		<% persona = Persona.where(pers_documentoIdentidad: @sucursal_empresa.sucEmpr_docIdentContacto2).take %>
+			    		<% tipoDocumPersona = persona.pers_documentoIdentidad[-2,2]%>
+			    		<% nroDocumPersona = persona.pers_documentoIdentidad[0, persona.pers_documentoIdentidad.length - 2] %>
+			    		<% nombrePersona = persona.pers_nombreCompleto %>
+			    	<% end %>
+			    				  		
+			    	<%= f.label :sucEmpr_docIdentContacto2, "Contacto 2" %><br>
+			    	<%= f.hidden_field :sucEmpr_docIdentContacto2 %>
+				    <%= select_tag(:cont2_tipoIdent, options_for_select(@tiposIdentPersona.invert, tipoDocumPersona), prompt: "-- TIPO DOC. IDENT --") %> | 
+				    <%= text_field_tag(:cont2_numeroIdent, nroDocumPersona, options={class:"documPersona", placeholder: "Nro de identificación"}) %> <p>&nbsp;</p>
+				    <%= text_field_tag(:cont2_nombreCompleto, nombrePersona, options={placeholder:"Nombre Completo", size: 60, readonly: true}) %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= f.label :sucEmpr_TipoSucursal, "Tipo de Sucursal*" %><br>
+			    	<%= f.select :sucEmpr_TipoSucursal, options_for_select(@tiposSucursal.invert, @sucursal_empresa.sucEmpr_TipoSucursal), prompt: "-- SELECCIONE --" %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= f.label :sucEmpr_horarioAtencion, "Horario de Atención" %><br>
+			    	<%= f.text_field :sucEmpr_horarioAtencion, options={size: 60} %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= f.label :sucEmp_estadoRegistro, "Estado Registro*" %><br>
+			    	<%= f.select :sucEmp_estadoRegistro, options_for_select(@estados.invert) %>
+			  	</div>
+			</div>
+  		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:load', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_sucursal_empresa_<%= @sucursal_empresa.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_sucursal_empresa').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+				
+				<%= link_to 'Regresar', sucursal_empresas_path , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					| <%= link_to 'Consultar', @sucursal_empresa, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<script>
+	$(function(){
+		 $( document ).trigger( "page:load" );
+		 $("#parents_path").val(<%= @parentalPath %>);
+	});
+	
+	$(document).on('page:load', function() {
+		
+		// $("#empr_tipoIdent").focus(function(){
+			// arrNombres = $("#parents_path").val();
+			// arrNombres = arrNombres.split("|");
+			// $("#ciudadDomicilio").val(arrNombres[arrNombres.length - 2].trim());
+		// });
+		
+		$("#empr_numeroIdent").blur(function(){
+			var documIdentEmpresa;
+			if ($("#empr_numeroIdent").val() != "" && $("#empr_tipoIdent option:selected").val() != "") {
+				documIdentEmpresa = $(this).val() +  $("#empr_tipoIdent option:selected").val();
+				$("#sucursal_empresa_empr_documentoIdentidad").val(documIdentEmpresa);
+				$.ajax({
+						url: "<%= buscar_datos_empresa_path %>",
+						data: {
+								id: documIdentEmpresa,
+								dato_requerido:"razon_social",
+								nombre_control:"empr_razonSocial"
+					  		  },
+						dataType: "script",
+						success: function(){
+							entidadTerrId = $("#entidadTerrId").val();
+							$("#sucursal_empresa_sucEmpr_ciudadDomicilio").val(entidadTerrId);
+						}
+				});
+			}
+		});
+		
+		$(".documPersona").blur(function(){
+				var documIdentPersona;
+				prefijo = $(this).attr('id').split("_");
+				prefijo = prefijo[0];
+				documIdentPersona = $("#" + prefijo + "_numeroIdent").val() + $("#" + prefijo + "_tipoIdent").val();
+								
+				$.ajax({
+						url: "<%= buscar_datos_persona_path %>",
+						data: {
+								id: documIdentPersona,
+								dato_requerido: "nombre",
+								nombre_control: prefijo + "_nombreCompleto"
+					  		  },
+						dataType: "script",
+						success: function(){
+							$("#sucursal_empresa_sucEmpr_docIdentContacto" + prefijo.substr(-1)).val(documIdentPersona);
+						}
+				});
+		});
+		
+	});
+</script>

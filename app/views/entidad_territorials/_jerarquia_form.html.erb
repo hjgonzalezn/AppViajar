@@ -1,0 +1,95 @@
+<div class="form-group">
+	<%= text_field_tag(:parents_path, @parentalPath, options={size: 60, readonly: true}) %>
+	<p>&nbsp;</p>
+	<%= select_tag(:continentes, options_from_collection_for_select(@continentes, :id , :enter_nombreOficial), class:"entidadTerr", prompt: "-- CONTINENTE --")%>
+	<%= select_tag(:entidadTerr1, nil, class:"entidadTerr", prompt: "-- SELECCIONE --")%>
+	<%= select_tag(:entidadTerr2, nil, class:"entidadTerr", prompt: "-- SELECCIONE --")%>
+	<%= hidden_field_tag(:controlAnterior, options={value:""}) %>
+	<%= hidden_field_tag(:valorAnterior, options={value:""}) %>
+	<%= hidden_field_tag(:entidadTerrId) %>
+</div>
+<script>
+$(document).on('page:load', function() {
+	var boClicked = false;
+	$(".entidadTerr").click(function(){
+		boClicked = true;
+		/*$("#controlAnterior").val("");*/
+	});
+	
+	$(".entidadTerr").change(function(){
+		var valorActual, varCadena, varLong, varSelectedText;
+		var varAux;
+		var switchControl = new Object();
+		var index;
+		
+		varSelectedText = $("option:selected", this).text();
+		
+		if (boClicked){
+			switchControl["continentes"] = "entidadTerr1";
+			switchControl["entidadTerr1"] = "entidadTerr2";
+			switchControl["entidadTerr2"] = "entidadTerr1";
+			
+			if ($("#controlAnterior").val() == $(this).attr("id")){
+				varCadena = $("#parents_path").val();
+				index = varCadena.indexOf($("#valorAnterior").val());
+				if (index > 0 || $("#valorAnterior").val() != varSelectedText){
+					varLong = varCadena.length;
+					varCadena = varCadena.substring(0, index);
+					varCadena = varCadena + varSelectedText + " | ";
+					$("#parents_path").val(varCadena);
+				}
+				
+				$("#valorAnterior").val(varSelectedText);
+			}
+			else{
+	
+		
+				if($(this).attr("id") == "continentes"){
+					if (varSelectedText.length > 0 ){
+						$("#parents_path").val(varSelectedText + " | ");
+					}
+					$("#entidadTerr1").find("option:not(:first)").remove();
+					$("#entidadTerr2").find("option:not(:first)").remove();
+				}
+				
+				valorActual = $("#parents_path").val();
+				
+				if($(this).val != "" && $(this).val != "-- SELECCIONE --"){
+					
+					$("#valorAnterior").val(varSelectedText);
+							
+					if (valorActual == ""){
+						valorActual = varSelectedText + " | ";
+					}
+					else if(varSelectedText != "-- SELECCIONE --" && valorActual.indexOf(varSelectedText) < 0){
+						valorActual = valorActual + varSelectedText + " | ";
+					}
+					
+					$("#parents_path").val(valorActual);
+					$("#entidad_territorial_enter_padreId").val($(this).val());
+					
+				} /* Valor permitido */
+			} /* Control anterior*/
+			if ($(this).val != "-- SELECCIONE --"){
+				enter_id = $(this).val();
+				$.ajax({
+						url: "<%= actualizar_lista_dependiente_path %>",
+						data: {
+								enter_padre_id: enter_id,
+								control_id: switchControl[$(this).attr('id')]
+					  		  },
+						dataType: "script",
+						success: function(){
+							$("#entidadTerrId").val(enter_id);
+						}
+				});
+			}
+		}
+		
+		boClicked = false;
+		$("#" + switchControl[$(this).attr("id")]).find("option:not(:first)").remove();
+		$("#controlAnterior").val($(this).attr("id"));
+		
+	});
+});
+</script>

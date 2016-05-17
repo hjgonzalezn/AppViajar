@@ -1,0 +1,99 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<br>
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p id="notice"><%= notice %></p>
+					</div>
+				<% end %>
+				<div class="tableWrapper">
+					<div class="section-header">
+						<h1>Sucursales de Empresas</h1>
+					</div>
+					
+					<table id="indexTable" class="stripe hover">
+  <thead>
+    <tr>
+      <th>Empresa</th>
+      <th>Ciudad</th>
+      <th>Nombre Sucursal</th>
+      <th>Telefono(s)</th>
+      <th>Tipo Sucursal</th>
+      <th>Estado</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sucursal_empresas.each do |sucursal_empresa| %>
+      <tr>
+      	<% empresa = Empresa.where(empr_documentoIdentidad: sucursal_empresa.empr_documentoIdentidad).take %>
+        <td><%= empresa.empr_nombreCorto %></td>
+        <% ciudad = EntidadTerritorial.find(sucursal_empresa.sucEmpr_ciudadDomicilio) %>
+        <td><%= ciudad.enter_nombreOficial %></td>
+        <td><%= sucursal_empresa.sucEmpr_nombreSucursal %></td>
+        <td><%= sucursal_empresa.sucEmpr_telefono1 + " - " + sucursal_empresa.sucEmpr_telefono2 %></td>
+        <td><%= @tiposSucursal[sucursal_empresa.sucEmpr_TipoSucursal] %></td>
+        <td><%= @estados[sucursal_empresa.sucEmp_estadoRegistro] %></td>
+					        		<td><%= link_to(sucursal_empresa, class:"btn btn-info") do %>
+					        				<i class="fa fa-book"></i>
+					        			<% end %>
+					        		</td>
+					        		<td><a href="<%= edit_sucursal_empresa_path(sucursal_empresa) %>" class="btn btn-warning">
+					        				<i class="fa fa-edit"></i>
+					        			</a>
+					        		</td>
+					        		<td>
+					        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/sucursal_empresas/#{sucursal_empresa.id}"%> >
+					        				<i class="fa fa-trash"></i>
+					        			</a>
+					        		</td>
+      							</tr>
+    						<% end %>
+  						</tbody>
+					</table>
+					<div class="section-footer">
+						<%= link_to 'Regresar', administracion_path , class:"button back" %>
+						<%= link_to 'Nuevo registro', new_sucursal_empresa_path, class:"button add" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script>
+
+	$(document).on('page:load', function() {
+			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
+			    table = $('#indexTable').DataTable();
+			}
+			else {
+			    table = $('#indexTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+		});
+		
+	$(function() {
+		
+		$('#indexTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "20%" },
+							{ sWidth : "20%" },
+							{ sWidth : "20%" },
+							{ sWidth : "10%" },
+							{ sWidth : "10%" },
+							{ sWidth : "10%" },
+							{ sWidth : "10%" }
+						]
+    		});
+    		
+			$( document ).trigger( "page:load" );
+	});
+</script>

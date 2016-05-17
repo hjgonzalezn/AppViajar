@@ -106,7 +106,7 @@ class EntidadTerritorialsController < ApplicationController
       @unidadesTerritoriales = UnidadTerritorial.where("undter_estadoRegistro = 'A'").order(:undter_nombre)
       @hshUnidadesTer = @unidadesTerritoriales.map{|h| [h.id, h.undter_nombre]}.to_h
       # Carga los continentes
-      @continentes = EntidadTerritorial.where("enter_nivel = 1 AND enter_estadoRegistro = 'A'")
+      @continentes = set_continentes
       # Carga la división territorial de un país, continente, etc.
       @division_pais = DivisionPai.where(divpais_estadoRegistro: :A)
       # Inicializando regiones

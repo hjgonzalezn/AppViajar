@@ -29,7 +29,8 @@
 						<div class="col-lg-9 col-md-9">
   							<p><%= @aeropuerto.aeropt_nombre %></p>
  							<p><%= @aeropuerto.aeropt_codigoIATA %></p>
- 							<p><%= @aeropuerto.aeropt_ciudadCdg %></p>
+ 							<% ciudad = @ciudadesColombia.find(@aeropuerto.aeropt_ciudadCdg) %>
+ 							<p><%= ciudad.enter_nombreOficial %></p>
  							<p><%= @estados[@aeropuerto.aeropt_estadoRegistro] %></p>
  							<p>&nbsp;</p>
 						</div>

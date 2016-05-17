@@ -1,0 +1,74 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-9 col-md-9" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Sucursal Empresa</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-3 col-md-3">
+							<p><strong>Docum. Identidad:</strong></p>
+							<p><strong>Sucursal:</strong></p>
+							<p><strong>Ciudad:</strong></p>
+							<p><strong>Direccion:</strong></p>
+							<p><strong>Teléfono 1:</strong></p>
+							<p><strong>Telefono 2:</strong></p>
+							<p><strong>Correo electrónico:</strong></p>
+							<p><strong>Contacto1:</strong></p>
+							<p><strong>Contacto2:</strong></p>
+							<p><strong>Tipo de sucursal:</strong></p>
+							<p><strong>Horario de atención:</strong></p>
+							<p><strong>Estado:</strong></p>
+						</div>
+						<div class="col-lg-9 col-md-9">
+							<p><%= @tiposDocumIdent[@sucursal_empresa.empr_documentoIdentidad[-2,2]] + " - " + @sucursal_empresa.empr_documentoIdentidad[0, @sucursal_empresa.empr_documentoIdentidad.length - 2] %></p>
+							<p><%= @sucursal_empresa.sucEmpr_nombreSucursal %>&nbsp;</p>
+							<% ciudad = EntidadTerritorial.find(@sucursal_empresa.sucEmpr_ciudadDomicilio)%>
+							<p><%= ciudad.enter_nombreOficial %></p>
+							<p><%= @sucursal_empresa.sucEmpr_direccion %></p>
+							<p><%= @sucursal_empresa.sucEmpr_telefono1 %></p>
+							<p><%= @sucursal_empresa.sucEmpr_telefono2 %>&nbsp;</p>
+							<p><%= @sucursal_empresa.sucEmpr_correoElectronico %>&nbsp;</p>
+							<% persona = Persona.where("pers_documentoIdentidad IN (?, ?)", @sucursal_empresa.sucEmpr_docIdentContacto1,  @sucursal_empresa.sucEmpr_docIdentContacto2) %>
+							<% if persona.nil? %>
+								<p>&nbsp;</p>
+							<% else %>
+								<% if persona.length > 0 then %>
+									<p><%= persona.first.pers_nombreCompleto %>&nbsp;</p>
+									<% if persona.first != persona.last then %>
+										<p><%= persona.last.pers_nombreCompleto %>&nbsp;</p>
+									<% else %>
+										<p>&nbsp;</p>
+									<% end %>
+								<% else %>
+									<p>&nbsp;</p>
+								<% end %>
+							<% end %>
+							<p><%= @tiposSucursal[@sucursal_empresa.sucEmpr_TipoSucursal] %></p>
+							<p><%= @sucursal_empresa.sucEmpr_horarioAtencion %>&nbsp;</p>
+							<p><%= @estados[@sucursal_empresa.sucEmp_estadoRegistro] %></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', sucursal_empresas_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_sucursal_empresa_path(@sucursal_empresa), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

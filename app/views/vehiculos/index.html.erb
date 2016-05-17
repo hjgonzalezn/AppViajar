@@ -1,0 +1,87 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<br>
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p id="notice"><%= notice %></p>
+					</div>
+				<% end %>
+				<div class="tableWrapper">
+					<div class="section-header">
+						<h1>Vehículos</h1>
+					</div>
+					
+					<table id="indexTable" class="stripe hover">
+					  <thead>
+					    <tr>
+					      <th>Tipo</th>
+					      <th>Modelo</th>
+					      <th>Propietario</th>
+					      <th>Peso Máximo</th>
+					      <th>Peso Pasajeros</th>
+					      <th>Carga Bodega</th>
+					      <th>Nro. pasajeros</th>
+					      <th>Estado</th>
+					      <th colspan="3"></th>
+					    </tr>
+					  </thead>
+					
+					  <tbody>
+					    <% @vehiculos.each do |vehiculo| %>
+					      <tr>
+					        <td><%= vehiculo.vehi_tipo %></td>
+					        <td><%= vehiculo.vehi_modeloCodigo %></td>
+					        <td><%= vehiculo.vehi_propietarioId %></td>
+					        <td><%= vehiculo.vehi_capacPesoMaximo %></td>
+					        <td><%= vehiculo.vehi_capacPesoPasajeros %></td>
+					        <td><%= vehiculo.vehi_capacCargaBodega %></td>
+					        <td><%= vehiculo.vehi_capacPasajeros %></td>
+					        <td><%= @estados[vehiculo.vehi_estadoRegistro] %></td>
+					        <td><%= link_to 'Show', vehiculo %></td>
+					        <td><%= link_to 'Edit', edit_vehiculo_path(vehiculo) %></td>
+					        <td><%= link_to 'Destroy', vehiculo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+					      </tr>
+					    <% end %>
+					  </tbody>
+					</table>
+					<div class="section-footer">
+						<%= link_to 'Regresar', administracion_path , class:"button back" %>
+						<%= link_to 'Nuevo registro', new_vehiculo_path, class:"button add" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script>
+
+	$(document).on('page:load', function() {
+			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
+			    table = $('#indexTable').DataTable();
+			}
+			else {
+			    table = $('#indexTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+		});
+		
+	$(function() {
+		$('#indexTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "10%" },
+							{ sWidth : "10%" },
+							{ sWidth : "30%" },
+							{ sWidth : "10%" },
+							{ sWidth : "10%" },
+							{ sWidth : "10%" },
+							{ sWidth : "10%" },
+							{ sWidth : "10%" }
+						]
+    		});
+	});
+</script>
