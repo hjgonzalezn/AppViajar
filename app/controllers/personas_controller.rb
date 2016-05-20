@@ -1,7 +1,11 @@
 class PersonasController < ApplicationController
+  include PersonasHelper
+  include EmpresasHelper
+  include EntidadTerritorialsHelper
+  
   before_action :set_persona, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
-  before_action :initialize_vars, only: [:new, :edit]
+  before_action :initialize_vars, only: [:new, :edit, :show]
   
   # GET /personas
   # GET /personas.json
@@ -12,11 +16,12 @@ class PersonasController < ApplicationController
   # GET /personas/1
   # GET /personas/1.json
   def show
+    @ciudadDomicilio = @ciudadesColombia.select{|h| h.id == @persona.pers_ciudadDomicilio}.map{|j| j.enter_nombreCorto}.pop
   end
 
   # GET /personas/new
   def new
-    @titulo = "Nueva Persona"
+    @titulo = "Registrar Persona"
     @persona = Persona.new
   end
 
@@ -72,11 +77,25 @@ class PersonasController < ApplicationController
     end
     
     def initialize_vars
+      @tiposIdentPersona = set_tipos_id_persona
+      @tiposIdentEmpresa = set_tipos_id_empresa
+      @generos = set_generos_persona
+      @estadosCiviles = set_estados_civiles
+      @perfilesLaborales = set_perfiles_laborales
+      @ciudadesColombia = set_ciudades_colombia
+      @paises = set_paises
       
+      if params[:action] == "edit" || params[:action] == "show" then 
+        @sucursal = SucursalEmpresa.find(@persona.sucursalEmpresaId)
+        @empresa = Empresa.where(empr_documentoIdentidad: @sucursal.empr_documentoIdentidad).take
+        
+          @sucursales = set_sucursales_empresa(@empresa.empr_documentoIdentidad)
+          @sucursales = @sucursales.map{|h| [h.sucEmpr_nombreSucursal, h.id]}.to_h
+        end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def persona_params
-      params.require(:persona).permit(:pers_documentoIdentidad, :pers_nombreCompleto, :pers_alias, :pers_sexo, :pers_fechaNacimiento, :pers_estadoCivil, :pers_direccionDomicilio, :pers_ciudadDomicilio, :pers_telefonoPersonal1, :pers_telefonoPersonal2, :pers_correoElectrPersonal, :pers_correoElectrLaboral, :pers_perfilLaboral, :sucursalEmpresaId, :empresaCargo, :pers_telefonoLaboral1, :pers_telefonoLaboral2, :pers_estadoRegistro)
+      params.require(:persona).permit(:pers_documentoIdentidad, :pers_nombres, :pers_apellidos, :pers_alias, :pers_sexo, :pers_paisOrigen, :pers_fechaNacimiento, :pers_estadoCivil, :pers_direccionDomicilio, :pers_ciudadDomicilio, :pers_telefonoPersonal1, :pers_telefonoPersonal2, :pers_correoElectrPersonal, :pers_correoElectrLaboral, :pers_perfilLaboral, :sucursalEmpresaId, :empresaCargo, :pers_telefonoLaboral1, :pers_telefonoLaboral2, :pers_estadoRegistro)
     end
 end

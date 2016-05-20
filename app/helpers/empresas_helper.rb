@@ -8,4 +8,8 @@ module EmpresasHelper
       
       return tiposIdentEmpresa
   end
+  
+  def set_sucursales_empresa(empr_documentoIdentidad)
+    sucursales_empresa = SucursalEmpresa.where("empr_documentoIdentidad = ? AND sucEmp_estadoRegistro = 'A'", empr_documentoIdentidad)
+  end
 end

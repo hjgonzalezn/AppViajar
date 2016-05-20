@@ -52,19 +52,23 @@ module EntidadTerritorialsHelper
       entidadTerr = EntidadTerritorial.find(enter_id)
       
       if flag then # incluir al hijo en la ruta de entidades territoriales
-        arrNombres << entidadTerr.enter_nombreOficial + " |"
+        arrNombres << entidadTerr.enter_nombreCorto + " |"
       end
       
       while entidadTerr.enter_nivel > 1
         entidadTerr = EntidadTerritorial.find(entidadTerr.enter_padreId)
-        arrNombres << entidadTerr.enter_nombreOficial + " |"
+        arrNombres << entidadTerr.enter_nombreCorto + " |"
       end
       parentalPath = arrNombres.reverse
       return parentalPath
     end
     
+    def set_paises
+      paises = EntidadTerritorial.where("enter_nivel = 2 AND enter_estadoRegistro = 'A'")
+    end
+    
     def set_ciudades_colombia
-      ciudadesCol = EntidadTerritorial.joins("INNER JOIN entidad_territorials E1 ON entidad_territorials.enter_padreId = E1.id INNER JOIN entidad_territorials E2 ON E1.enter_padreId = E2.id").where("E2.id = 3 AND E2.enter_estadoRegistro = 'A' AND E1.enter_estadoRegistro = 'A'")
+      ciudadesCol = EntidadTerritorial.joins("INNER JOIN entidad_territorials E1 ON entidad_territorials.enter_padreId = E1.id INNER JOIN entidad_territorials E2 ON E1.enter_padreId = E2.id").where("E2.id = 3 AND E2.enter_estadoRegistro = 'A' AND E1.enter_estadoRegistro = 'A'").order(:enter_nombreCorto)
     end
     
 end

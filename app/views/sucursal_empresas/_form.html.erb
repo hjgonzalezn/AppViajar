@@ -69,7 +69,7 @@
 			    		<% persona = Persona.where(pers_documentoIdentidad: @sucursal_empresa.sucEmpr_docIdentContacto1).take %>
 			    		<% tipoDocumPersona = persona.pers_documentoIdentidad[-2,2]%>
 			    		<% nroDocumPersona = persona.pers_documentoIdentidad[0, persona.pers_documentoIdentidad.length - 2] %>
-			    		<% nombrePersona = persona.pers_nombreCompleto %>
+			    		<% nombrePersona = persona.pers_nombres + " " + persona.pers_apellidos  %>
 			    	<% end %>
 			    	
 			    	<%= f.label :sucEmpr_docIdentContacto1, "Contacto 1" %><br>
@@ -136,20 +136,17 @@
 
 <script>
 	$(function(){
-		 $( document ).trigger( "page:load" );
+		 $( document ).trigger( "page:update" );
 		 $("#parents_path").val(<%= @parentalPath %>);
 	});
 	
-	$(document).on('page:load', function() {
-		
-		// $("#empr_tipoIdent").focus(function(){
-			// arrNombres = $("#parents_path").val();
-			// arrNombres = arrNombres.split("|");
-			// $("#ciudadDomicilio").val(arrNombres[arrNombres.length - 2].trim());
-		// });
+	$(document).on('page:update', function() {
 		
 		$("#empr_numeroIdent").blur(function(){
 			var documIdentEmpresa;
+			var hshDatosControl = new Object();
+			hshDatosControl["razon_social"] = "empr_razonSocial";
+			
 			if ($("#empr_numeroIdent").val() != "" && $("#empr_tipoIdent option:selected").val() != "") {
 				documIdentEmpresa = $(this).val() +  $("#empr_tipoIdent option:selected").val();
 				$("#sucursal_empresa_empr_documentoIdentidad").val(documIdentEmpresa);
@@ -157,8 +154,7 @@
 						url: "<%= buscar_datos_empresa_path %>",
 						data: {
 								id: documIdentEmpresa,
-								dato_requerido:"razon_social",
-								nombre_control:"empr_razonSocial"
+								datos_control: hshDatosControl
 					  		  },
 						dataType: "script",
 						success: function(){

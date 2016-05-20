@@ -18,19 +18,19 @@
 		<div id="tm-form-content">
 		  	<div class="form-group">
 			    <%= f.label :entidad_territorial_id, "País*" %><br>
-			    <%= f.select(:entidad_territorial_id, @entidadesTerritoriales.select{|h| h.enter_nivel == 2}.map{|reg| [reg.enter_nombreOficial, reg.id]}, prompt:"-- SELECCIONE --") %>
+			    <%= f.select(:entidad_territorial_id, @entidadesTerritoriales.select{|h| h.enter_nivel == 2}.map{|reg| [reg.enter_nombreOficial, reg.id]}, {}, options_html={class:"form-control", prompt: "-- SELECCIONE --"}) %>
 			</div>
 			<div class="form-group">
 			    <%= f.label :unidad_territorial_id, "Unidad Territorial*" %><br>
-			    <%= f.select(:unidad_territorial_id, @unidadesTerritoriales.map{|reg| [reg.undter_nombre, reg.id]}, prompt: "-- SELECCIONE --") %>
+			    <%= f.select(:unidad_territorial_id, @unidadesTerritoriales.map{|reg| [reg.undter_nombre, reg.id]}, {}, options_html={class:"form-control", prompt: "-- SELECCIONE --"}) %>
 			</div>
 		 	<div class="form-group">
 			    <%= f.label :divpais_nivel, "Nivel*" %><br>
-			    <%= f.number_field :divpais_nivel %>
+			    <%= f.number_field :divpais_nivel, options={class:"form-control"} %>
 			</div>
 			<div class="form-group">
 			    <%= f.label :divpais_estadoRegistro, "Estado*" %><br>
-			    <%= f.select(:divpais_estadoRegistro, options_for_select(@estados.invert)) %>			    
+			    <%= f.select(:divpais_estadoRegistro, options_for_select(@estados.invert), {}, options_html={class:"form-control", prompt: "-- SELECCIONE --"}) %>			    
 			</div>
 		</div>
 		<div id="tm-form-footer">

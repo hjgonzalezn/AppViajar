@@ -17,86 +17,145 @@
 		</div>
 		<div id="tm-form-content">
 			<div class="col-lg-6 col-md-6">
-				<div class="form-group">
-    				<%= f.label :pers_documentoIdentidad, "Docum. Identidad" %><br>
-    				<%= f.text_field :pers_documentoIdentidad %>
+				<div class="col-lg-6 col-md-6">
+					<div class="form-group">
+						<% pers_tipoIdentidad = nil %>
+						<% pers_numeroIdentidad = nil %>
+						
+						<% unless @persona.pers_documentoIdentidad.nil? %>
+							<% pers_tipoIdentidad = @persona.pers_documentoIdentidad[-2, 2] %>
+							<% pers_numeroIdentidad = @persona.pers_documentoIdentidad[0, @persona.pers_documentoIdentidad.length - 2] %>
+						<% end %>
+	    				<%= f.label :tipoDocumentoIdentidad, "Tipo. Docum. Identidad*" %><br>
+	    				<%= select_tag(:tipoIdentificacion, options_for_select(@tiposIdentPersona.invert, pers_tipoIdentidad), options={class:"form-control", prompt: "-- TIPO DOC. IDENT --"})%> 
+	    				<%= f.hidden_field :pers_documentoIdentidad %>
+	    			</div>
+    				<div class="form-group">
+    					<%= f.label :pers_nombres, "Nombres*" %><br>
+    					<%= f.text_field :pers_nombres, options={class:"form-control", size: 25, maxlength: 30, required: :required} %> 
+  					</div>
+  					<div class="form-group">
+  						<%= f.label :pers_alias, "Alias" %>
+  						<%= f.text_field :pers_alias, options={size: 25, maxlength: 30, class:"form-control"} %>
+  					</div>
+			  		<div class="form-group">
+			    		<%= f.label :pers_sexo, "Sexo*" %><br>
+			    		<%= f.select :pers_sexo, options_for_select(@generos.invert, @persona.pers_sexo), {}, html_options={class:"form-control", prompt: "-- SELECCIONE --"} %>
+			  		</div>
+			  		<div class="form-group">
+			    		<%= f.label :pers_paisOrigen, "País de origen" %><br>
+			    		<%= f.select :pers_paisOrigen, options_for_select(@paises.map{|h| [h.enter_nombreCorto, h.id]}, @persona.pers_paisOrigen), {}, html_options={class:"form-control", prompt:"-- SELECCIONE --"} %>
+			  		</div>
+		  			<div class="form-group">
+		    			<%= f.label :pers_telefonoPersonal1, "Teléfono Personal 1" %><br>
+		    			<%= f.text_field :pers_telefonoPersonal1, options={class:"form-control"} %>
+		  			</div>
   				</div>
-  				<div class="field">
-    				<%= f.label :pers_nombreCompleto, "Nombre Completo" %><br>
-    				<%= f.text_field :pers_nombreCompleto, options={size: 60, maxlength: 60} %>
+  				<div class="col-lg-6 col-md-6">
+  					<div class="form-group">
+  						<%= f.label :numeroIdentificacion, "Nro. Docum. Identidad*" %><br>
+  						<%= text_field_tag(:numeroIdentificacion, pers_numeroIdentidad, options={class:"form-control", maxlength: 20, required: :required}) %>
+  					</div>
+  					<div class="form-group">
+  						<%= f.label :pers_apellidos, "Apellidos*"%>
+  						<%= f.text_field :pers_apellidos, options={class:"form-control", size: 25, maxlength: 30, required: :required} %>
+  					</div>
+  					<div class="form-group">
+  						<%= f.label :pers_fechaNacimiento, "Fecha de Nacimiento" %>
+		                <div class='input-group date' id='datetimepicker1'>
+	                		<%= f.text_field :pers_fechaNacimiento, options = {class:"form-control"} %>
+	                    	<span class="input-group-addon">
+	                        	<span class="fa fa-calendar"></span>
+	                    	</span>
+	                	</div>  						
+  					</div>
+			  		<div class="form-group">
+			    		<%= f.label :pers_estadoCivil, "Estado Civil*" %><br>
+			    		<%= f.select :pers_estadoCivil, options_for_select(@estadosCiviles.invert, @persona.pers_estadoCivil), {}, html_options={class:"form-control", prompt: "-- SELECCIONE --"} %>
+			  		</div>
+			  		<div class="form-group">
+			    		<%= f.label :pers_ciudadDomicilio, "Ciudad Domicilio (Colombia)" %><br>
+			    		<%= f.select :pers_ciudadDomicilio, options_for_select(@ciudadesColombia.map{|h| [h.enter_nombreCorto, h.id]}, @persona.pers_ciudadDomicilio), {}, html_options={class:"form-control", prompt: "-- SELECCIONE --"} %>
+			  		</div>
+			  		<div class="form-group">
+			    		<%= f.label :pers_telefonoPersonal2, "Teléfono Personal 2" %><br>
+			    		<%= f.text_field :pers_telefonoPersonal2, options={class:"form-control"}%>
+			  		</div>
   				</div>
-		  		<div class="field">
-		    		<%= f.label :pers_alias, "Alias" %><br>
-		    		<%= f.text_field :pers_alias, options={size: 30, maxlength: 30} %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_sexo, "Sexo" %><br>
-		    		<%= f.text_field :pers_sexo %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_fechaNacimiento, "Fecha de Nacimiento" %><br>
-		    		<%= f.date_select :pers_fechaNacimiento %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_estadoCivil, "Estado Civil" %><br>
-		    		<%= f.text_field :pers_estadoCivil %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_direccionDomicilio, "Dirección Domicilio" %><br>
-		    		<%= f.text_field :pers_direccionDomicilio, options={size: 60, maxlength: 60} %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_ciudadDomicilio, "Ciudad Domicilio" %><br>
-		    		<%= f.number_field :pers_ciudadDomicilio %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_telefonoPersonal1, "Teléfono Personal 1" %><br>
-		    		<%= f.text_field :pers_telefonoPersonal1 %>
-		  		</div>
+  				<div class="col-lg-12 col-md-12">
+			  		<div class="form-group">
+			    		<%= f.label :pers_direccionDomicilio, "Dirección Domicilio" %><br>
+			    		<%= f.text_field :pers_direccionDomicilio, options={class:"form-control", size: 60, maxlength: 60} %>
+			  		</div>
+	
+			  		<div class="form-group">
+			    		<%= f.label :pers_correoElectrPersonal, "Correo Electrónico Personal" %><br>
+			    		<%= f.text_field :pers_correoElectrPersonal, options={class:"form-control", size: 60, maxlength: 60} %>
+			  		</div>
+			  	</div>
 			</div>
 			<div class="col-lg-6 col-md-6">
-		  		<div class="field">
-		    		<%= f.label :pers_telefonoPersonal2, "Teléfono Personal 2" %><br>
-		    		<%= f.text_field :pers_telefonoPersonal2 %>
+				<div class="col-lg-12 col-md-12">
+			  		<div class="form-group">
+			    		<%= f.label :pers_perfilLaboral, "Perfil Laboral" %><br>
+			    		<%= f.select :pers_perfilLaboral, options_for_select(@perfilesLaborales.invert, @persona.pers_perfilLaboral), {}, html_options={class:"form-control", prompt: "-- SELECCIONE --"} %>
+			  		</div>
+			  	</div>
+			  	<div class="col-lg-6 col-md-6">
+			  		<div class="form-group">
+					    <% tipoDocumEmpresa = @empresa == nil ? @empresa : @empresa.empr_documentoIdentidad[-2, 2] %>
+					    <% nroDocumEmpresa = @empresa == nil ? @empresa : @empresa.empr_documentoIdentidad[0, @empresa.empr_documentoIdentidad.length - 2] %>
+					    <% razonSocialEmpr = @empresa == nil ? @empresa : @empresa.empr_nombreCorto %>
+			    		<%= label_tag :empr_tipoIdent, "Tipo Docum. Identidad" %><br>
+					    <%= select_tag(:empr_tipoIdent, options_for_select(@tiposIdentEmpresa.invert, tipoDocumEmpresa), options={class:"form-control", prompt: "-- TIPO DOC. IDENT --"}) %>
+			  		</div>
+			  	</div>
+			  	<div class="col-lg-6 col-md-6">
+			  		<div class="form-group">
+			  			<%= label_tag :empr_numeroIdent, "Nro Docum. Identidad" %><br>
+					    <%= text_field_tag(:empr_numeroIdent, nroDocumEmpresa, options={class:"form-control", placeholder: "Nro de identificación"}) %> <p>&nbsp;</p>
+			  		</div>
 		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_correoElectrPersonal, "Correo Electrónico Personal" %><br>
-		    		<%= f.text_field :pers_correoElectrPersonal, options={size: 60, maxlength: 60} %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_correoElectrLaboral, "Correo Electrónico Laboral" %><br>
-		    		<%= f.text_field :pers_correoElectrLaboral, options={size: 60, maxlength: 60} %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_perfilLaboral, "Perfil Laboral" %><br>
-		    		<%= f.text_field :pers_perfilLaboral %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :sucursalEmpresaId, "Sucursal Empresa" %><br>
-		    		<%= f.number_field :sucursalEmpresaId %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :empresaCargo, "Cargo" %><br>
-		    		<%= f.text_field :empresaCargo %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_telefonoLaboral1, "Teléfono Laboral 1" %><br>
-		    		<%= f.text_field :pers_telefonoLaboral1 %>
-		  		</div>
-		 	 	<div class="field">
-		    		<%= f.label :pers_telefonoLaboral2, "Teléfono Laboral 2" %><br>
-		    		<%= f.text_field :pers_telefonoLaboral2 %>
-		  		</div>
-		  		<div class="field">
-		    		<%= f.label :pers_estadoRegistro, "Estado" %><br>
-		    		<%= f.text_field :pers_estadoRegistro %>
-		  		</div>
+		  		<div class="col-lg-12 col-md-12">
+			  		<div class="form-group">
+			  			<%= text_field_tag(:empr_razonSocial, razonSocialEmpr, options={class:"form-control", placeholder:"Razón Social", size: 60, readonly: true}) %><br>
+			  			<% sucursales = @sucursales == nil ? [["-- SELECCIONE --",""]] : @sucursales %>
+			    		<%= f.label :sucursalEmpresaId, "Sucursal Empresa" %><br>
+			    		<%= f.select :sucursalEmpresaId, options_for_select(sucursales, @persona.sucursalEmpresaId), {}, html_options={class:"form-control"} %>
+			  		</div>
+			  		<div class="form-group">
+			    		<%= f.label :empresaCargo, "Cargo" %><br>
+			    		<%= f.text_field :empresaCargo, options={class:"form-control", size: 60, maxlength: 60} %>
+			  		</div>
+			  	</div>
+		  		<div class="col-lg-6 col-md-6">
+			  		<div class="form-group">
+			    		<%= f.label :pers_telefonoLaboral1, "Teléfono Laboral 1" %><br>
+			    		<%= f.text_field :pers_telefonoLaboral1, options={class:"form-control"} %> 
+			  		</div>
+			  	</div>
+			  	<div class="col-lg-6 col-md-6">
+			  		<div class="form-group">
+			    		<%= f.label :pers_telefonoLaboral2, "Teléfono Laboral 2" %><br>
+			    		<%= f.text_field :pers_telefonoLaboral2, options={class:"form-control"} %>
+			  		</div>
+			  	</div>		  		
+			  	<div class="col-lg-12 col-md-12">
+			  		<div class="form-group">
+			    		<%= f.label :pers_correoElectrLaboral, "Correo Electrónico Laboral" %><br>
+			    		<%= f.text_field :pers_correoElectrLaboral, options={class:"form-control", size: 60, maxlength: 60} %>
+			  		</div>
+			  		<div class="form-group">
+			    		<%= f.label :pers_estadoRegistro, "Estado*" %><br>
+			    		<%= f.select :pers_estadoRegistro, options_for_select(@estados.invert), {}, html_options={class:"form-control"} %>
+			  		</div>
+			  	</div>
 		  	</div>
   		</div>
 		<div id="tm-form-footer">
 			<div class="actions">
 				<script>
-					$(document).on('page:load', function() {
+					$(document).on('page:update', function() {
 						$("#cmd_aceptar").click(function(e){
 							<% if params[:action] == "edit" then %>
 								$('#<%= params[:action] %>_persona_<%= @persona.id %>').submit();
@@ -119,6 +178,44 @@
 <% end %>
 <script>
 	$(function(){
-		 $( document ).trigger( "page:load" );
+		 $( document ).trigger( "page:update" );
+	});
+	
+	$(document).on('page:update', function() {
+		
+		$('.date').datetimepicker({
+            	format: 'YYYY-MM-DD'            	
+        });
+		
+		$("#numeroIdentificacion").blur(function(){
+			documIdentPersona = $(this).val() +  $("#tipoIdentificacion option:selected").val();
+			$("#persona_pers_documentoIdentidad").val(documIdentPersona);
+		});
+		
+		$("#empr_numeroIdent").blur(function(){
+			var documIdentEmpresa;
+			var hshDatosControl = new Object();
+			hshDatosControl["razon_social"] = "empr_razonSocial";
+			hshDatosControl["sucursales_empresa"] = "persona_sucursalEmpresaId";
+			
+			if ($("#empr_numeroIdent").val() != "" && $("#empr_tipoIdent option:selected").val() != "") {
+				documIdentEmpresa = $(this).val() +  $("#empr_tipoIdent option:selected").val();
+				$("#sucursal_empresa_empr_documentoIdentidad").val(documIdentEmpresa);
+				
+				$.ajax({
+						url: "<%= buscar_datos_empresa_path %>",
+						data: {
+								id: documIdentEmpresa,
+								datos_control: hshDatosControl
+					  		  },
+						dataType: "script",
+						complete: function(){
+						}
+				});
+			}
+		});
+		
 	});
 </script>
+
+

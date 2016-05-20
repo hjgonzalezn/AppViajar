@@ -6,7 +6,7 @@
 	<% entidadPadre = EntidadTerritorial.find(idPadre) %>
 	$("#entidad_territorial_enter_nivel").val("<%= entidadPadre.enter_nivel + 1 %>");
 	
-	<% @entidadesTerritoriales = EntidadTerritorial.select("id codigo, enter_nombreOficial descripcion").where("enter_padreId = #{params[:enter_padre_id]}").order(:enter_nombreOficial) %>
+	<% @entidadesTerritoriales = EntidadTerritorial.select("id codigo, enter_nombreCorto descripcion").where("enter_padreId = #{params[:enter_padre_id]}").order(:enter_nombreOficial) %>
 	<% if @entidadesTerritoriales.size > 0 then %>
 		<% @entidadesTerritoriales = @entidadesTerritoriales.map{|a| [a.descripcion, a.codigo]}.insert(nil.to_f, "-- SELECCIONE --") %>
 		$("#<%= params[:control_id] %>").html("<%= escape_javascript(options_for_select(@entidadesTerritoriales)) %>");

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516001725) do
+ActiveRecord::Schema.define(version: 20160518225117) do
 
   create_table "aeropuertos", force: :cascade do |t|
     t.string   "aeropt_nombre",         limit: 255
@@ -68,11 +68,12 @@ ActiveRecord::Schema.define(version: 20160516001725) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.string   "enter_codigoOficial",  limit: 255
+    t.string   "enter_codigoISO",      limit: 255
+    t.string   "enter_nombreCorto",    limit: 255
   end
 
   create_table "personas", force: :cascade do |t|
     t.string   "pers_documentoIdentidad",   limit: 255
-    t.string   "pers_nombreCompleto",       limit: 255
     t.string   "pers_alias",                limit: 255
     t.string   "pers_sexo",                 limit: 255
     t.date     "pers_fechaNacimiento"
@@ -91,7 +92,13 @@ ActiveRecord::Schema.define(version: 20160516001725) do
     t.string   "pers_estadoRegistro",       limit: 255
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.integer  "entidad_territorials_id",   limit: 4
+    t.string   "pers_apellidos",            limit: 255
+    t.string   "pers_nombres",              limit: 255
+    t.integer  "pers_paisOrigen",           limit: 4
   end
+
+  add_index "personas", ["pers_paisOrigen"], name: "fk_rails_ef4b3c4b9d", using: :btree
 
   create_table "regions", force: :cascade do |t|
     t.string   "reg_nombre",                 limit: 255
@@ -144,4 +151,5 @@ ActiveRecord::Schema.define(version: 20160516001725) do
     t.datetime "updated_at",                             null: false
   end
 
+  add_foreign_key "personas", "entidad_territorials", column: "pers_paisOrigen"
 end

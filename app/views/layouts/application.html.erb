@@ -71,7 +71,7 @@
 				    <div class="tm-banner-inner">
 						<h1 class="tm-banner-title">Encuentra <span class="tm-yellow-text">El Mejor</span> Lugar</h1>
 						<p class="tm-banner-subtitle">Para tus vacaciones</p>
-						<a href="#more" class="tm-banner-link">Leer Más</a>	
+						<a href="#spin-1" class="tm-banner-link">Leer Más</a>	
 					</div>
 					<%= image_tag("slideshow/banner-1.jpg", alt: "Bahía Solano") %>	
 			    </li>
@@ -97,6 +97,22 @@
 	<% end %>
 <%= yield %>
 
+			<!--  LOADING  -->
+			<div id="cargando">
+				<div class='loading spin-1'>
+				  <div class='loading spin-2'>
+				    <div class='loading spin-3'>
+				      <div class='loading spin-4'>
+				        <div class='loading spin-5'>
+				          <div class='loading spin-6'></div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<!--  END LOADING -->
+			
 	<hr class="vivo">
 	<footer class="tm-blue-bg">
 		<div class="container">
@@ -167,10 +183,18 @@
 	</footer>
 	
 		<script>
+
+		$(document).on("page:fetch", function(){
+		  $("#cargando").show();
+		});
+		
+		$(document).on("page:update", function(){
+		  $("#cargando").hide();
+		});
 		
 		// HTML document is loaded. DOM is ready.
 		$(function() {
-    		
+
 			$('#hotelCarTabs a').click(function (e) {
 			  e.preventDefault()
 			  $(this).tab('show')
@@ -189,17 +213,31 @@
 			      }
 			    }
 		  	});
+
 		});
 		
 		// Load Flexslider when everything is loaded.
 		$(window).load(function() {	  		
-
+			
 			//	For images only
 		    $('.flexslider').flexslider({
 			    controlNav: false,
 			    prevText: "",           //String: Set the text for the "previous" directionNav item
 				nextText: ""               //String: Set the text for the "next" directionNav item
 		    });
+		    	    
+	  	});
+	  	
+	  	$(document).ajaxSend(function(){
+	  		$("#cargando").show();
+	  	});
+	  	
+	  	$(document).ajaxStop(function(){
+	  		$("#cargando").hide();
+	  	});
+	  	
+		$(document).ajaxComplete(function(){
+	  		$("#cargando").hide();
 	  	});
 	</script>
 	

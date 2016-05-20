@@ -20,7 +20,8 @@
 					</div>
 					<div id="tm-form-content">
 						<div class="col-lg-3 col-md-3">
-						<p><strong>Docum. Identidad:</strong></p>
+						<p><strong>Tipo Docum. Identidad:</strong></p>
+						<p><strong>Nro. Docum. Identidad:</strong></p>
 						<p><strong>Nombre Completo:</strong></p>
 						<p><strong>Alias:</strong></p>
 						<p><strong>Sexo:</strong></p>
@@ -41,20 +42,21 @@
 						<p><strong>Estado:</strong></p>
 						</div>
 						<div class="col-lg-9 col-md-9">
-						<p><%= @persona.pers_documentoIdentidad %></p>
-						<p><%= @persona.pers_nombreCompleto %></p>
+						<p><%= @tiposIdentPersona[@persona.pers_documentoIdentidad[-2, 2]] %></p>
+						<p><%= @persona.pers_documentoIdentidad[0, @persona.pers_documentoIdentidad.length - 2]  %></p>
+						<p><%= @persona.pers_nombres + " " + @persona.pers_apellidos %></p>
 						<p><%= @persona.pers_alias %></p>
-						<p><%= @persona.pers_sexo %>&nbsp;</p>
+						<p><%= @generos[@persona.pers_sexo] %>&nbsp;</p>
 						<p><%= @persona.pers_fechaNacimiento %>&nbsp;</p>
-						<p><%= @persona.pers_estadoCivil %>&nbsp;</p>
+						<p><%= @estadosCiviles[@persona.pers_estadoCivil] %>&nbsp;</p>
 						<p><%= @persona.pers_direccionDomicilio %>&nbsp;</p>
-						<p><%= @persona.pers_ciudadDomicilio %>&nbsp;</p>
+						<p><%= @ciudadDomicilio %>&nbsp;</p>
 						<p><%= @persona.pers_telefonoPersonal1 %>&nbsp;</p>
 						<p><%= @persona.pers_telefonoPersonal2 %>&nbsp;</p>
 						<p><%= @persona.pers_correoElectrPersonal %>&nbsp;</p>
-						<p><%= @persona.pers_perfilLaboral %>&nbsp;</p>
-						<p><%= @persona.sucursalEmpresaId %>&nbsp;</p>
-						<p><%= @persona.sucursalEmpresaId %>&nbsp;</p>
+						<p><%= @perfilesLaborales[@persona.pers_perfilLaboral] %>&nbsp;</p>
+						<p><%= @empresa.empr_nombreCorto %>&nbsp;</p>
+						<p><%= @sucursal.sucEmpr_nombreSucursal %>&nbsp;</p>
 						<p><%= @persona.empresaCargo %>&nbsp;</p>
 						<p><%= @persona.pers_telefonoLaboral1 %>&nbsp;</p>
 						<p><%= @persona.pers_telefonoLaboral2 %>&nbsp;</p>

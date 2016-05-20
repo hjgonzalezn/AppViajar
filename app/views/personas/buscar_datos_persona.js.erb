@@ -4,7 +4,7 @@
 	<% unless persona.nil? %>
 		<% case params[:dato_requerido] %>
 			<% when "nombre" %>
-				varDatoPersona = "<%= persona.pers_nombreCompleto %>";
+				varDatoPersona = "<%= persona.pers_nombres + " " + persona.pers_apellidos %>";
 		<% end %>
 		$("#<%= params[:nombre_control]%>").val(varDatoPersona);
 	<% end %>

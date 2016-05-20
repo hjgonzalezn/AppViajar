@@ -344,7 +344,7 @@
 			    controlNav: false,
 			    prevText: "",           //String: Set the text for the "previous" directionNav item
 				nextText: ""               //String: Set the text for the "next" directionNav item
-		    });
+		    });		    
 		});
 		
 		$(function() {
@@ -354,6 +354,7 @@
             	minDate: moment()
             	
             });
+                      
             $('.date-time').datetimepicker();
             $("#txtFechaIda").val("");
             $("#txtFechaRegreso").val("");
@@ -394,6 +395,7 @@
 	           }
 	           
 	           $("#frmReservarVuelo").submit();
+	           
 	     	});
 	   });
 	</script>

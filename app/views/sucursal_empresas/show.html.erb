@@ -47,9 +47,9 @@
 								<p>&nbsp;</p>
 							<% else %>
 								<% if persona.length > 0 then %>
-									<p><%= persona.first.pers_nombreCompleto %>&nbsp;</p>
+									<p><%= persona.first.pers_nombres + " " + persona.first.pers_apellidos %>&nbsp;</p>
 									<% if persona.first != persona.last then %>
-										<p><%= persona.last.pers_nombreCompleto %>&nbsp;</p>
+										<p><%= persona.last.pers_nombres + " " + persona.last.pers_apellidos %>&nbsp;</p>
 									<% else %>
 										<p>&nbsp;</p>
 									<% end %>

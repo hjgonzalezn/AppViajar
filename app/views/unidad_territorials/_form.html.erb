@@ -16,11 +16,11 @@
 		<div id="tm-form-content">
 		  	<div class="form-group">
 			    <%= f.label :undter_nombre, "Nombre*" %><br>
-			    <%= f.text_field :undter_nombre, size:60 %>
+			    <%= f.text_field :undter_nombre, options={class:"form-control", size:60} %>
 			</div>
 			<div class="form-group">
 				<%= f.label :undter_estadoRegistro, "Estado Registro*" %><br>
-			    <%= f.text_field :undter_estadoRegistro %>
+			    <%= f.select(:undter_estadoRegistro, options_for_select(@estados.invert), {}, options_html={class:"form-control"}) %>
 			</div>
   		</div>
 		<div id="tm-form-footer">
