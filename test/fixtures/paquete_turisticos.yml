@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pqTur_nombre: MyString
+  pqTur_descripcion: MyString
+  pqTur_incluye: MyText
+  pqTur_noIncluye: MyText
+  pqTur_opcionales: MyText
+  pqTur_recomendaciones: MyText
+  pqTur_fechaVigenciaIni: 2016-05-31
+  pqTur_fechaVigenciaFin: 2016-05-31
+  pqTur_fechaPromocionIni: 2016-05-31
+  pqTur_fechaPromocionFin: 2016-05-31
+  pqTur_estadoRegistro: MyString
+
+two:
+  pqTur_nombre: MyString
+  pqTur_descripcion: MyString
+  pqTur_incluye: MyText
+  pqTur_noIncluye: MyText
+  pqTur_opcionales: MyText
+  pqTur_recomendaciones: MyText
+  pqTur_fechaVigenciaIni: 2016-05-31
+  pqTur_fechaVigenciaFin: 2016-05-31
+  pqTur_fechaPromocionIni: 2016-05-31
+  pqTur_fechaPromocionFin: 2016-05-31
+  pqTur_estadoRegistro: MyString

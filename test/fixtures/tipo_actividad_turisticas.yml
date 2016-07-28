@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tiAcT_nombre: MyString
+  tiAcT_descripcion: MyString
+  tiAcT_foto: MyString
+  tiAcT_icono: MyString
+
+two:
+  tiAcT_nombre: MyString
+  tiAcT_descripcion: MyString
+  tiAcT_foto: MyString
+  tiAcT_icono: MyString

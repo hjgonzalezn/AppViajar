@@ -1,0 +1,230 @@
+<%= form_for(@viaje) do |f| %>
+	<% if @viaje.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@viajes.errors.count, "error") %> prohibited this viaje from being saved:</h2>
+      		<ul>
+      			<% @viaje.errors.full_messages.each do |message| %>
+        			<li><%= message %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+ 	<% end %>
+	
+	<div class="col-lg-11 col-md-11" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+			<div class="col-lg-6 col-md-6">
+				<div class="form-group">
+					<label>Tipo de viaje*</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label class="tm-label-radio"><input type="radio" name="optTipoViaje" value="AÉREO"> Aéreo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label class="tm-label-radio"><input type="radio" name="optTipoViaje" value="TERRESTRE"> Terrestre</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label class="tm-label-radio"><input type="radio" name="optTipoViaje" value="ACUÁTICO"> Marítimo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<div class="tm-invisible">
+						<%= select_tag :rutas, options_for_select(@rutasViaje.invert) %>
+						<%= select_tag :vehiculos, options_for_select(@vehiculos.map{|h|[h.vehi_modeloCodigo, h.id]}) %>
+					</div>
+				</div>
+				<div class="form-group">
+	    			<%= f.label :viaje_ruta, "Ruta*" %><br>
+	    			<%= f.select :viaje_ruta, [], options={prompt: "-- SELECCIONE --"}, options={class:"form-control"} %>
+	  			</div>
+				<div class="form-group">
+	    			<%= label_tag "Trayecto" %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    			<label class="tm-label-radio">
+	    				<%= f.radio_button(:viaje_trayecto, "RT", options={checked: "checked"}) %> 
+	    				Ida y vuelta
+	    			</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    			<label class="tm-label-radio"><!--input type="radio" name="optTrayecto" value="OW"-->
+	    				<%= f.radio_button(:viaje_trayecto, "OW") %> 
+	    				Sólo ida
+	    			</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  			</div>
+			 	<div class="form-group">
+					<%= f.label :viaje_fecha, "Fecha*" %><br>
+					<div class='input-group date' id='datetimepicker1'>
+						<%= f.text_field :viaje_fecha, options = {class:"form-control"} %>
+						<span class="input-group-addon">
+					   		<span class="fa fa-calendar"></span>
+						</span>
+					</div>
+				</div>
+	  			<div class="form-group">
+	    			<%= f.label :viaje_horaSalida, "Horas de salida*" %><br>
+	    			<%= f.hidden_field :viaje_horaSalida %>
+	    			<table style="background-color: #c4ffc5; border: 5px solid #c4ffc5;">
+	    				<tr>
+	    					<td rowspan="3" width="20%" style="padding: 10px;"><strong>IDA</strong></td>
+	    					<td><strong>CIUDAD</strong></td>
+	    					<td><strong>HORA</strong></td>
+	    				</tr>
+	    				<tr>
+	    					<td width="65%"><%= text_field_tag :parada1, nil, options={class:"form-control", size:40, readonly: :readonly} %></td>
+	    					<td width="15%"><%= time_field_tag :hora1, nil, options={class:"form-control"} %></td>
+	    				</tr>
+	    				<tr>
+	    					<td><%= text_field_tag :parada2, nil, options={class:"form-control", size:40, readonly: :readonly} %></td>
+	    					<td><%= time_field_tag :hora2, nil, options={class:"form-control"} %></td>
+	    				</tr>
+	    			</table>
+					<div style="clear: both; height: 5px;"></div>
+	    			<table style="background-color: #d3d0fc; border: 5px solid #d3d0fc;">
+	    				<tr>
+	    					<td rowspan="3" width="20%" style="padding: 10px;"><strong>REGRESO</strong></td>
+	    					<td><strong>CIUDAD</strong></td>
+	    					<td><strong>HORA</strong></td>
+	    				</tr>
+	    				<tr>
+	    					<td width="65%"><%= text_field_tag :parada3, nil, options={class:"form-control", size:40, readonly: :readonly} %></td>
+	    					<td width="15%"><%= time_field_tag :hora3, nil, options={class:"form-control"} %></td>
+	    				</tr>
+	    				<tr>
+	    					<td><%= text_field_tag :parada4, nil, options={class:"form-control", size:40, readonly: :readonly} %></td>
+	    					<td><%= time_field_tag :hora4, nil, options={class:"form-control"} %></td>
+	    				</tr>
+	    			</table>
+	    		</div>
+	    	</div>
+	    	<div class="col-lg-6 col-md-6">
+			  	<div class="form-group">
+			    	<%= f.label :vehiculo_id, "Vehículo*" %><br>
+			    	<%= f.select :vehiculo_id, [], {prompt:"-- SELECCIONE --"}, options={class:"form-control"} %>
+			  	</div>
+    			<!--table style="background-color: #c4ffc5; border: 5px solid #c4ffc5;">
+    				<tr>
+    					<td rowspan="6" width="20%" style="padding: 10px;"><strong>TARIFAS</strong></td>
+    					<td><strong>DESCRIPCIÓN</strong></td>
+    					<td><strong>SILLAS</strong></td>
+    				</tr>
+    				<tr>
+    					<td width="60%"><%= text_field_tag :textTarifa1, "PROMO", options={class:"form-control", readonly: :readonly} %></td>
+    					<td width="20%"><%= number_field_tag :tarifa1, nil, options={class:"form-control"} %></td>
+    				</tr>
+    				<tr>
+    					<td><%= text_field_tag :textTarifa2, "ECONO", options={class:"form-control", readonly: :readonly} %></td>
+    					<td><%= number_field_tag :tarifa2, nil, options={class:"form-control"} %></td>
+    				</tr>
+    				<tr>
+    					<td><%= text_field_tag :textTarifa3, "BASE", options={class:"form-control", readonly: :readonly} %></td>
+    					<td><%= number_field_tag :tarifa3, nil, options={class:"form-control"} %></td>
+    				</tr>
+    				<tr>
+    					<td><%= text_field_tag :textTarifa4, "FLEXI", options={class:"form-control", readonly: :readonly} %></td>
+    					<td><%= number_field_tag :tarifa4, nil, options={class:"form-control"} %></td>
+    				</tr>
+    				<tr>
+    					<td><%= text_field_tag :textTarifa5, "DELUXE", options={class:"form-control", readonly: :readonly} %></td>
+    					<td><%= number_field_tag :tarifa5, nil, options={class:"form-control"} %></td>
+    				</tr>
+    			</table>
+    			<br><br-->
+			  	<div class="form-group">
+			    	<%= f.label :viaje_estado, "Estado del viaje*" %><br>
+			    	<%= f.select :viaje_estado, options_for_select(@estadosViaje.map{|h|[h.ctlg_valorDesc, h.ctlg_valorCdg]}), {}, options={class:"form-control"} %>
+			  	</div>
+			  	<div class="form-group">
+					<%= f.label :viaje_estadoRegistro, "Estado de registro" %><br>
+			    	<%=f.select :viaje_estadoRegistro, options_for_select(@estados.invert), {}, html_options={class:"form-control"} %>
+			  	</div>
+			</div>
+		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_viaje_<%= @viaje.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								varHorasSalida = $("#hora1").val() + "|" + $("#hora2").val() + "|" + $("#hora3").val() + "|" + $("#hora4").val();
+								$("#viaje_viaje_horaSalida").val(varHorasSalida);
+								$('#<%= params[:action] %>_viaje').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+				
+				<%= link_to 'Regresar', viajes_path , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					| <%= link_to 'Consultar', @viaje, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+<script>
+	$(function(){
+		 $( document ).trigger( "page:update" );
+	});
+	
+	$(document).on('page:update', function() {
+		
+		$('.date').datetimepicker({
+            	format: 'YYYY-MM-DD',
+            	defaultDate:false,
+            	minDate: moment()
+       	});
+       
+       	$("input[name=optTipoViaje][type=radio]").change(function(){
+       		$("#viaje_viaje_ruta").html("<option value=''>-- SELECCIONE --</option>");
+       		$("#viaje_vehiculo_id").html("<option value=''>-- SELECCIONE --</option>");
+       		$("#viaje_viaje_ruta").trigger("change");
+       		varMedio = $(this).val();
+			$("#rutas > option").each(function(){
+				arrText = $(this).text().split("|");
+				if(arrText[0] == varMedio){
+					$("#viaje_viaje_ruta").append("<option value=" + $(this).val() + ">" + arrText[1] + "</option>")
+				}
+			});
+			
+			$("#vehiculos > option").each(function(){
+				arrText = $(this).text().split("|");
+				if(arrText[0] == varMedio){
+					$("#viaje_vehiculo_id").append("<option value=" + $(this).val() + ">" + arrText[1] + "</option>")
+				}
+			});
+       	});
+       	
+       	$("input[name='viaje[viaje_trayecto]'][type=radio]").change(function(){
+       		arrLugares = $("option:selected", $("#viaje_viaje_ruta")).text().split(">");
+       		if (arrLugares != "-- SELECCIONE --"){
+       			if($("input[name='viaje[viaje_trayecto]']:checked").val() == "OW"){ /* SOLO IDA */
+		       		$("#parada3").val("");
+		       		$("#parada4").val("");
+       			}
+       			else if($("input[name='viaje[viaje_trayecto]']:checked").val() == "RT"){ /* IDA Y VUELTA */
+		       		for(x=0; x < arrLugares.length - 1; x++){
+		       			$("#parada" + (x+1)).val(arrLugares[x].trim());
+		       		}
+				  	arrLugares.reverse();
+	       			for(x=0; x < arrLugares.length - 1; x++){
+	       				$("#parada" + (x+3)).val(arrLugares[x].trim());
+	       			}
+       			}
+       		}
+       	});
+       	
+       	$("#viaje_viaje_ruta").change(function(){
+       		$("#parada1").val(""); $("#parada2").val("");
+       		$("#parada3").val(""); $("#parada4").val("");
+       		$("#hora1").val(""); $("#hora2").val("");
+       		$("#hora3").val(""); $("#hora4").val("");
+       		arrLugares = $("option:selected", this).text().split(">");
+       		if (arrLugares != "-- SELECCIONE --"){
+	       		for(x=0; x < arrLugares.length - 1; x++){
+	       			$("#parada" + (x+1)).val(arrLugares[x].trim());
+	       		}
+       		
+       			if($("input[name='viaje[viaje_trayecto]']:checked").val() == "RT"){ /* IDA Y VUELTA */
+				  	arrLugares.reverse();
+	       			for(x=0; x < arrLugares.length - 1; x++){
+	       				$("#parada" + (x+3)).val(arrLugares[x].trim());
+	       			}
+       			}
+       		}
+       	});
+	});
+</script>

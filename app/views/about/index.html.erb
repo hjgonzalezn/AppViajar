@@ -234,7 +234,7 @@
 	</section>
 	
 	<!-- white bg -->
-	<section class="tm-white-bg section-margin-bottom">
+	<!--section class="tm-white-bg section-margin-bottom">
 		<div class="container">
 			<div class="row">				
 				<div class="tm-section-header">
@@ -335,16 +335,19 @@
 				</div>
 			</div>		
 		</div>
-	</section>
+	</section-->
 	
 	<script>
 		
-		$(document).on('page:load', function() {
+		$(document).on('page:update', function() {
+		  	$(".mainmenu").removeClass("active");
+		  	$("#mnuHome").addClass("active");
+		  				
 			$('.flexslider').flexslider({
 			    controlNav: false,
 			    prevText: "",           //String: Set the text for the "previous" directionNav item
 				nextText: ""               //String: Set the text for the "next" directionNav item
-		    });		    
+		    });
 		});
 		
 		$(function() {

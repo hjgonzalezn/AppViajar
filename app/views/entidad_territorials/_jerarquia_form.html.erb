@@ -1,5 +1,5 @@
 <div class="form-group">
-	<%= text_field_tag(:parents_path, @parentalPath, options={size: 60, readonly: true}) %>
+	<%= text_field_tag(:parents_path, @parentalPath, options={size: 60, readonly: true, class:"form-control"}) %>
 	<p>&nbsp;</p>
 	<%= select_tag(:continentes, options_from_collection_for_select(@continentes, :id , :enter_nombreOficial), class:"entidadTerr", prompt: "-- CONTINENTE --")%>
 	<%= select_tag(:entidadTerr1, nil, class:"entidadTerr", prompt: "-- SELECCIONE --")%>
@@ -9,7 +9,7 @@
 	<%= hidden_field_tag(:entidadTerrId) %>
 </div>
 <script>
-$(document).on('page:load', function() {
+$(document).on('page:update', function() {
 	var boClicked = false;
 	$(".entidadTerr").click(function(){
 		boClicked = true;

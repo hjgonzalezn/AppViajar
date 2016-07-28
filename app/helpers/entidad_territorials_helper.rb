@@ -71,4 +71,44 @@ module EntidadTerritorialsHelper
       ciudadesCol = EntidadTerritorial.joins("INNER JOIN entidad_territorials E1 ON entidad_territorials.enter_padreId = E1.id INNER JOIN entidad_territorials E2 ON E1.enter_padreId = E2.id").where("E2.id = 3 AND E2.enter_estadoRegistro = 'A' AND E1.enter_estadoRegistro = 'A'").order(:enter_nombreCorto)
     end
     
+    def set_entidades_colombia
+      enter_id = "3" # Colombia
+      pais = EntidadTerritorial.find(enter_id)
+      entiCol = {pais.id => pais.enter_nombreCorto}
+      
+      begin
+        rSet = EntidadTerritorial.where("enter_padreId IN (#{enter_id})").order(:enter_nombreCorto)
+        enter_id = ""
+        rSet.each do |t|
+          entiCol[t.id] = t.enter_nombreCorto + "|" + t.enter_padreId.to_s
+          enter_id = t.id.to_s + "," + enter_id.to_s
+        end
+        
+        if enter_id != "" then
+          enter_id = enter_id[0, enter_id.length - 1]
+        end
+      end until enter_id == ""
+      
+      entidadesCol = {}
+      
+      entiCol.each do |key, value|
+        cadenaAux = value
+        begin
+          padre_id = nil
+          while !cadenaAux.index("|").nil? do
+            arrValor = cadenaAux.split("|")
+            padre_id = arrValor[1].to_i
+            entidadesCol[key] = (entidadesCol[key] == nil ? "" : entidadesCol[key])  + arrValor[0] + ", "
+            cadenaAux = entiCol[padre_id]
+          end
+          
+          unless entidadesCol[key].nil?
+            entidadesCol[key] = entidadesCol[key] + pais.enter_nombreCorto
+          end 
+        end until padre_id == pais.id || padre_id == nil 
+      end
+            
+      return entidadesCol
+    end
+    
 end

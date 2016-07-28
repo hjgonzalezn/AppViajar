@@ -26,6 +26,7 @@
 						<p><strong>Alias:</strong></p>
 						<p><strong>Sexo:</strong></p>
 						<p><strong>Fecha de Nacimiento:</strong></p>
+						<p><strong>Peso Corporal:</strong></p>						
 						<p><strong>Estado Civil:</strong></p>
 						<p><strong>Dirección de Domicilio:</strong></p>
 						<p><strong>Ciudad de Domicilio:</strong></p>
@@ -48,6 +49,7 @@
 						<p><%= @persona.pers_alias %></p>
 						<p><%= @generos[@persona.pers_sexo] %>&nbsp;</p>
 						<p><%= @persona.pers_fechaNacimiento %>&nbsp;</p>
+						<p><%= (@persona.pers_pesoCorporal == nil ? 0.to_s : @persona.pers_pesoCorporal.to_s) + " kg" %></p>
 						<p><%= @estadosCiviles[@persona.pers_estadoCivil] %>&nbsp;</p>
 						<p><%= @persona.pers_direccionDomicilio %>&nbsp;</p>
 						<p><%= @ciudadDomicilio %>&nbsp;</p>
@@ -55,8 +57,8 @@
 						<p><%= @persona.pers_telefonoPersonal2 %>&nbsp;</p>
 						<p><%= @persona.pers_correoElectrPersonal %>&nbsp;</p>
 						<p><%= @perfilesLaborales[@persona.pers_perfilLaboral] %>&nbsp;</p>
-						<p><%= @empresa.empr_nombreCorto %>&nbsp;</p>
-						<p><%= @sucursal.sucEmpr_nombreSucursal %>&nbsp;</p>
+						<p><%= @empresa == nil ? "" : @empresa.empr_nombreCorto %>&nbsp;</p>
+						<p><%= @sucursal == nil ? "" : @sucursal.sucEmpr_nombreSucursal %>&nbsp;</p>
 						<p><%= @persona.empresaCargo %>&nbsp;</p>
 						<p><%= @persona.pers_telefonoLaboral1 %>&nbsp;</p>
 						<p><%= @persona.pers_telefonoLaboral2 %>&nbsp;</p>

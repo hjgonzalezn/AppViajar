@@ -1,0 +1,45 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-8 col-md-8" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Tipo De Actividad Turística</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-3 col-md-3">
+							<p><strong>Nombre:</strong></p>
+							<p><strong>Descripcion:</strong></p>
+							<p><strong>Foto:</strong></p>
+							<p><strong>Icono:</strong></p>
+						</div>
+						<div class="col-lg-9 col-md-9">
+							<p><%= @tipo_actividad_turistica.tiAcT_nombre %></p>
+							<p><%= @tipo_actividad_turistica.tiAcT_descripcion %>&nbsp;</p>
+							<p><%= @tipo_actividad_turistica.tiAcT_foto %>&nbsp;</p>
+							<p><%= @tipo_actividad_turistica.tiAcT_icono %>&nbsp;</p>
+							<p>&nbsp;</p>
+						</div>
+
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', tipo_actividad_turisticas_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_tipo_actividad_turistica_path(@tipo_actividad_turistica), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

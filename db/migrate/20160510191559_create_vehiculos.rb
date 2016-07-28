@@ -6,7 +6,7 @@ class CreateVehiculos < ActiveRecord::Migration
       t.string :vehi_medioCodigo
       t.string :vehi_nombre
       t.string :vehi_matricula
-      t.integer :vehi_propietarioId
+      t.string :vehi_propietarioId
       t.string :vehi_tipoPropietario
       t.integer :vehi_sucursalEmpresaPropId
       t.float :vehi_capacPesoMaximo

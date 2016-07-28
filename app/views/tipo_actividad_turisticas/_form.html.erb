@@ -1,0 +1,68 @@
+<%= form_for(@tipo_actividad_turistica) do |f| %>
+  <% if @tipo_actividad_turistica.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tipo_actividad_turistica.errors.count, "error") %> prohibited this tipo_actividad_turistica from being saved:</h2>
+
+      <ul>
+      <% @tipo_actividad_turistica.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div class="col-lg-8 col-md-8" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+		  <div class="form-group">
+		    <%= f.label :tiAcT_nombre, "Nombre*" %><br>
+		    <%= f.text_field :tiAcT_nombre, options={class:"form-control", size: 50, maxlength: 50 ,required: :required} %>
+		  </div>
+		  <div class="form-group">
+		    <%= f.label :tiAcT_descripcion, "Descripción*" %><br>
+		    <%= f.text_field :tiAcT_descripcion, options={class:"form-control", size: 70, maxlength: 100 ,required: :required}  %>
+		  </div>
+		  <div class="form-group">
+		    <%= f.label :tiAcT_foto, "Foto" %><br>
+		    <%= f.text_field :tiAcT_foto, options={size: 50, maxlength: 50, class:"form-control"}  %>
+		  </div>
+		  <div class="form-group">
+		    <%= f.label :tiAcT_icono, "Icono" %><br>
+		    <%= f.text_field :tiAcT_icono, {class:"form-control"}  %>
+		  </div>
+		  <div class="form-group">
+		    <%= f.label :tiAcT_estadoRegistro, "Estado*" %><br>
+		    <%= f.select :tiAcT_estadoRegistro, options_for_select(@estados.invert), {}, {class:"form-control"}  %>
+		  </div>
+  		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_tipo_actividad_turistica_<%= @tipo_actividad_turistica.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_tipo_actividad_turistica').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+				
+				<%= link_to 'Regresar', tipo_actividad_turisticas_path , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					| <%= link_to 'Consultar', @tipo_actividad_turistica, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+<script>
+	$(function(){
+		 $( document ).trigger( "page:update" );
+	});
+</script>

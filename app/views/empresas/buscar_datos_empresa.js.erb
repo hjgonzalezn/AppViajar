@@ -3,12 +3,11 @@
 	<% unless empresa.nil? %>
 		<% hshDatosControl = params[:datos_control] %>
 		<% hshDatosControl.each do |key, value| %>
-			<% puts key + " - " + value %>
 			<% case key %>
 				<% when "razon_social" %>
 					$("#<%= value %>").val("<%= empresa.empr_nombreCorto %>");
 				<% when "sucursales_empresa" %>
-					<% sucursales = SucursalEmpresa.where("empr_documentoIdentidad = '#{params[:id]}' AND sucEmp_estadoRegistro = 'A'").order(:sucEmpr_nombreSucursal)%>
+					<% sucursales = set_sucursales_empresa(params[:id])%>
 					<% sucursales = sucursales.map{|a| [a.sucEmpr_nombreSucursal, a.id]}.insert(nil.to_f, "-- SELECCIONE --") %>
 					$("#<%= value %>").html("<%= escape_javascript(options_for_select(sucursales)) %>");
 			<% end %>

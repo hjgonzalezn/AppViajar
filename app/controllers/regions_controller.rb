@@ -81,8 +81,7 @@ class RegionsController < ApplicationController
     end
     
     def initialize_vars
-      @padreRegion = EntidadTerritorial.where("enter_nivel IN (1,2)")
-      
+      @padreRegion = EntidadTerritorial.where("enter_nivel IN (1,2) AND enter_estadoRegistro = 'A'")
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

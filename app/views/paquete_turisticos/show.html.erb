@@ -1,0 +1,57 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-11 col-md-11" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Paquete Turístico</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-6 col-md-6">
+							<p><strong>Nombre:</strong></p>
+							<p><strong>Descripcion:</strong></p>
+							<p><strong>Incluye:</strong></p>
+							<p><strong>No Incluye:</strong></p>
+							<p><strong>Actividades opcionales:</strong></p>
+							<p><strong>Recomendaciones:</strong></p>
+							<p><strong>Fecha inicial de vigencia:</strong></p>
+							<p><strong>Fecha final de vigencia:</strong></p>
+							<p><strong>Fecha inicial de promoción:</strong></p>
+							<p><strong>Fecha final de promoción:</strong></p>
+							<p><strong>Pqtur estadoregistro:</strong></p>
+						</div>
+						<div class="col-lg-6 col-md-6">
+							<p><%= @paquete_turistico.pqTur_nombre %></p>
+							<p><%= @paquete_turistico.pqTur_descripcion %></p>
+							<p><%= @paquete_turistico.pqTur_incluye %></p>
+							<p><%= @paquete_turistico.pqTur_noIncluye %></p>
+							<p><%= @paquete_turistico.pqTur_opcionales %></p>
+							<p><%= @paquete_turistico.pqTur_recomendaciones %></p>
+							<p><%= @paquete_turistico.pqTur_fechaVigenciaIni %></p>
+							<p><%= @paquete_turistico.pqTur_fechaVigenciaFin %></p>
+							<p><%= @paquete_turistico.pqTur_fechaPromocionIni %></p>
+							<p><%= @paquete_turistico.pqTur_fechaPromocionFin %></p>
+							<p><%= @paquete_turistico.pqTur_estadoRegistro %></p>
+						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', paquete_turisticos_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_paquete_turistico_path(@paquete_turistico), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

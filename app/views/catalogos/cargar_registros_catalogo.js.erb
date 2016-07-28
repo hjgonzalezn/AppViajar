@@ -1,0 +1,10 @@
+<% unless params[:categoria] && params[:subcategoria].nil? %>
+	<% registros = Catalogo.where("ctlg_categoria = ? AND ctlg_subcategoria = ? ", params[:categoria], params[:subcategoria]).order(:ctlg_valorDesc) %>
+	<% registros = registros.map{|a| [a.ctlg_valorDesc, a.ctlg_valorCdg]}.insert(nil.to_f, "-- SELECCIONE --") %>
+	<% case params[:tipoControl] %>
+		<% when "dropdown_menu" then %>
+			$("#<%= params[:nombreControl] %>").html("<%= escape_javascript(options_for_select(registros)) %>");
+		<% else %>
+			$("#<%= params[:nombreControl] %>").val(registros.first.ctlg_valorDesc);	
+	<% end %>
+<% end %>

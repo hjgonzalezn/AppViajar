@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Viaje ruta:</strong>
+  <%= @viaje.viaje_ruta %>
+</p>
+
+<p>
+  <strong>Viaje fecha:</strong>
+  <%= @viaje.viaje_fecha %>
+</p>
+
+<p>
+  <strong>Viaje horasalida:</strong>
+  <%= @viaje.viaje_horaSalida %>
+</p>
+
+<p>
+  <strong>Viaje estado:</strong>
+  <%= @viaje.viaje_estado %>
+</p>
+
+<p>
+  <strong>Vehiculo:</strong>
+  <%= @viaje.vehiculo.vehi_modeloCodigo %>
+</p>
+
+<p>
+  <strong>Viaje estadoregistro:</strong>
+  <%= @viaje.viaje_estadoRegistro %>
+</p>
+
+<%= link_to 'Edit', edit_viaje_path(@viaje) %> |
+<%= link_to 'Back', viajes_path %>

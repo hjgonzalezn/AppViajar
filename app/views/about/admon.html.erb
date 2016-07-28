@@ -10,7 +10,7 @@
 						<ul class="ca-menu">
 							<li>
 		                        <a href="<%= personas_path %>">
-		                            <span class="ca-icon"><i class="fa fa-user"></i></span>
+		                            <span class="ca-icon"><i class="fa fa-odnoklassniki"></i></span>
 		                            <div class="ca-content">
 		                                <h2 class="ca-main">Personas</h2>
 		                                <h3 class="ca-sub">Información básica</h3>
@@ -19,7 +19,7 @@
 							</li>
 							<li>
 		                        <a href="<%= empresas_path %>">
-		                            <span class="ca-icon"><i class="fa fa-home"></i></span>
+		                            <span class="ca-icon"><i class="fa fa-bank"></i></span>
 		                            <div class="ca-content">
 		                                <h2 class="ca-main">Empresas</h2>
 		                                <h3 class="ca-sub">Información básica</h3>
@@ -76,29 +76,38 @@
 					<div class="col-xs-3 col-md-3 col-sm-3">
 						<ul class="ca-menu">
 							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-send"></i></span>
+		                        <a href="<%= ruta_path %>">
+		                            <span class="ca-icon"><i class="fa fa-map-signs"></i></span>
 		                            <div class="ca-content">
-		                                <h2 class="ca-main">Vuelos</h2>
+		                                <h2 class="ca-main">Rutas</h2>
+		                                <h3 class="ca-sub">Datos Básicos</h3>
+		                            </div>
+		                        </a>
+							</li>
+							<li>
+		                        <a href="#">
+		                            <span class="ca-icon"><i class="fa fa-list-alt"></i></span>
+		                            <div class="ca-content">
+		                                <h2 class="ca-main">Solicitudes</h2>
+		                                <h3 class="ca-sub">Revisión de pendientes</h3>
+		                            </div>
+		                        </a>
+							</li>
+							<li>
+		                        <a href="<%= viajes_path %>">
+		                            <span class="ca-icon"><i class="fa fa-briefcase"></i></span>
+		                            <div class="ca-content">
+		                                <h2 class="ca-main">Viajes</h2>
 		                                <h3 class="ca-sub">Control de itinerarios</h3>
 		                            </div>
 		                        </a>
 							</li>
 							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-briefcase"></i></span>
+		                        <a href="<%= paquete_turisticos_path %>">
+		                            <span class="ca-icon"><i class="fa fa-picture-o"></i></span>
 		                            <div class="ca-content">
 		                                <h2 class="ca-main">Planes Turísticos</h2>
 		                                <h3 class="ca-sub">Manejo de agenda</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-usd"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Tarifas</h2>
-		                                <h3 class="ca-sub">Control de precios</h3>
 		                            </div>
 		                        </a>
 							</li>
@@ -135,7 +144,7 @@
 						<ul class="ca-menu">
 							<li>
 		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-eye"></i></span>
+		                            <span class="ca-icon"><i class="fa fa-user"></i></span>
 		                            <div class="ca-content">
 		                                <h2 class="ca-main">Cuentas</h2>
 		                                <h3 class="ca-sub">Usuarios del sistema</h3>
@@ -157,6 +166,24 @@
 		                            <div class="ca-content">
 		                                <h2 class="ca-main">Permisos</h2>
 		                                <h3 class="ca-sub">Accesos a los perfiles</h3>
+		                            </div>
+		                        </a>							
+							</li>
+							<li>
+		                        <a href="<%= tipo_actividad_turisticas_path %>">
+		                            <span class="ca-icon"><i class="fa fa-ship"></i></span>
+		                            <div class="ca-content">
+		                                <h2 class="ca-main">Ingredientes</h2>
+		                                <h3 class="ca-sub">Tipos Actv. Turismo</h3>
+		                            </div>
+		                        </a>							
+							</li>
+							<li>
+		                        <a href="<%= tipo_actividad_turisticas_path %>">
+		                            <span class="ca-icon"><i class="fa fa-warning"></i></span>
+		                            <div class="ca-content">
+		                                <h2 class="ca-main">Recomendaciones</h2>
+		                                <h3 class="ca-sub">Info. de interés</h3>
 		                            </div>
 		                        </a>							
 							</li>
@@ -228,3 +255,9 @@
 		</div>
 	</div>
 </section>
+<script>
+	$(document).on("page:update", function(){
+	  	$(".mainmenu").removeClass("active");
+	  	$("#mnuAdmin").addClass("active");
+	});
+</script>

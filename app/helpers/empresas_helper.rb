@@ -10,6 +10,6 @@ module EmpresasHelper
   end
   
   def set_sucursales_empresa(empr_documentoIdentidad)
-    sucursales_empresa = SucursalEmpresa.where("empr_documentoIdentidad = ? AND sucEmp_estadoRegistro = 'A'", empr_documentoIdentidad)
+    sucursales_empresa = SucursalEmpresa.where("empr_documentoIdentidad = ? AND sucEmp_estadoRegistro = 'A'", empr_documentoIdentidad).order(:sucEmpr_nombreSucursal)
   end
 end

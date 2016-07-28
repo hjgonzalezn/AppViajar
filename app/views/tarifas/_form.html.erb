@@ -1,0 +1,139 @@
+<%= form_for(@tarifa) do |f| %>
+  <% if @tarifa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tarifa.errors.count, "error") %> prohibited this tarifa from being saved:</h2>
+
+      <ul>
+      <% @tarifa.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<div class="col-lg-11 col-md-11" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+			<div class="col-lg-6 col-md-6">
+			  	<div class="form-group">
+				    <%= f.label :trf_concepto, "Concepto*" %><br>
+				    <%= f.text_field :trf_concepto, class:"form-control" %>
+				</div>
+	  			<div class="form-group">
+	    			<%= f.label :trf_conceptoCodigo, "Código" %><br>
+	    			<%= f.text_field :trf_conceptoCodigo, class:"form-control" %>
+	 		 	</div>
+	  			<div class="form-group">
+	    			<%= f.label :trf_conceptoAplicacion, "Aplicación" %><br>
+	    			<%= f.text_field :trf_conceptoAplicacion, class:"form-control" %>
+	  			</div>
+	  			<div class="form-group">
+	    			<%= f.label :trf_detalleAplicacion, "Detalle" %><br>
+	    			<%= f.text_field :trf_detalleAplicacion, class:"form-control" %>
+	  			</div>
+	  			<div class="form-group">
+	    			<%= f.label :trf_naturaleza, "Naturaleza" %><br>
+	    			<%= f.select :trf_naturaleza, options_for_select(@hshNaturalezaConcept.invert, @tarifa.trf_naturaleza),{prompt:"-- SELECCIONE --"}, {class:"form-control"} %>
+	  			</div>
+	  			<div class="form-group">
+	   	 			<%= f.label :trf_tipoProducto, "Tipo de Producto" %><br>
+	    			<%= f.text_field :trf_tipoProducto, {class:"form-control", value:@parentController.upcase, readonly: true} %>
+	  			</div>
+	  			<div class="form-group">
+	    			<%= f.label :trf_producto, "Producto*" %><br>
+	    			<%= text_field_tag :nombreProducto, @producto, {class:"form-control", readonly: true} %>
+	    			<%= f.hidden_field :trf_producto, {value: @parentId}%>
+	  			</div>
+  			</div>
+  			<div class="col-lg-6 col-md-6">
+  				<div class="col-lg-6 col-md-6">
+		  			<div class="form-group">
+		    			<%= f.label :trf_promo, "Valor PROMO" %><br>
+		    			<%= f.text_field :trf_promo, {class:"form-control", value: @tarifa.trf_promo == nil ? nil : number_to_currency(@tarifa.trf_promo) } %>
+		  			</div>
+		  			<div class="form-group">
+		    			<%= f.label :trf_econo, "Valor ECONO" %><br>
+		    			<%= f.text_field :trf_econo, {class:"form-control", value: @tarifa.trf_econo == nil ? nil : number_to_currency(@tarifa.trf_econo) } %>
+		  			</div>
+	  				<div class="form-group">
+	    				<%= f.label :trf_base, "Valor BASE" %><br>
+	    				<%= f.text_field :trf_base, {class:"form-control", value: @tarifa.trf_base == nil ? nil : number_to_currency(@tarifa.trf_base) } %>
+	  				</div>
+		  			<div class="form-group">
+		    			<%= f.label :trf_unidadCobro, "Unidad de Cobro" %><br>
+		    			<%= f.text_field :trf_unidadCobro, class:"form-control" %>
+		  			</div>
+		  		</div>
+		  		<div class="col-lg-6 col-md-6">
+	  				<div class="form-group">
+	    				<%= f.label :trf_flexi, "Valor FLEXI" %><br>
+	    				<%= f.text_field :trf_flexi, {class:"form-control", value: @tarifa.trf_flexi == nil ? nil : number_to_currency(@tarifa.trf_flexi) } %>
+	  				</div>
+		  			<div class="form-group">
+		    			<%= f.label :trf_deluxe, "Valor DELUXE" %><br>
+		    			<%= f.text_field :trf_deluxe, {class:"form-control", value: @tarifa.trf_deluxe == nil ? nil : number_to_currency(@tarifa.trf_deluxe) } %>
+		  			</div>
+  					<div class="form-group">
+  						<%= f.label :trf_fechaInicio, "Fecha de Vigencia (desde)" %>
+		                <div class='input-group date' id='datetimepicker1'>
+	                		<%= f.text_field :trf_fechaInicio, options = {class:"form-control"} %>
+	                    	<span class="input-group-addon">
+	                        	<span class="fa fa-calendar"></span>
+	                    	</span>
+	                	</div>  						
+  					</div>
+		  			<div class="form-group">
+		    			<%= f.label :trf_estadoRegistro, "Estado*" %><br>
+		    			<%= f.select :trf_estadoRegistro, options_for_select(@estados.invert, @tarifa.trf_estadoRegistro), {}, {class:"form-control"} %>
+		  			</div>
+	  			</div>
+  			</div>
+  		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_tarifa_<%= @tarifa.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_tarifa').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+				
+				<%= link_to 'Regresar', ("/" + @parentController + "/" + @parentId) , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					<% path = request.fullpath %>
+					<% path["/edit"]="" %>
+					| <%= link_to 'Consultar', path, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<script>
+	$(function(){
+		 $( document ).trigger( "page:update" );
+	});
+	
+	$(document).on('page:update', function() {
+		
+		$('.date').datetimepicker({
+            	format: 'YYYY-MM-DD',
+            	defaultDate:false,
+            	minDate: moment()
+        });
+        
+        accion = "<%= action_name %>"; 
+        
+        if(accion == "new"){
+        	$("#tarifa_trf_fechaInicio").val("");
+        }
+	});
+</script>

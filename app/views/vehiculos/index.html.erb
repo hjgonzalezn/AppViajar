@@ -13,43 +13,64 @@
 					<div class="section-header">
 						<h1>Vehículos</h1>
 					</div>
-					
-					<table id="indexTable" class="stripe hover">
-					  <thead>
-					    <tr>
-					      <th>Tipo</th>
-					      <th>Modelo</th>
-					      <th>Propietario</th>
-					      <th>Peso Máximo</th>
-					      <th>Peso Pasajeros</th>
-					      <th>Carga Bodega</th>
-					      <th>Nro. pasajeros</th>
-					      <th>Estado</th>
-					      <th colspan="3"></th>
-					    </tr>
-					  </thead>
-					
-					  <tbody>
-					    <% @vehiculos.each do |vehiculo| %>
-					      <tr>
-					        <td><%= vehiculo.vehi_tipo %></td>
-					        <td><%= vehiculo.vehi_modeloCodigo %></td>
-					        <td><%= vehiculo.vehi_propietarioId %></td>
-					        <td><%= vehiculo.vehi_capacPesoMaximo %></td>
-					        <td><%= vehiculo.vehi_capacPesoPasajeros %></td>
-					        <td><%= vehiculo.vehi_capacCargaBodega %></td>
-					        <td><%= vehiculo.vehi_capacPasajeros %></td>
-					        <td><%= @estados[vehiculo.vehi_estadoRegistro] %></td>
-					        <td><%= link_to 'Show', vehiculo %></td>
-					        <td><%= link_to 'Edit', edit_vehiculo_path(vehiculo) %></td>
-					        <td><%= link_to 'Destroy', vehiculo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-					      </tr>
-					    <% end %>
-					  </tbody>
-					</table>
+					<div class="row">
+						<div class="col-lg-11 col-md-11 col-sm-11 center">
+							<% tipoVehiculo = "" %>
+							<% index = 0 %>
+							<% @vehiculos.each do |vehiculo| %>
+								<% if vehiculo.vehi_tipo != tipoVehiculo then %>
+									<% if index >= 1 then %>
+										</div>
+									<% end %>
+									
+									<div class="col-lg-12">
+										<div class="tm-section-header section-margin-top-med">
+											<div class="col-lg-4 col-md-3 col-sm-3"><hr></div>
+											<div class="col-lg-4 col-md-6 col-sm-6"><h2 class="tm-section-title"><%= @tiposVehiculo[vehiculo.vehi_tipo] + "S" %></h2></div>
+											<div class="col-lg-4 col-md-3 col-sm-3"><hr></div>	
+										</div>				
+									</div>
+									<div class="row">
+								<% else %>
+									<% if index % 4 == 0 then %>
+										</div>
+										<p>&nbsp;</p>
+										<div class="row">
+									<% end %>
+								<% end %>
+								<% tipoVehiculo = vehiculo.vehi_tipo %>
+								<% datosPropietario = set_propietario_vehiculo(vehiculo.vehi_tipoPropietario, vehiculo.vehi_propietarioId, vehiculo.vehi_sucursalEmpresaPropId) %>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
+									<div class="tm-tours-box-2">
+										<h3><%= vehiculo.vehi_modeloCodigo %></h3>				
+										<%= image_tag("/assets/models/vehiculos/" + (vehiculo.vehi_foto == nil ? "foto.jpg" : vehiculo.vehi_foto), alt: "#{vehiculo.vehi_modeloCodigo}", class: "img-responsive") %>
+										<div class="tm-tours-box-2-info">
+											<h3 class="margin-bottom-15"><%= datosPropietario["nombre"] %></h3>
+											<p><%= datosPropietario["ciudad"] %></p>
+										</div>						
+										<div class="tm-tours-box-2-bottom-bar">
+											<%= link_to(vehiculo, class:"btn btn-info") do %>
+					        					<i class="fa fa-book"></i>
+					        				<% end %>
+											<a href="<%= edit_vehiculo_path(vehiculo) %>" class="btn btn-warning">
+					        					<i class="fa fa-edit"></i>
+					        				</a>
+					        				<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/vehiculos/#{vehiculo.id}"%> >
+					        					<i class="fa fa-trash"></i>
+					        				</a>
+										</div>
+									</div>
+								</div>
+								<% index += 1 %>
+							<% end %>
+						</div>
+						<p>&nbsp;</p>
+					</div>
+					<div class="col-lg-12 col-md-12 col-sm-12 center">
 					<div class="section-footer">
 						<%= link_to 'Regresar', administracion_path , class:"button back" %>
 						<%= link_to 'Nuevo registro', new_vehiculo_path, class:"button add" %>
+					</div>
 					</div>
 				</div>
 			</div>
@@ -74,11 +95,9 @@
     		"pagingType": "full_numbers",
 			"aoColumns" : [
 							{ sWidth : "10%" },
-							{ sWidth : "10%" },
+							{ sWidth : "20%" },
 							{ sWidth : "30%" },
-							{ sWidth : "10%" },
-							{ sWidth : "10%" },
-							{ sWidth : "10%" },
+							{ sWidth : "20%" },
 							{ sWidth : "10%" },
 							{ sWidth : "10%" }
 						]

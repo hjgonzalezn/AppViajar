@@ -1,12 +1,13 @@
-<% unless params[:id].blank? || params[:dato_requerido].blank? || params[:nombre_control].blank? %>
-	var varDatoPersona;
+<% unless params[:id].blank? || params[:datos_control].blank? %>
 	<% persona = Persona.where(pers_documentoIdentidad: "#{params[:id]}").take %>
 	<% unless persona.nil? %>
-		<% case params[:dato_requerido] %>
-			<% when "nombre" %>
-				varDatoPersona = "<%= persona.pers_nombres + " " + persona.pers_apellidos %>";
+		<% hshDatosControl = params[:datos_control] %>
+		<% hshDatosControl.each do |key, value| %>
+			<% case key %>
+				<% when "nombre" %>
+					$("#<%= value %>").val("<%= persona.pers_nombres + " " + persona.pers_apellidos %>");
+			<% end %>
 		<% end %>
-		$("#<%= params[:nombre_control]%>").val(varDatoPersona);
 	<% end %>
 <% end %>
 	

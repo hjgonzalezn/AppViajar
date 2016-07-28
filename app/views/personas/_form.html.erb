@@ -40,11 +40,15 @@
   					</div>
 			  		<div class="form-group">
 			    		<%= f.label :pers_sexo, "Sexo*" %><br>
-			    		<%= f.select :pers_sexo, options_for_select(@generos.invert, @persona.pers_sexo), {}, html_options={class:"form-control", prompt: "-- SELECCIONE --"} %>
+			    		<%= f.select :pers_sexo, options_for_select(@generos.invert, @persona.pers_sexo), options={prompt: "-- SELECCIONE --"}, html_options={class:"form-control"} %>
 			  		</div>
 			  		<div class="form-group">
+			    		<%= f.label :pers_pesoCorporal, "Peso Corporal (kg)" %><br>
+			    		<%= f.text_field :pers_pesoCorporal, options={size: 25, maxlength: 3, class:"form-control"} %>
+			  		</div>			  		
+			  		<div class="form-group">
 			    		<%= f.label :pers_paisOrigen, "País de origen" %><br>
-			    		<%= f.select :pers_paisOrigen, options_for_select(@paises.map{|h| [h.enter_nombreCorto, h.id]}, @persona.pers_paisOrigen), {}, html_options={class:"form-control", prompt:"-- SELECCIONE --"} %>
+			    		<%= f.select :pers_paisOrigen, options_for_select(@paises.map{|h| [h.enter_nombreCorto, h.id]}, @persona.pers_paisOrigen), options={prompt: "-- SELECCIONE --"}, html_options={class:"form-control"} %>
 			  		</div>
 		  			<div class="form-group">
 		    			<%= f.label :pers_telefonoPersonal1, "Teléfono Personal 1" %><br>
@@ -71,11 +75,16 @@
   					</div>
 			  		<div class="form-group">
 			    		<%= f.label :pers_estadoCivil, "Estado Civil*" %><br>
-			    		<%= f.select :pers_estadoCivil, options_for_select(@estadosCiviles.invert, @persona.pers_estadoCivil), {}, html_options={class:"form-control", prompt: "-- SELECCIONE --"} %>
+			    		<%= f.select :pers_estadoCivil, options_for_select(@estadosCiviles.invert, @persona.pers_estadoCivil), options={prompt: "-- SELECCIONE --"}, options={class:"form-control"} %>
+			  		</div>
+			  		<div class="form-group">
+						<p>&nbsp;</p>
+						<p>&nbsp;</p>
+						<p>&nbsp;</p>
 			  		</div>
 			  		<div class="form-group">
 			    		<%= f.label :pers_ciudadDomicilio, "Ciudad Domicilio (Colombia)" %><br>
-			    		<%= f.select :pers_ciudadDomicilio, options_for_select(@ciudadesColombia.map{|h| [h.enter_nombreCorto, h.id]}, @persona.pers_ciudadDomicilio), {}, html_options={class:"form-control", prompt: "-- SELECCIONE --"} %>
+			    		<%= f.select :pers_ciudadDomicilio, options_for_select(@ciudadesColombia.map{|h| [h.enter_nombreCorto, h.id]}, @persona.pers_ciudadDomicilio), options={prompt: "-- SELECCIONE --"}, html_options={class:"form-control"} %>
 			  		</div>
 			  		<div class="form-group">
 			    		<%= f.label :pers_telefonoPersonal2, "Teléfono Personal 2" %><br>

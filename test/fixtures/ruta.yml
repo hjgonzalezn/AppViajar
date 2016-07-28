@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ruta_medio: MyString
+  ruta_descripcion: MyString
+  ruta_frecuencia: MyString
+  ruta_vehiculo: MyString
+  ruta_estadoRegistro: MyString
+
+two:
+  ruta_medio: MyString
+  ruta_descripcion: MyString
+  ruta_frecuencia: MyString
+  ruta_vehiculo: MyString
+  ruta_estadoRegistro: MyString

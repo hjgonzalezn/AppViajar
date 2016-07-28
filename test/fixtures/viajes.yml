@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  viaje_ruta: MyString
+  viaje_fecha: 2016-07-03
+  viaje_horaSalida: MyString
+  viaje_estado: MyString
+  vehiculo_id: 
+  viaje_estadoRegistro: MyString
+
+two:
+  viaje_ruta: MyString
+  viaje_fecha: 2016-07-03
+  viaje_horaSalida: MyString
+  viaje_estado: MyString
+  vehiculo_id: 
+  viaje_estadoRegistro: MyString

@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  trf_concepto: MyString
+  tfr_conceptoCodigo: MyString
+  trf_conceptoAplicacion: MyString
+  trf_detalleAplicacion: MyString
+  trf_naturaleza: MyString
+  trf_tipoProducto: MyString
+  trf_producto: MyString
+  trf_promo: 1.5
+  trf_econo: 1.5
+  trf_base: 1.5
+  trf_flexi: 1.5
+  trf_unidadCobro: MyString
+  trf_fechaInicio: 2016-05-27
+  trf_fechaFin: 2016-05-27
+  trf_estadoRegistro: MyString
+
+two:
+  trf_concepto: MyString
+  tfr_conceptoCodigo: MyString
+  trf_conceptoAplicacion: MyString
+  trf_detalleAplicacion: MyString
+  trf_naturaleza: MyString
+  trf_tipoProducto: MyString
+  trf_producto: MyString
+  trf_promo: 1.5
+  trf_econo: 1.5
+  trf_base: 1.5
+  trf_flexi: 1.5
+  trf_unidadCobro: MyString
+  trf_fechaInicio: 2016-05-27
+  trf_fechaFin: 2016-05-27
+  trf_estadoRegistro: MyString

@@ -1,0 +1,121 @@
+<%= form_for(@rutum) do |f| %>
+  <% if @rutum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rutum.errors.count, "error") %> prohibited this rutum from being saved:</h2>
+
+      <ul>
+      <% @rutum.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+   <style>
+  	.custom-combobox {
+    	position: relative;
+    	display: inline-block;
+  	}
+  	.custom-combobox-toggle {
+    	position: absolute;
+    	top: 0;
+    	bottom: 0;
+    	margin-left: -1px;
+    	padding: 0;
+  	}
+  	.custom-combobox-input {
+    	margin: 0;
+    	padding: 5px 10px;
+    	width:370px;
+  }
+  </style>
+  
+	<div class="col-lg-6 col-md-6" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+			<div class="col-lg-12 col-md-12">
+				<div class="form-group">
+			    	<%= f.label :ruta_medio, "Medio*" %><br>
+			    	<%= f.select :ruta_medio, options_for_select([["ACUÁTICO", "ACUÁTICO"], ["AÉREO", "AÉREO"], ["TERRESTRE", "TERRESTRE"]], @rutum.ruta_medio) ,{prompt: "-- SELECCIONE --"},options={class:"form-control"} %>
+			  	</div>
+				<div class="form-group">
+			    	<%= f.label :ruta_prioridad, "Prioridad*" %><br>
+			    	<%= f.select :ruta_prioridad, options_for_select([[1, 1], [2, 2], [3, 3]], @rutum.ruta_prioridad) ,{prompt: "-- SELECCIONE --"},options={class:"form-control"} %>
+			  	</div>
+			  	<div class="form-group">
+			  		<%= f.hidden_field :ruta_descripcion %>
+			    	<%= label_tag "Estación 1" %><br>
+			    	<%= select_tag :estacion1, options_for_select(@entidadesColombia.invert, @estacion1), prompt:"-- SELECCIONE --" %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= label_tag "Estación 2" %><br>
+			    	<%= select_tag :estacion2, options_for_select(@entidadesColombia.invert, @estacion2), prompt:"-- SELECCIONE --" %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= label_tag "Estación 3" %><br>
+			    	<%= select_tag :estacion3, options_for_select(@entidadesColombia.invert, @estacion3), prompt:"-- SELECCIONE --" %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= label_tag "Estación 4" %><br>
+			    	<%= select_tag :estacion4, options_for_select(@entidadesColombia.invert, @estacion4), prompt:"-- SELECCIONE --" %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= f.label :ruta_frecuencia, "Frecuencia*" %><br>
+			    	<%= f.text_field :ruta_frecuencia, options={class:"form-control"} %>
+			  	</div>
+			  	<div class="form-group">
+			    	<%= f.label :ruta_estadoRegistro, "Estado*" %><br>
+			    	<%= f.select :ruta_estadoRegistro, options_for_select(@estados.invert), {}, html_options={class:"form-control"} %>
+			  	</div>
+			</div>
+		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							$( "#rutum_ruta_frecuencia" ).trigger( "focus" );
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_rutum_<%= @rutum.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_rutum').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+				
+				<%= link_to 'Regresar', ruta_path , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					| <%= link_to 'Consultar', @rutum, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+<script>
+	$(document).on("page:update", function(){
+   		$( "#estacion1" ).combobox();
+   		$( "#estacion2" ).combobox();
+   		$( "#estacion3" ).combobox();
+   		$( "#estacion4" ).combobox();
+   		
+   		$("#rutum_ruta_frecuencia").focus(function(){
+   			valor = $("#estacion1").val() + "|" + $("#estacion2").val();
+   			if ($("#estacion3").val() != ""){
+   				valor = valor + "|" + $("#estacion3").val();
+   			} 
+   			if ($("#estacion4").val() != ""){
+   				valor = valor + "|" + $("#estacion4").val();
+   			}
+   			
+   			$("#rutum_ruta_descripcion").val(valor);
+   		});
+   		
+    	$( "#toggle" ).click(function() {
+      		$( "#combobox" ).toggle();
+    	});
+	});
+</script>

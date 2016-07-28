@@ -1,0 +1,73 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-9 col-md-9" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Tarifas</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-4 col-md-4">
+							<p><strong>Concepto:</strong></p>
+							<p><strong>Código Concepto:</strong></p>
+							<p><strong>Aplicación:</strong></p>
+							<p><strong>Detalle Aplicación:</strong></p>
+							<p><strong>Naturaleza:</strong></p>
+							<p><strong>Tipo Producto:</strong></p>
+							<p><strong>Producto:</strong></p>
+							<p><strong>Valor PROMO:</strong></p>
+							<p><strong>Tarifa ECONO:</strong></p>
+							<p><strong>Tarifa BASE:</strong></p>
+							<p><strong>Tarifa FLEXI:</strong></p>
+							<p><strong>Tarifa DELUXE:</strong></p>
+							<p><strong>Unidad de Cobro:</strong></p>
+							<p><strong>Fecha de inicio (vigencia):</strong></p>
+							<p><strong>Fecha final:</strong></p>
+							<p><strong>Estado:</strong></p>
+							<p>&nbsp;</p>
+						</div>
+						<div class="col-lg-8 col-md-8">
+							<p><%= @tarifa.trf_concepto %></p>
+							<p><%= @tarifa.trf_conceptoCodigo %></p>
+							<p><%= @tarifa.trf_conceptoAplicacion %></p>
+							<p><%= @tarifa.trf_detalleAplicacion %>&nbsp;</p>
+							<p><%= @hshNaturalezaConcept[@tarifa.trf_naturaleza] %></p>
+							<p><%= @tarifa.trf_tipoProducto %>&nbsp;</p>
+							<p><%= @producto %>&nbsp;</p>
+							<p><%= number_to_currency(@tarifa.trf_promo) %>&nbsp;</p>
+							<p><%= number_to_currency(@tarifa.trf_econo) %>&nbsp;</p>
+							<p><%= number_to_currency(@tarifa.trf_base) %>&nbsp;</p>
+							<p><%= number_to_currency(@tarifa.trf_flexi) %>&nbsp;</p>
+							<p><%= number_to_currency(@tarifa.trf_deluxe) %>&nbsp;</p>
+							<p><%= @tarifa.trf_unidadCobro %></p>
+							<p><%= @tarifa.trf_fechaInicio %></p>
+							<p><%= @tarifa.trf_fechaFin %>&nbsp;</p>
+							<p><%= @estados[@tarifa.trf_estadoRegistro] %></p>
+						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', @parent_path, class:"button back" %> |
+						<% case @tarifa.trf_tipoProducto %>
+							<% when "VEHICULOS" %>
+									<%= link_to 'Modificar', edit_vehiculo_tarifa_path(@parentId, @tarifa), class:"button edit" %>
+							<% when "RUTA" %>
+								<%= link_to 'Modificar', edit_rutum_tarifa_path(@parentId, @tarifa), class:"button edit" %>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

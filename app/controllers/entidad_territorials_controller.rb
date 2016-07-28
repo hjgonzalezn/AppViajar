@@ -116,6 +116,6 @@ class EntidadTerritorialsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entidad_territorial_params
-      params.require(:entidad_territorial).permit(:enter_nombreOficial, :enter_codigoOficial, :enter_presentacion, :enter_padreId, :enter_nivel, :region_id, :division_pais_id, :enter_estadoRegistro)
+      params.require(:entidad_territorial).permit(:enter_nombreOficial, :enter_nombreCorto, :enter_codigoOficial, :enter_presentacion, :enter_padreId, :enter_nivel, :region_id, :division_pais_id, :enter_estadoRegistro)
     end
 end

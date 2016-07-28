@@ -1,69 +1,168 @@
-<p id="notice"><%= notice %></p>
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-11 col-md-11" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Vehículo</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-12 col-md-12">
+							<div class="view view-first">
+								<%= image_tag("/assets/models/vehiculos/" + (@vehiculo.vehi_foto == nil ? "foto.jpg" : @vehiculo.vehi_foto), alt: "Nuquí", class: "img-responsive") %>
+								<div class="mask">
+                        			<h2><%= @tiposVehiculo[@vehiculo.vehi_tipo] + " - " + @vehiculo.vehi_modeloCodigo %></h2>
+										<div class="col-lg-5 col-md-5">
+											<p>&nbsp;</p>
+											<p><strong>Matrícula:</strong></p>
+											<p><strong>Nombre:</strong></p>
+											<p><strong>Tipo Propietario:</strong></p>
+											<p><strong>Propietario</strong></p>
+											<p><strong>Sucursal Propietario:</strong></p>
+											<p><strong>Capacidad Peso Máximo:</strong></p>
+											<p><strong>Capacidad Peso Pasajeros:</strong></p>
+											<p><strong>Capacidad Carga Bodega:</strong></p>
+											<p><strong>Nro. pasajeros:</strong></p>
+											<p><strong>Estado:</strong></p>
+										</div>
+										<div class="col-lg-7 col-md-7">
+											<p>&nbsp;</p>
+				  							<p><%= @vehiculo.vehi_matricula %>&nbsp;</p>
+				  							<p><%= @vehiculo.vehi_nombre %>&nbsp;</p>
+				  							<p><%= @vehiculo.vehi_tipoPropietario %></p>
+											<% datosPropietario = set_propietario_vehiculo(@vehiculo.vehi_tipoPropietario, @vehiculo.vehi_propietarioId, @vehiculo.vehi_sucursalEmpresaPropId) %>
+				  							<p><%= datosPropietario["nombre"] %></p>
+				  							<p><%= datosPropietario["ciudad"] %>&nbsp;</p>
+				  							<p><%= @vehiculo.vehi_capacPesoMaximo.round(0) %> kg</p>
+				  							<p><%= @vehiculo.vehi_capacPesoPasajeros.round(0) %> kg &nbsp;</p>
+				  							<p><%= @vehiculo.vehi_capacCargaBodega.round(0) %> kg &nbsp;</p>
+				  							<p><%= @vehiculo.vehi_capacPasajeros %></p>
+				  							<p><%= @estados[@vehiculo.vehi_estadoRegistro] %></p>
+				  							<p>&nbsp;</p>
+										</div>
+								</div>
+							</div>
+						</div>
+						<!--p>&nbsp;</p>
+						<div class="col-lg-5 col-md-5">
+							<p><strong>Tipo:</strong></p>
+							<p><strong>Modelo:</strong></p>
+							<p><strong>Nombre:</strong></p>
+							<p><strong>Matrícula:</strong></p>
+							<p><strong>Tipo Propietario:</strong></p>
+							<p><strong>Propietario</strong></p>
+							<p><strong>Sucursal Propietario:</strong></p>
+							<p><strong>Capacidad Peso Máximo:</strong></p>
+							<p><strong>Capacidad Peso Pasajeros:</strong></p>
+							<p><strong>Capacidad Carga Bodega:</strong></p>
+							<p><strong>Nro. pasajeros:</strong></p>
+							<p><strong>Estado:</strong></p>
+							<p>&nbsp;</p>
+						</div>
+						<div class="col-lg-7 col-md-7">
+  							<p><%= @tiposVehiculo[@vehiculo.vehi_tipo] %></p>
+  							<p><%= @vehiculo.vehi_modeloCodigo %></p>
+  							<p><%= @vehiculo.vehi_nombre %>&nbsp;</p>
+  							<p><%= @vehiculo.vehi_matricula %>&nbsp;</p>
+  							<p><%= @vehiculo.vehi_tipoPropietario %></p>
+							<% datosPropietario = set_propietario_vehiculo(@vehiculo.vehi_tipoPropietario, @vehiculo.vehi_propietarioId, @vehiculo.vehi_sucursalEmpresaPropId) %>
+  							<p><%= datosPropietario["nombre"] %></p>
+  							<p><%= datosPropietario["ciudad"] %>&nbsp;</p>
+  							<p><%= @vehiculo.vehi_capacPesoMaximo.round(0) %> kg</p>
+  							<p><%= @vehiculo.vehi_capacPesoPasajeros.round(0) %> kg &nbsp;</p>
+  							<p><%= @vehiculo.vehi_capacCargaBodega.round(0) %> kg &nbsp;</p>
+  							<p><%= @vehiculo.vehi_capacPasajeros %></p>
+  							<p><%= @estados[@vehiculo.vehi_estadoRegistro] %></p>
+  							<p>&nbsp;</p>
+						</div-->
+						<p>&nbsp;</p>
+						<div class="col-lg-12 col-md-12">
+							<h3 class="center">Tarifas</h3>
+							<table id="indexTable" class="stripe hover">
+  								<thead>
+						    		<tr>
+						      			<th>Concepto</th>
+						      			<th>Detalle</th>
+						      			<th>Valor</th>
+						      			<th>Vigencia desde</th>	
+						      			<th>Estado</th>
+						      			<th colspan="3"></th>
+						    		</tr>
+  								</thead>
+  								<tbody>
+    								<% @tarifas.each do |tarifa| %>
+      									<tr>
+							        		<td><%= tarifa.trf_concepto %></td>
+							        		<td><%= tarifa.trf_detalleAplicacion %></td>
+							        		<td><%= number_to_currency(tarifa.trf_base) %></td>
+							        		<td><%= tarifa.trf_fechaInicio %></td>
+							        		<td><%= @estados[tarifa.trf_estadoRegistro] %></td>
+					        				<td><%= link_to(vehiculos_path + "/" + @vehiculo.id.to_s + "/tarifas/" + tarifa.id.to_s, class:"btn btn-info") do %>
+					        					<i class="fa fa-book"></i>
+					        				<% end %>
+					        				</td>
+					        				<td><a href="<%= edit_vehiculo_tarifa_path(@vehiculo.id, tarifa) %>" class="btn btn-warning">
+					        						<i class="fa fa-edit"></i>
+					        					</a>
+					        				</td>
+					        				<td>
+					        					<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href="<%= @delete_path + tarifa.id.to_s %>">
+					        						<i class="fa fa-trash"></i>
+					        					</a>
+					        				</td>
+      									</tr>
+    								<% end %>
+  								</tbody>
+							</table>
+							
+							<p>&nbsp;</p>
+							<%= link_to 'Nueva tarifa', new_vehiculo_tarifa_path(@vehiculo), class:"button add" %>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', vehiculos_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_vehiculo_path(@vehiculo), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-<p>
-  <strong>Vehi tipo:</strong>
-  <%= @vehiculo.vehi_tipo %>
-</p>
-
-<p>
-  <strong>Vehi modelocodigo:</strong>
-  <%= @vehiculo.vehi_modeloCodigo %>
-</p>
-
-<p>
-  <strong>Vehi mediocodigo:</strong>
-  <%= @vehiculo.vehi_medioCodigo %>
-</p>
-
-<p>
-  <strong>Vehi nombre:</strong>
-  <%= @vehiculo.vehi_nombre %>
-</p>
-
-<p>
-  <strong>Vehi matricula:</strong>
-  <%= @vehiculo.vehi_matricula %>
-</p>
-
-<p>
-  <strong>Vehi propietarioid:</strong>
-  <%= @vehiculo.vehi_propietarioId %>
-</p>
-
-<p>
-  <strong>Vehi tipopropietario:</strong>
-  <%= @vehiculo.vehi_tipoPropietario %>
-</p>
-
-<p>
-  <strong>Vehi sucursalempresapropid:</strong>
-  <%= @vehiculo.vehi_sucursalEmpresaPropId %>
-</p>
-
-<p>
-  <strong>Vehi capacpesomaximo:</strong>
-  <%= @vehiculo.vehi_capacPesoMaximo %>
-</p>
-
-<p>
-  <strong>Vehi capacpesopasajeros:</strong>
-  <%= @vehiculo.vehi_capacPesoPasajeros %>
-</p>
-
-<p>
-  <strong>Vehi capaccargabodega:</strong>
-  <%= @vehiculo.vehi_capacCargaBodega %>
-</p>
-
-<p>
-  <strong>Vehi capacpasajeros:</strong>
-  <%= @vehiculo.vehi_capacPasajeros %>
-</p>
-
-<p>
-  <strong>Vehi estadoregistro:</strong>
-  <%= @vehiculo.vehi_estadoRegistro %>
-</p>
-
-<%= link_to 'Edit', edit_vehiculo_path(@vehiculo) %> |
-<%= link_to 'Back', vehiculos_path %>
+<script>
+	$(document).on('page:load', function() {
+			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
+			    table = $('#indexTable').DataTable();
+			}
+			else {
+			    table = $('#indexTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+		});
+		
+	$(function() {
+		$('#indexTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "40%" },
+							{ sWidth : "20%" },
+							{ sWidth : "15%" },
+							{ sWidth : "15%" },
+							{ sWidth : "10%" }						]
+    		});
+	});
+</script>

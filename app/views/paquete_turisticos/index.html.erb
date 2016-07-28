@@ -1,0 +1,130 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<br>
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p id="notice"><%= notice %></p>
+					</div>
+				<% end %>
+				<div class="tableWrapper">
+					<div class="section-header">
+						<h1>Planes  Turísticos</h1>
+					</div>
+					
+					<div class="row">
+						<div class="col-lg-11 col-md-11 col-sm-11 center">
+							<% index = 0 %>
+							<% @paquete_turisticos.each do |paquete_turistico| %>
+									
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
+									<div class="tm-tours-box-2">
+										<h3><%= paquete_turistico.pqTur_nombre %></h3>				
+										<%= image_tag("/assets/models/vehiculos/" + (nil == nil ? "foto.jpg" : ""), alt: "#{nil}", class: "img-responsive") %>
+										<div class="tm-tours-box-2-info">
+											<h3 class="margin-bottom-15"><%= %></h3>
+											<p><%=  %></p>
+										</div>						
+										<div class="tm-tours-box-2-bottom-bar">
+											<%= link_to(paquete_turistico, class:"btn btn-info") do %>
+					        					<i class="fa fa-book"></i>
+					        				<% end %>
+											<a href="<%= edit_paquete_turistico_path(paquete_turistico) %>" class="btn btn-warning">
+					        					<i class="fa fa-edit"></i>
+					        				</a>
+					        				<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/paquete_turisticos/#{paquete_turistico.id}"%> >
+					        					<i class="fa fa-trash"></i>
+					        				</a>
+										</div>
+									</div>
+								</div>
+								
+								<% index += 1 %>
+							<% end %>
+						</div>
+					</div>
+					<!--table id="indexTable" class="stripe hover">
+						  <thead>
+						    <tr>
+						      <th>Pqtur nombre</th>
+						      <th>Pqtur descripcion</th>
+						      <th>Pqtur incluye</th>
+						      <th>Pqtur noincluye</th>
+						      <th>Pqtur opcionales</th>
+						      <th>Pqtur recomendaciones</th>
+						      <th>Pqtur fechavigenciaini</th>
+						      <th>Pqtur fechavigenciafin</th>
+						      <th>Pqtur fechapromocionini</th>
+						      <th>Pqtur fechapromocionfin</th>
+						      <th>Pqtur estadoregistro</th>
+						      <th colspan="3"></th>
+						    </tr>
+						  </thead>
+						
+						  <tbody>
+						    <% @paquete_turisticos.each do |paquete_turistico| %>
+						      <tr>
+						        <td><%= paquete_turistico.pqTur_nombre %></td>
+						        <td><%= paquete_turistico.pqTur_descripcion %></td>
+						        <td><%= paquete_turistico.pqTur_incluye %></td>
+						        <td><%= paquete_turistico.pqTur_noIncluye %></td>
+						        <td><%= paquete_turistico.pqTur_opcionales %></td>
+						        <td><%= paquete_turistico.pqTur_recomendaciones %></td>
+						        <td><%= paquete_turistico.pqTur_fechaVigenciaIni %></td>
+						        <td><%= paquete_turistico.pqTur_fechaVigenciaFin %></td>
+						        <td><%= paquete_turistico.pqTur_fechaPromocionIni %></td>
+						        <td><%= paquete_turistico.pqTur_fechaPromocionFin %></td>
+						        <td><%= paquete_turistico.pqTur_estadoRegistro %></td>
+					        		<td><%= link_to(paquete_turistico, class:"btn btn-info") do %>
+					        				<i class="fa fa-book"></i>
+					        			<% end %>
+					        		</td>
+					        		<td><a href="<%= edit_paquete_turistico_path(paquete_turistico) %>" class="btn btn-warning">
+					        				<i class="fa fa-edit"></i>
+					        			</a>
+					        		</td>
+					        		<td>
+					        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/paquete_turisticos/#{paquete_turistico.id}"%> >
+					        				<i class="fa fa-trash"></i>
+					        			</a>
+					        		</td>
+      							</tr>
+    						<% end %>
+  						</tbody>
+					</table-->
+					<div class="section-footer">
+						<%= link_to 'Regresar', administracion_path , class:"button back" %>
+						<%= link_to 'Nuevo registro', new_paquete_turistico_path, class:"button add" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script>
+
+	$(document).on('page:update', function() {
+			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
+			    table = $('#indexTable').DataTable();
+			}
+			else {
+			    table = $('#indexTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+		});
+		
+	$(function() {
+		$('#indexTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "70%" },
+							{ sWidth : "30%" }
+						]
+    		});
+	});
+</script>

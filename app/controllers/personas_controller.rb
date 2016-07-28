@@ -86,16 +86,24 @@ class PersonasController < ApplicationController
       @paises = set_paises
       
       if params[:action] == "edit" || params[:action] == "show" then 
-        @sucursal = SucursalEmpresa.find(@persona.sucursalEmpresaId)
-        @empresa = Empresa.where(empr_documentoIdentidad: @sucursal.empr_documentoIdentidad).take
         
+        @sucursal = @persona.sucursalEmpresaId
+        @empresa = nil
+        @sucursales = nil
+        
+        unless @sucursal.nil?
+          @sucursal = SucursalEmpresa.find(@persona.sucursalEmpresaId)
+          @empresa = Empresa.where(empr_documentoIdentidad: @sucursal.empr_documentoIdentidad).take
           @sucursales = set_sucursales_empresa(@empresa.empr_documentoIdentidad)
           @sucursales = @sucursales.map{|h| [h.sucEmpr_nombreSucursal, h.id]}.to_h
         end
+        
+
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def persona_params
-      params.require(:persona).permit(:pers_documentoIdentidad, :pers_nombres, :pers_apellidos, :pers_alias, :pers_sexo, :pers_paisOrigen, :pers_fechaNacimiento, :pers_estadoCivil, :pers_direccionDomicilio, :pers_ciudadDomicilio, :pers_telefonoPersonal1, :pers_telefonoPersonal2, :pers_correoElectrPersonal, :pers_correoElectrLaboral, :pers_perfilLaboral, :sucursalEmpresaId, :empresaCargo, :pers_telefonoLaboral1, :pers_telefonoLaboral2, :pers_estadoRegistro)
+      params.require(:persona).permit(:pers_documentoIdentidad, :pers_nombres, :pers_apellidos, :pers_alias, :pers_sexo, :pers_pesoCorporal, :pers_paisOrigen, :pers_fechaNacimiento, :pers_estadoCivil, :pers_direccionDomicilio, :pers_ciudadDomicilio, :pers_telefonoPersonal1, :pers_telefonoPersonal2, :pers_correoElectrPersonal, :pers_correoElectrLaboral, :pers_perfilLaboral, :sucursalEmpresaId, :empresaCargo, :pers_telefonoLaboral1, :pers_telefonoLaboral2, :pers_estadoRegistro)
     end
 end

@@ -1,0 +1,2 @@
+module TipoActividadTuristicasHelper
+end

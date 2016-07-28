@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tarifas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Trf concepto</th>
+      <th>Tfr conceptocodigo</th>
+      <th>Trf conceptoaplicacion</th>
+      <th>Trf detalleaplicacion</th>
+      <th>Trf naturaleza</th>
+      <th>Trf tipoproducto</th>
+      <th>Trf producto</th>
+      <th>Trf promo</th>
+      <th>Trf econo</th>
+      <th>Trf base</th>
+      <th>Trf flexi</th>
+      <th>Trf unidadcobro</th>
+      <th>Trf fechainicio</th>
+      <th>Trf fechafin</th>
+      <th>Trf estadoregistro</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tarifas.each do |tarifa| %>
+      <tr>
+        <td><%= tarifa.trf_concepto %></td>
+        <td><%= tarifa.trf_conceptoCodigo %></td>
+        <td><%= tarifa.trf_conceptoAplicacion %></td>
+        <td><%= tarifa.trf_detalleAplicacion %></td>
+        <td><%= tarifa.trf_naturaleza %></td>
+        <td><%= tarifa.trf_tipoProducto %></td>
+        <td><%= tarifa.trf_producto %></td>
+        <td><%= tarifa.trf_promo %></td>
+        <td><%= tarifa.trf_econo %></td>
+        <td><%= tarifa.trf_base %></td>
+        <td><%= tarifa.trf_flexi %></td>
+        <td><%= tarifa.trf_unidadCobro %></td>
+        <td><%= tarifa.trf_fechaInicio %></td>
+        <td><%= tarifa.trf_fechaFin %></td>
+        <td><%= tarifa.trf_estadoRegistro %></td>
+        <td><%= link_to 'Show', tarifa %></td>
+        <td><%= link_to 'Edit', edit_tarifa_path(tarifa) %></td>
+        <td><%= link_to 'Destroy', tarifa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tarifa', new_tarifa_path %>
