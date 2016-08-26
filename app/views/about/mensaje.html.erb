@@ -1,0 +1,34 @@
+<!-- gray bg -->	
+<section class="container tm-home-section-1" id="more">
+	<div class="row">
+		<!-- slider -->
+		<div class="flexslider effect2 effect2-contact flex-caption">
+			<ul class="slides">
+				<li>
+					<!--div class="contact-text"-->
+						<h2 class="msj-title">&nbsp;<i class="fa fa-check"></i> TRANSACCIÓN EXITOSA</h2>
+						<div class="alert alert-success">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<p id="notice" class="slider-subtitle"><%= notice %></p>
+						</div>
+						<p class="center"><input type="button" value="Aceptar" id="cmd_aceptar" class="tm-orange-btn"></p>
+						<div class="slider-social">
+							<a href="#" class="tm-social-icon"><i class="fa fa-twitter"></i></a>
+							<a href="#" class="tm-social-icon"><i class="fa fa-facebook"></i></a>
+							<a href="#" class="tm-social-icon"><i class="fa fa-pinterest"></i></a>
+							<a href="#" class="tm-social-icon"><i class="fa fa-google-plus"></i></a>
+						</div>
+					<!-- </div> -->			      
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>
+
+<script>
+	$(document).on('page:update', function() {
+		$("#cmd_aceptar").click(function(e){
+			window.location.href = "/about";
+		});
+	});
+</script>

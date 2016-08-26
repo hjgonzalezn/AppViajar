@@ -19,31 +19,67 @@
 						<h1>Consultar Paquete Turístico</h1>
 					</div>
 					<div id="tm-form-content">
-						<div class="col-lg-6 col-md-6">
-							<p><strong>Nombre:</strong></p>
-							<p><strong>Descripcion:</strong></p>
-							<p><strong>Incluye:</strong></p>
-							<p><strong>No Incluye:</strong></p>
-							<p><strong>Actividades opcionales:</strong></p>
-							<p><strong>Recomendaciones:</strong></p>
-							<p><strong>Fecha inicial de vigencia:</strong></p>
-							<p><strong>Fecha final de vigencia:</strong></p>
-							<p><strong>Fecha inicial de promoción:</strong></p>
-							<p><strong>Fecha final de promoción:</strong></p>
-							<p><strong>Pqtur estadoregistro:</strong></p>
-						</div>
-						<div class="col-lg-6 col-md-6">
-							<p><%= @paquete_turistico.pqTur_nombre %></p>
-							<p><%= @paquete_turistico.pqTur_descripcion %></p>
-							<p><%= @paquete_turistico.pqTur_incluye %></p>
-							<p><%= @paquete_turistico.pqTur_noIncluye %></p>
-							<p><%= @paquete_turistico.pqTur_opcionales %></p>
-							<p><%= @paquete_turistico.pqTur_recomendaciones %></p>
-							<p><%= @paquete_turistico.pqTur_fechaVigenciaIni %></p>
-							<p><%= @paquete_turistico.pqTur_fechaVigenciaFin %></p>
-							<p><%= @paquete_turistico.pqTur_fechaPromocionIni %></p>
-							<p><%= @paquete_turistico.pqTur_fechaPromocionFin %></p>
-							<p><%= @paquete_turistico.pqTur_estadoRegistro %></p>
+						<div class="tm-home-box-h">
+							<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
+							    <li role="presentation" class="active">
+									<a href="#datos" aria-controls="datos" role="tab" data-toggle="tab">Datos Básicos</a>
+							    </li>
+							    <li role="presentation">
+							    	<a href="#actividades" aria-controls="hotel" role="tab" data-toggle="tab">Actividades</a>
+							    </li>
+							    <li role="presentation">
+							    	<a href="#itinerario" aria-controls="hotel" role="tab" data-toggle="tab">Itinerario</a>
+							    </li>
+							    <li role="presentation">
+							    	<a href="#fechas" aria-controls="hotel" role="tab" data-toggle="tab">Agenda</a>
+							    </li>
+							</ul>
+							<div class="tab-content tm-white-bg">
+								<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="datos">
+									<div class="tm-search-box">
+										<p>&nbsp;</p>
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Nombre:</strong></p>
+											<p><strong>Descripcion:</strong></p>
+											<p><strong>Incluye:</strong></p>
+											<p><strong>No Incluye:</strong></p>
+											<p><strong>Actividades opcionales:</strong></p>
+											<p><strong>Recomendaciones:</strong></p>
+											<p><strong>Fecha inicial de vigencia:</strong></p>
+											<p><strong>Fecha final de vigencia:</strong></p>
+											<p><strong>Fecha inicial de promoción:</strong></p>
+											<p><strong>Fecha final de promoción:</strong></p>
+											<p><strong>Pqtur estadoregistro:</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<p><%= @paquete_turistico.pqTur_nombre %></p>
+											<p><%= @paquete_turistico.pqTur_descripcion %></p>
+											<p><%= @paquete_turistico.pqTur_incluye %></p>
+											<p><%= @paquete_turistico.pqTur_noIncluye %></p>
+											<p><%= @paquete_turistico.pqTur_opcionales %></p>
+											<p><%= @paquete_turistico.pqTur_recomendaciones %></p>
+											<p><%= @paquete_turistico.pqTur_fechaVigenciaIni %></p>
+											<p><%= @paquete_turistico.pqTur_fechaVigenciaFin %></p>
+											<p><%= @paquete_turistico.pqTur_fechaPromocionIni %></p>
+											<p><%= @paquete_turistico.pqTur_fechaPromocionFin %></p>
+											<p><%= @paquete_turistico.pqTur_estadoRegistro %></p>
+										</div>
+										<p>&nbsp;</p>
+									</div>
+								</div>
+								<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="actividades">
+									<div class="tm-search-box">
+									</div>
+								</div>
+								<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="itinerario">
+									<div class="tm-search-box">
+									</div>
+								</div>
+								<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="fechas">
+									<div class="tm-search-box">
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div id="tm-form-footer">

@@ -1,0 +1,254 @@
+		<!-- gray bg -->	
+	<section class="container tm-home-section-1" id="more">
+		<div class="row">
+			<!-- slider -->
+			<div class="flexslider effect2 effect2-contact flex-caption">
+				<ul class="slides">
+					<li>
+						<div class="col-lg-12">
+							<div class="col-lg-12">
+								<div class="col-lg-12">
+							<h2 class="slider-title">Detalle de la Reserva</h2>
+							<div class="col-lg-12">
+								<p class="slider-subtitle">Apreciado cliente, por favor ingrese los datos de los titulares de la reserva teniendo en cuenta adultos, menores e infantes.</p>
+								<table class="slider-abstract">
+									<tr>
+										<th colspan="4">DATOS DEL VIAJE</th>
+										<th colspan="3	"><strong>PASAJEROS</strong></th>
+									</tr>
+									<tr>
+										<th>ORIGEN</th>
+										<td><%= @enterOrigen.enter_nombreCorto %></td>
+										<th><strong>FECHA DE IDA</strong></th>
+										<td><%= @dtFechaIda %></td>
+										<th><strong>ADULTOS</strong></th>
+										<th><strong>MENORES</strong></th>
+										<th><strong>INFANTES</strong></th>
+									</tr>
+									<tr>
+										<th>DESTINO</th>
+										<td><%= @enterDestino.enter_nombreCorto %></td>
+										<th><strong>FECHA DE REGRESO</strong></th>
+										<td><%= @dtFechaRegreso %></td>
+										<td><%= @nroAdultos %></td>
+										<td><%= @nroMenores %></td>
+										<td><%= @nroInfantes %></td>
+									</tr>
+								</table>
+								<p>&nbsp;</p>
+							</div>
+						</div>
+						</div>
+						<div class="col-lg-12">
+							<form id="frm" action="/about/confirmar_reserva" method="post" class="hotel-search-form">
+								<div class="col-lg-12">
+									<div class="col-lg-12">
+										<h3>INFORMACIÓN DE CONTACTO</h3>
+										<br>
+									</div>								
+									<div class="col-lg-6">
+										<div class="form-group">
+											<%= select_tag("contacto_tipo_identificacion", options_for_select(@tiposIdAdulto.invert), options={class:"form-control", prompt: "-- TIPO DOCUM. IDENTIDAD --", name:"contacto[tipo_identificacion]"})%>
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<%= text_field_tag "contacto_numero_identificacion", nil, options={class:"form-control", placeholder:"Número de Identificación", name:"contacto[numero_identificacion]"} %>
+			          					</div>
+			          				</div>
+			          			</div>
+								
+			          			<div class="col-lg-12">
+			          				<div class="col-lg-6">
+										<div class="form-group">
+											<%= text_field_tag "contacto_nombres", nil, options={class:"form-control", placeholder:"Nombres", name:"contacto[nombres]"} %>
+			          					</div>
+			          				</div>
+			          				<div class="col-lg-6">
+										<div class="form-group">
+											<%= text_field_tag "contacto_apellidos", nil, options={class:"form-control", placeholder:"Apellidos", name:"contacto[apellidos]"} %>
+				          				</div>
+				          			</div>
+			          			</div>
+			          			
+			          			<div class="col-lg-12">
+			          				<div class="col-lg-6">
+										<div class="form-group">
+											<%= text_field_tag "contacto_telefono", nil, options={class:"form-control", placeholder:"Teléfono", name:"contacto[telefono]"} %>
+			          					</div>
+			          				</div>
+			          				<div class="col-lg-6">
+										<div class="form-group">
+											<%= text_field_tag "contacto_correo", nil, options={class:"form-control", placeholder:"Correo electrónico", name:"contacto[correo_electronico]"} %>
+				          				</div>
+				          			</div>
+				          		<div class="col-lg-12">
+					          		<p class="slider-description">
+										<label class="tm-label-radio"><%= check_box_tag :contacto_pax, options={} %> Usted es uno de los pasajeros.</label>
+									</p>
+								</div>
+			          			</div>
+									          			
+								<ul class="nav nav-tabs tm-white-bg" role="tablist" id="personTabs">
+								    <li role="presentation" class="active">
+										<a href="#adultos" aria-controls="adultos" role="tab" data-toggle="tab">Adultos (<%= @nroAdultos %>)</a>
+								    </li>
+								    <li role="presentation">
+								    	<a href="#menores" aria-controls="menores" role="tab" data-toggle="tab">Menores (<%= @nroMenores %>)</a>
+								    </li>
+								    <li role="presentation">
+								    	<a href="#infantes" aria-controls="infantes" role="tab" data-toggle="tab">Infantes (<%= @nroInfantes %>)</a>
+								    </li>
+								</ul>
+		
+								
+									<div class="tab-content">
+										<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="adultos">
+											<div class="tm-search-box">
+												<div class="tm-form-inner frm-reservas" id="ad-inner">
+													<% nmIndex = 0 %>
+													<% for i in 1..@nroAdultos %>
+														<% nmIndex = nmIndex + 1 %>
+														<h4><%= "Adulto #{i}" %></h4>
+														<div class="col-lg-12">
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= hidden_field_tag "reserva_tipo_pax" + nmIndex.to_s, "ADULTO", options={name:"reserva[tipo_pax][]"} %> 
+																	<%= select_tag("reserva_tipo_identificacion" + nmIndex.to_s, options_for_select(@tiposIdAdulto.invert), options={class:"form-control", prompt: "-- TIPO DOCUM. IDENTIDAD --", name:"reserva[tipo_identificacion][]"})%>
+																</div>
+															</div>
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_numero_identificacion" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Número de Identificación", name:"reserva[numero_identificacion][]"} %>
+									          					</div>
+									          				</div>
+									          			</div>
+									          			<div class="col-lg-12">
+									          				<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_nombres" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Nombres", name:"reserva[nombres][]"} %>
+									          					</div>
+									          				</div>
+									          				<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_apellidos" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Apellidos", name:"reserva[apellidos][]"} %>
+										          				</div>
+										          			</div>
+									          			</div>
+								          			<% end %>
+									          	</div>
+									      	</div>
+									   	</div>
+										<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="menores">
+											<div class="tm-search-box">
+												<div class="tm-form-inner frm-reservas">
+													<% for i in 1..@nroMenores %>
+														<% nmIndex = nmIndex + 1 %>
+														<h4><%= "Menor #{i}" %></h4>
+														<div class="col-lg-12">
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= hidden_field_tag "reserva_tipo_pax" + nmIndex.to_s, "MENOR", options={name:"reserva[tipo_pax][]"} %>
+																	<%= select_tag("reserva_tipo_identificacion" + nmIndex.to_s, options_for_select(@tiposIdMenor.invert), options={class:"form-control", prompt: "-- TIPO DOCUM. IDENTIDAD --", name:"reserva[tipo_identificacion][]"})%>
+																</div>
+															</div>
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_numero_identificacion" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Número de identificación", name:"reserva[numero_identificacion][]"} %>
+											          			</div>
+											          		</div>
+											          	</div>
+											          	<div class="col-lg-12">
+										          			<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_nombres" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Nombres", name: "reserva[nombres][]"} %>
+											          			</div>
+											          		</div>
+											          		<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_apellidos" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Apellidos", name:"reserva[apellidos][]"} %>
+												          		</div>
+											          		</div>
+											          	</div>
+										          	<% end %>
+									          	</div>
+									      	</div>
+									   	</div>
+									   	<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="infantes">
+											<div class="tm-search-box">
+												<div class="tm-form-inner frm-reservas">
+													<% for i in 1..@nroInfantes %>
+														<% nmIndex = nmIndex + 1 %>	
+														<h4><%= "Infante #{i}" %></h4>
+														<div class="col-lg-12">
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= hidden_field_tag "reserva_tipo_pax" + nmIndex.to_s, "INFANTE", options={name:"reserva[tipo_pax][]"} %>
+																	<%= select_tag("reserva_tipo_identificacion" + nmIndex.to_s, options_for_select(@tiposIdInfante.invert), options={class:"form-control", prompt: "-- TIPO DOCUM. IDENTIDAD --", name:"reserva[tipo_identificacion][]"})%>
+																</div>
+															</div>
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_numero_identificacion" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Número de identificación", name:"reserva[numero_identificacion][]"} %>
+											          			</div>
+											          		</div>
+											          	</div>
+										          		<div class="col-lg-12">
+											          		<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_nombres" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Nombres", name:"reserva[nombres][]"} %>
+												          		</div>
+												          	</div>
+												          	<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_apellidos" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Apellidos", name:"reserva[apellidos][]"} %>
+												          		</div>
+												          	</div>
+												   		</div>
+										          	<% end %>
+									          	</div>
+									      	</div>
+										</div>
+									</div>
+						            <div class="form-group tm-yellow-gradient-bg text-center">
+						            	<%= hidden_field_tag :datos_viaje, @enterOrigen.id.to_s + "|" + @enterDestino.id.to_s + "|" + @dtFechaIda + "|" + @dtFechaRegreso + "|" + @nroAdultos.to_s + "|" + @nroMenores.to_s + "|" + @nroInfantes.to_s %>
+						            	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+						            	<button type="submit" name="submit" class="tm-orange-btn">Enviar</button>
+						            </div>	
+								</div>
+							</form>
+						</div>			      
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>	
+	
+	<!-- white bg -->
+	<section class="section-padding-top tm-white-bg">
+		<div class="container">
+			<div class="row">
+				<div class="tm-section-header section-margin-bottom">
+					<br/>
+				</div>	
+			</div>
+		</div>
+	</section>
+	
+<script>
+	$(document).on('page:update', function() {
+		$("#contacto_pax").click(function(){
+			if($('input[id="contacto_pax"]:checked').length > 0){
+				$("#reserva_tipo_identificacion1").val($("#contacto_tipo_identificacion option:selected").val());
+				$("#reserva_numero_identificacion1").val($("#contacto_numero_identificacion").val());
+				$("#reserva_nombres1").val($("#contacto_nombres").val());
+				$("#reserva_apellidos1").val($("#contacto_apellidos").val());
+				$("#reserva_numero_identificacion1").val($("#contacto_numero_identificacion").val());
+			}
+			else{
+				$("#reserva_tipo_identificacion1").val("");
+				$("#reserva_numero_identificacion1").val("");
+			}
+		});
+	});
+</script>

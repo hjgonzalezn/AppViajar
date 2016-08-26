@@ -30,6 +30,10 @@ h3.center{
 	padding: 3px;
 }
 
+.center{
+	text-align:center;
+}
+
 .col-lg-11.center, .col-md-11.center, .col-sm-11.center{
 	left:4%;
 }
@@ -79,7 +83,6 @@ body { overflow-x: hidden; }
 	height: 93px;
 	position: relative;
 	z-index: 100;
-	/*border-top: 3px solid #FFFFFF;*/
 	border-bottom:3px solid #2dc970;
 }
 .tm-site-name-container { padding-top: 13px; }
@@ -432,11 +435,95 @@ body { overflow-x: hidden; }
 	padding:12px;
 }
 
-.tm-form-inner { padding: 25px 30px 5px; }
+.tm-form-inner { padding: 25px 30px 5px; width:100%; }
 
+.frm-reservas{
+	overflow: auto;
+}
+
+.frm-reservas h4{
+	text-align:left;
+	color:#cd0a0a;
+	font-size:18px;
+}
 
 .tableWrapper{
 	background-color:#f8f8f8;
+}
+
+.slider-abstract, .datos-persona, .datos-contacto{
+	width:100%;
+	border-spacing: 4px;
+	border-collapse:separate;
+	border: none;
+}
+
+.slider-abstract td:nth-child(1){
+	font-weight:bold;
+}
+
+.slider-abstract tr, .datos-persona tr:nth-child(odd), .datos-contacto tr:nth-child(odd){
+	background-color:#f6f6f6;
+}
+
+.datos-persona tr:nth-child(even), .datos-contacto tr:nth-child(even){
+	background-color:#f9f9f9;
+}
+
+.slider-abstract th, .datos-persona th, .datos-contacto th{
+	background-color:#d8f6e5;
+	font-size:16px;
+	padding:5px;
+	border-radius:5px;
+}
+.slider-abstract tr:first-child th, .datos-persona tr:first-child th, .datos-contacto tr:first-child th{
+	text-align:center;
+	background-color:#2dc970;
+	color:white;
+	font-size:16px;
+	padding: 10px 0;
+}
+
+.slider-abstract td, .slider-abstract th, .datos-persona td, .datos-persona th, .datos-contacto td, .datos-contacto th{
+	padding: 5px 10px;
+	border-radius:5px;
+}
+
+.hotel-search-form h3{
+	background-color: #2dc970;
+	color: white;
+	padding: 10px;
+	border-radius:5px;
+	font-size:16px;
+	font-weight:bold;
+}
+
+.datos-persona td:nth-child(1){
+	width: 15%;
+}
+
+.datos-persona td:nth-child(2){
+	width: 25%;
+}
+
+.datos-persona td:nth-child(3){
+	width: 30%;
+}
+
+.datos-persona td:nth-child(4){
+	width: 30%;
+}
+
+.datos-contacto td:nth-child(1){
+	width: 40%;
+}
+
+.datos-contacto td:nth-child(2){
+	width: 30%;
+}
+
+.datos-contacto td:nth-child(3){
+	width: 30%;
 }
 
 #content-wrapper{
@@ -535,7 +622,7 @@ input:out-of-range {
   left: auto;
 }
 .tm-white-bg {
-	background-color: #fff;
+	background-color: #FFFFFF;
 }
 
 
@@ -553,7 +640,11 @@ input:out-of-range {
 	height: auto;
 }
 
-.
+.tm-home-box-30 {
+	width: 30%;
+	height: auto;
+}
+
 .tm-home-box-1-center {
 	margin: 0 auto;
 }
@@ -577,7 +668,7 @@ input:out-of-range {
 }
 
 #personTabs li {
-	width: 20%;
+	width: 30%;
 	height: 100%;
 }
 #hotelCarTabs > li > a, #personTabs > li > a, #generalTabs li > a {
@@ -1118,10 +1209,10 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 .margin-bottom-15 { margin-bottom: 15px; }
 .margin-bottom-5 { margin-bottom: 5px; }
 
-.tab-content{
+/*.tab-content{
 	overflow:auto;
 	background-color:white;
-}
+}*/
 
 /* About */
 .about-section { margin-top: 150px; }
@@ -1246,12 +1337,20 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 .flexslider.flexslider-about img {
 	max-width: 528px;
 }
-.slider-title {
+.slider-title, .msj-title {
 	font-style: italic;
 	font-weight: 600;
 	margin-bottom: 25px;
 	text-transform: uppercase;
 }
+
+.msj-title{
+	color:#2dc970;
+	/*background-color:#28C76B;*/
+	padding: 5px;
+	border-bottom: 3px solid #FFFF00;
+}
+
 .slider-subtitle {
 	font-size: 18px;
 	margin-bottom: 30px;
@@ -1270,6 +1369,12 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 	background-color: #F4F4F4;
 	padding: 40px;
 }
+
+.tm-contact-box-h {
+	background-color: #FFFFFF;
+	padding: 40px;
+}
+
 .contact-image { 
 	float: left; 
 	widthh: 100%;

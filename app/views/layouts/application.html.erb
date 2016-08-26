@@ -252,7 +252,6 @@
 		</div>		
 	</footer>
 	<script>
-
 		$(document).on("page:fetch", function(){
 		  $("#cargando").show();
 		});
@@ -263,12 +262,10 @@
 		
 		// HTML document is loaded. DOM is ready.
 		$(function() {
-
 			$('#hotelCarTabs a').click(function (e) {
 			  e.preventDefault()
 			  $(this).tab('show')
 			});
-
 			// https://css-tricks.com/snippets/jquery/smooth-scrolling/
 		  	$('a[href*=#]:not([href=#])').click(function() {
 			    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
@@ -282,7 +279,6 @@
 			      }
 			    }
 		  	});
-
 		});
 		
 		// Load Flexslider when everything is loaded.

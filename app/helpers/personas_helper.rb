@@ -4,8 +4,10 @@ module PersonasHelper
     if categoria == "TODOS" then
       condicion = ""
       registros = Catalogo.where("ctlg_categoria = 'TIPO DE DOCUMENTO DE IDENTIDAD' AND ctlg_subcategoria IN ('PERSONA', 'ADULTO', 'MENOR', 'TODOS') AND ctlg_estadoRegistro = 'A'")
+    elsif categoria == "INFANTE" then
+      registros = Catalogo.where("ctlg_categoria = 'TIPO DE DOCUMENTO DE IDENTIDAD' AND ctlg_ValorCdg IN ('NUIP', 'RC', 'PA') AND ctlg_estadoRegistro = 'A'")
     else
-      registros = Catalogo.where("ctlg_categoria = 'TIPO DE DOCUMENTO DE IDENTIDAD' AND ctlg_subcategoria IN ('" + categoria + "') AND ctlg_estadoRegistro = 'A'")
+      registros = Catalogo.where("ctlg_categoria = 'TIPO DE DOCUMENTO DE IDENTIDAD' AND ctlg_subcategoria IN ('PERSONA', '" + categoria + "') AND ctlg_estadoRegistro = 'A'")
     end
     
     registros.each do |h|

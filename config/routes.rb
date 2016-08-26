@@ -6,7 +6,14 @@ Rails.application.routes.draw do
   get 'personas/buscar_datos_persona' => 'personas#buscar_datos_persona', as: :buscar_datos_persona
   get 'catalogos/cargar_registros_catalogo' => 'catalogos#cargar_registros_catalogo', as: :cargar_registros_catalogo
   get 'about' => 'about#index', as: :home
-  get 'about/datos_reserva' => 'about#datos_reserva'
+  get 'about/mensaje' => 'about#mensaje', as: :mensaje
+  get 'about/detalle_reserva' => 'about#detalle_reserva', as: :detalle_reserva
+  post 'about/detalle_reserva' => 'about#detalle_reserva'
+  get 'about/detalle_plan_turistico/:id' => 'about#detalle_plan_turistico', as: :detalle_plan_turistico
+  post 'about/detalle_plan_turistico/:id' => 'about#detalle_plan_turistico'
+  post 'about/registrar_reserva' => 'about#registrar_reserva'
+  post 'about/confirmar_reserva' => 'about#confirmar_reserva' 
+  get 'about/confirmar_reserva' => 'about#confirmar_reserva'
   get 'about/admon' => 'about#admon', as: :administracion
   get 'about/somos' => 'about#somos', as: :somos
   get 'about/ofertas' => 'about#ofertas', as: :ofertas

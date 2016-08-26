@@ -1,0 +1,137 @@
+<!-- gray bg -->	
+<section class="container tm-home-section-1" id="more">
+	<div class="row">
+		<!-- slider -->
+		<div class="flexslider effect2 effect2-contact flex-caption">
+			<ul class="slides">
+				<li>
+					<div class="col-lg-12">
+						<h2 class="slider-title">Confirmación de la Reserva</h2>
+						<div class="tm-home-box-h"></div>
+						<p class="slider-subtitle">Apreciado cliente, para brindarle un mejor servicio y evitar contratiempos le invitamos a verificar que la información de la reserva es correcta.</p>
+						<div class="col-lg-12">
+							<table class="slider-abstract">
+									<tr>
+										<th colspan="4">DATOS DEL VIAJE</th>
+										<th colspan="3"><strong>NRO. DE PASAJEROS</strong></th>
+									</tr>
+									<tr>
+										<th>ORIGEN</th>
+										<td><%= @enterOrigen.enter_nombreCorto %></td>
+										<th><strong>FECHA DE IDA</strong></th>
+										<td><%= @dtFechaIda %></td>
+										<th><strong>ADULTOS</strong></th>
+										<th><strong>MENORES</strong></th>
+										<th><strong>INFANTES</strong></th>
+									</tr>
+									<tr>
+										<th>DESTINO</th>
+										<td><%= @enterDestino.enter_nombreCorto %></td>
+										<th><strong>FECHA DE REGRESO</strong></th>
+										<td><%= @dtFechaRegreso %></td>
+										<td class="center"><%= @nroAdultos %></td>
+										<td class="center"><%= @nroMenores %></td>
+										<td class="center"><%= @nroInfantes %></td>
+									</tr>
+							</table>
+							<p>&nbsp;</p>
+							<table class="datos-persona">
+								<thead>
+									<tr>
+										<th colspan="4">PASAJEROS</th>
+									</tr>
+									<tr>
+										<th>TIPO PASAJERO</th>
+										<th>DOCUMENTO DE IDENTIFICACION</th>
+										<th>NOMBRES</th>
+										<th>APELLIDOS</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% for i in 0..@datosReserva["tipo_identificacion"].length - 1 %>
+									<tr>
+										<td><%= @datosReserva["tipo_pax"][i] %></td>
+										<td><%= @datosReserva["tipo_identificacion"][i] + " - " + @datosReserva["numero_identificacion"][i] %></td>
+										<td><%= @datosReserva["nombres"][i] %></td>
+										<td><%= @datosReserva["apellidos"][i] %></td>
+									</tr>
+									<% end %>
+								</tbody>
+							</table>
+							<br>
+							<table class="datos-contacto">
+								<thead>
+									<tr>
+										<th colspan="3">INFORMACIÓN DE CONTACTO</th>
+									</tr>
+									<tr>
+										<th>NOMBRE COMPLETO / RAZÓN SOCIAL</th>
+										<th>TELÉFONO</th>
+										<th>CORREO ELECTRÓNICO</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><%= @datosContacto["nombres"] + " " + @datosContacto["apellidos"] %></td>
+										<td><%= @datosContacto["telefono"] %></td>
+										<td><%= @datosContacto["correo_electronico"] %></td>
+									</tr>
+								</tbody>
+							</table>
+							<br>
+							<p class="slider-subtitle">
+								Para viajes operados por Naisa Tours SAS Tenga en cuenta que:
+								<ul>
+									<li>Los datos personales de los pasajeros deben coincidir con su documento de identidad, la corrección de los mismos puede implicar el pago de cargos adicionales.</li>
+									<li>Tiene derecho a 10 kilos de equipaje en bodega y 3 kilos de equipaje de mano. Si se sobrepasan estos pesos, se aplicarán cargos por exceso de equipaje de acuerdo con la tarifa estipulada por la empresa. 
+										Además, el envío de dicha carga en el mismo viaje estará condicionado a la capacidad de la aeronave.</li>
+									<li>Debe presentarse en el aeropuerto para su chequeo con al menos una hora de anticipación a la salida del vuelo. De no llegar a tiempo, el pasajero perderá su cupo y pagará una multa equivalente al 25% del valor del tiquete.</li>
+									<li>Para brindarle un mejor servicio, por favor infórmenos con antelación a la fecha de su viaje si requiere transportar equipaje especial o sobredimensionado: mascotas, silla de ruedas, equipos médicos o de pesca, etc.</li>
+								</ul>
+								<br>
+								Las anteriores condiciones son las más importantes a tener en cuenta pero no las únicas, para conocer el detalle completo del contrato, haga clic <a href="#"><strong>Aquí</strong></a>.
+							</p>
+							<br>
+					</div>
+					<div class="col-lg-12">
+						<form id="frmConfirmarReserva" action="/about/registrar_reserva" method="post" class="hotel-search-form">
+							<%= hidden_field_tag :datos_viaje, @datosViaje %>
+							<%= hidden_field_tag :datos_reserva, @datosReserva %>
+							<%= hidden_field_tag :contacto, @datosContacto %>
+							<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+							<p class="slider-subtitle">
+								<label class="tm-label-radio"><%= check_box_tag :terminos, options={} %> Acepto los términos y condiciones del contrato de transporte de pasajeros</label>
+							</p>
+							<p class="center"><input type="button" value="Enviar" id="cmd_aceptar" class="tm-orange-btn"></p>
+						</form>			
+					</div>	      
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>	
+
+<!-- white bg -->
+<section class="section-padding-top tm-white-bg">
+	<div class="container">
+		<div class="row">
+			<div class="tm-section-header section-margin-bottom">
+				<br/>
+			</div>	
+		</div>
+	</div>
+</section>
+
+<script>
+	$(document).on('page:update', function() {
+		$("#cmd_aceptar").click(function(e){
+			if($('input[id="terminos"]:checked').length == 0){
+				swal("Error","Apreciado cliente, debe aceptar los términos del contrato antes de confirmar la reserva", "error");
+				return;
+			}
+			
+			$("#frmConfirmarReserva").submit();
+			e.preventDefault();
+		});
+	});
+</script>

@@ -17,7 +17,7 @@
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="flight">
 							<div class="tm-search-box effect2">
-								<form id="frmReservarVuelo" action="accions/datos_reserva" method="post" class="hotel-search-form">
+								<form id="frmReservarVuelo" action="about/detalle_reserva" method="post" class="hotel-search-form">
 									<div class="tm-form-inner">
 										<div class="form-group">
 											<%= select_tag :cboOrigen, options_from_collection_for_select(@ciudadesAeropuertos, :id, :enter_nombreOficial), options={class:"form-control" , required: :required, prompt: "-- ORIGEN --"} %>
@@ -65,7 +65,8 @@
 												</div>
 											</div>
 							          	</div>							           
-									</div>							
+									</div>				
+									<%= hidden_field_tag :authenticity_token, form_authenticity_token %>			
 						            <div class="form-group tm-yellow-gradient-bg text-center">
 						            	<input type="button" id="cmdReservarVuelo" class="tm-orange-btn" value="Reservar">
 						            </div>  
@@ -79,16 +80,15 @@
 									<div class="tm-form-inner">
 										<div class="form-group">
 							            	 <select class="form-control">
-							            	 	<option value="">-- Hotel -- </option>
-							            	 	<option value="shangrila">Shangri-La</option>
-												<option value="chatrium">Chatrium</option>
-												<option value="fourseasons">Four Seasons</option>
-												<option value="hilton">Hilton</option>
+							            	 	<option value="">-- Hotel --</option>
+							            	 	<option value="bahia">Bahía Solano</option>
+												<option value="valle">El Valle</option>
+												<option value="huina">Huina</option>
 											</select> 
 							          	</div>
 							          	<div class="form-group">
 							                <div class='input-group date' id='datetimepicker1'>
-							                    <input type='text' class="form-control" placeholder="Fecha de ingreso" />
+							                    <input type='text' class="form-control" placeholder="Fecha de ingreso" id="txtFchIngresoHotel"/>
 							                    <span class="input-group-addon">
 							                        <span class="fa fa-calendar"></span>
 							                    </span>
@@ -96,7 +96,7 @@
 							            </div>
 							          	<div class="form-group">
 							                <div class='input-group date' id='datetimepicker2'>
-							                    <input type='text' class="form-control" placeholder="Fecha de salida" />
+							                    <input type='text' class="form-control" placeholder="Fecha de salida" id="txtFchSalidaHotel"/>
 							                    <span class="input-group-addon">
 							                        <span class="fa fa-calendar"></span>
 							                    </span>
@@ -157,16 +157,34 @@
 				</div>
 			</div>
 			<div class="row">
+			    <div class="col-lg-6">
+			        <div class="tm-home-box-3">
+						<div class="tm-home-box-3-img-container">
+							<%= image_tag("sitios/index-10.jpg", alt: "image", class: "img-responsive") %>	
+						</div>						
+						<div class="tm-home-box-3-info">
+							<h3>Avistamiento de Ballenas</h3>
+							<h4>Bahía Solano</h4>
+							<p class="tm-home-box-3-description">Sé del espectáculo de estos gigantes en el Pacífico colombiano.</p>
+							<h5>DESDE 1.350.000</h5>
+					        <div class="tm-home-box-2-container">
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
+							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s </span></a>
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
+						</div>
+						</div>						
+					</div>
+			   	</div>
 				<div class="col-lg-6">
 					<div class="tm-home-box-3">
 						<div class="tm-home-box-3-img-container">
 							<%= image_tag("sitios/index-07.jpg", alt: "image", class: "img-responsive") %>	
 						</div>						
 						<div class="tm-home-box-3-info">
-							<h3>Bahía Solano</h3>
-							<h4>Semana Santa</h4>
-							<p class="tm-home-box-3-description">En la Semana Mayor recarga tus energías y restaura tu espíritu.</p>
-							<h5>COP 1.500.000</h5>
+							<h3>Plan Aventura</h3>
+							<h4>Bahía Solano</h4>
+							<p class="tm-home-box-3-description">Te invitamos a conocer los mejores sitios de la región.</p>
+							<h5>DESDE 1.250.000</h5>
 					        <div class="tm-home-box-2-container">
 							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
 							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s</span></a>
@@ -175,6 +193,24 @@
 						</div>						
 					</div>					
 			     </div>
+				<div class="col-lg-6">
+				    <div class="tm-home-box-3">
+						<div class="tm-home-box-3-img-container">
+							<%= image_tag("planes/descanso-playa.jpg", alt: "image", class: "img-responsive") %>
+						</div>						
+						<div class="tm-home-box-3-info">
+							<h3>Descanso en la Playa</h3>
+							<h4>Bahía Solano</h4>
+							<p class="tm-home-box-3-description">Conoce la tradicional cultura cafetera de Colombia, patrimonio de la humanidad</p>
+							<h5>DESDE 1.100.000</h5>
+					        <div class="tm-home-box-2-container">
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
+							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s </span></a>
+							<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
+						</div>
+						</div>						
+					</div>
+			    </div>
 			     <div class="col-lg-6">
 			        <div class="tm-home-box-3">
 						<div class="tm-home-box-3-img-container">
@@ -184,7 +220,7 @@
 							<h3>Caño Cristales</h3>
 							<h4>La Macarena, Meta</h4> 
 							<p class="tm-home-box-3-description">Visita el "río de los 5 colores", hermoso lienzo natural.</p>
-							<h5>COP 650.000</h5>
+							<h5>DESDE 650.000</h5>
 					        <div class="tm-home-box-2-container">
 							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
 							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s </span></a>
@@ -193,42 +229,6 @@
 						</div>						
 					</div>
 				</div>
-				<div class="col-lg-6">
-				    <div class="tm-home-box-3">
-						<div class="tm-home-box-3-img-container">
-							<%= image_tag("sitios/index-09.jpg", alt: "image", class: "img-responsive") %>
-						</div>						
-						<div class="tm-home-box-3-info">
-							<h3>Eje Cafetero</h3>
-							<h4>Terrestre</h4>
-							<p class="tm-home-box-3-description">Conoce la tradicional cultura cafetera de Colombia, patrimonio de la humanidad</p>
-							<h5>COP 450.000</h5>
-					        <div class="tm-home-box-2-container">
-							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s </span></a>
-							<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-						</div>
-						</div>						
-					</div>
-			    </div>
-			    <div class="col-lg-6">
-			        <div class="tm-home-box-3">
-						<div class="tm-home-box-3-img-container">
-							<%= image_tag("sitios/index-10.jpg", alt: "image", class: "img-responsive") %>	
-						</div>						
-						<div class="tm-home-box-3-info">
-							<h3>Bahía Solano</h3>
-							<h4>Avistamiento de Ballenas</h4>
-							<p class="tm-home-box-3-description">Proin gravida nibhvell velit auctor aliquet. Aenean sollicitudin</p>
-							<h5>COP 1.350.000</h5>
-					        <div class="tm-home-box-2-container">
-							<a href="#" class="tm-home-box-2-link"><i class="fa fa-heart tm-home-box-2-icon border-right"></i></a>
-							<a href="#" class="tm-home-box-2-link"><span class="tm-home-box-2-description box-3">Leer m&aacute;s </span></a>
-							<a href="#" class="tm-home-box-2-link"><i class="fa fa-edit tm-home-box-2-icon border-left"></i></a>
-						</div>
-						</div>						
-					</div>
-			   	</div>
 			</div>
 		</div>
 	</section>
@@ -348,9 +348,7 @@
 			    prevText: "",           //String: Set the text for the "previous" directionNav item
 				nextText: ""               //String: Set the text for the "next" directionNav item
 		    });
-		});
-		
-		$(function() {
+		    
 			$('.date').datetimepicker({
             	format: 'DD/MM/YYYY',
             	defaultDate:false,
@@ -361,7 +359,8 @@
             $('.date-time').datetimepicker();
             $("#txtFechaIda").val("");
             $("#txtFechaRegreso").val("");
-			
+            $("#txtFchIngresoHotel").val("");
+            $("#txtFchSalidaHotel").val("");
 			$("#cmdReservarVuelo").click(function() {
 				
 				if($("#cboOrigen").val() == ""){
@@ -400,5 +399,5 @@
 	           $("#frmReservarVuelo").submit();
 	           
 	     	});
-	   });
+		});
 	</script>

@@ -1,0 +1,78 @@
+<h2 style="color:#2dc970; border-bottom:2px solid #FFFF00; width:80%; text-align: center; padding-bottom: 2px;">RESERVA EN LÍNEA</h2>
+<table width="80%">
+	<tbody>
+		<tr>
+			<td colspan="2" style="border-radius: 5px; background-color: #2dc970; color:white; padding: 10px 20px; font-size: 18px;" width="60%"><strong>DATOS DEL VIAJE</strong></td>
+			<td colspan="3" style="border-radius: 5px; background-color: #2dc970; color:white; padding: 10px 20px; font-size: 18px;" width="40%"><strong>NRO. DE PASAJEROS</strong></td>
+		</tr>
+		<tr>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px;"><strong>RUTA</strong></td>
+			<td style="background-color: #f6f6f6; border-radius: 5px; padding:5px 10px;"><%= @enterOrigen.enter_nombreCorto + " - " + @enterDestino.enter_nombreCorto %></td>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px; text-align: center;"><strong>ADULTOS</strong></td>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px; text-align: center;"><strong>MENORES</strong></td>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px; text-align: center;"><strong>INFANTES</strong></td>
+		</tr>
+		<tr>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px;"><strong>FECHA DE IDA</strong></td>
+			<td style="background-color: #f6f6f6; border-radius: 5px; padding:5px 10px;"><%= @dtFechaIda %></td>
+			<td style="background-color: #f6f6f6; border-radius: 5px; padding:5px 10px; text-align: center"><%= @nroAdultos %></td>
+			<td style="background-color: #f6f6f6; border-radius: 5px; padding:5px 10px; text-align: center"><%= @nroMenores %></td>
+			<td style="background-color: #f6f6f6; border-radius: 5px; padding:5px 10px; text-align: center"><%= @nroInfantes %></td>
+		</tr>
+		<tr>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px;"><strong>FECHA DE REGRESO</strong></td>
+			<td style="background-color: #f6f6f6; border-radius: 5px; padding:5px 10px;"><%= @dtFechaRegreso %></td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<table width="80%">
+	<thead>
+		<tr>
+			<td colspan="4" style="border-radius: 5px; background-color: #2dc970; color:white; padding: 10px 20px; font-size: 18px;" width="100%"><strong>DATOS DE LOS PASAJEROS</strong></td>
+		</tr>
+		<tr>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px; width: 15%;"><strong>TIPO PASAJERO</strong></td>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px; width: 25%;"><strong>DOCUMENTO DE IDENTIFICACIÓN</strong></td>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px; width: 30%;"><strong>NOMBRES</strong></td>
+			<td style="background-color: #d8f6e5; border-radius: 5px; padding:5px 10px; width: 30%;"><strong>APELLIDOS</strong></td>
+		</tr>
+	</thead>
+	<tbody>
+		<% for nmIndex in 0..@datosReserva["tipo_identificacion"].length - 1 %>
+			<% if nmIndex % 2 == 0 then %>
+				<% color = "#f6f6f6"%>
+			<% else %>
+				<% color = "#f0f0f0"%>
+			<% end %>
+			<tr>
+				<td style="background-color: <%= color %>; border-radius: 5px; padding:5px 10px;"><%= @datosReserva["tipo_pax"][nmIndex] %></td>
+				<td style="background-color: <%= color %>; border-radius: 5px; padding:5px 10px;"><%= @datosReserva["tipo_identificacion"][nmIndex] + " - " + @datosReserva["numero_identificacion"][nmIndex] %></td>
+				<td style="background-color: <%= color %>; border-radius: 5px; padding:5px 10px;"><%= @datosReserva["nombres"][nmIndex] %></td>
+				<td style="background-color: <%= color %>; border-radius: 5px; padding:5px 10px;"><%= @datosReserva["apellidos"][nmIndex] %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<br>
+<table width="80%">
+	<thead>
+		<tr>
+			<th colspan="3" style="border-radius: 5px; background-color: #2dc970; color:white; padding: 10px 20px; font-size: 18px;">INFORMACIÓN DE CONTACTO</th>
+		</tr>
+		<tr>
+			<th style="border-radius: 5px; background-color: #d8f6e5; padding: 10px 20px; font-size: 18px; width: 40%;">NOMBRE COMPLETO / RAZÓN SOCIAL</th>
+			<th style="border-radius: 5px; background-color: #d8f6e5; padding: 10px 20px; font-size: 18px; width: 30%;">TELÉFONO</th>
+			<th style="border-radius: 5px; background-color: #d8f6e5; padding: 10px 20px; font-size: 18px; width: 30%;">CORREO ELECTRÓNICO</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="background-color: #f6f6f6; border-radius: 5px; padding:5px 10px;"><%= @datosContacto["nombres"] + " " + @datosContacto["apellidos"] %></td>
+			<td style="background-color: #f6f6f6; border-radius: 5px; padding:5px 10px;"><%= @datosContacto["telefono"] %></td>
+			<td style="background-color: #f6f6f6; border-radius: 5px; padding:5px 10px;"><%= @datosContacto["correo_electronico"] %></td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<p>&nbsp;</p>
