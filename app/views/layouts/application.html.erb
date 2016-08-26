@@ -60,7 +60,7 @@
 	<div class="navbar-fixed-top">
 		<div class="row tm-blue-bg">
 			<div class="col-lg-12 col-md-12 col-sm-12 tm-login-bar">
-				<%= form_tag({controller: "about", action: "datos_reserva"}, method: "get") do %>
+				<%= form_tag({controller: "about", action: "detalle_reserva"}, method: "get") do %>
 					<label>Usuario</label> <%= text_field(:user, :name, class: "form-control-inline") %>
 					<label>Contraseña</label> <%= password_field_tag(:password, nil, class: "form-control-inline") %>
 					<%= button_tag "Iniciar sesión", type: "button", class:"inline"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
