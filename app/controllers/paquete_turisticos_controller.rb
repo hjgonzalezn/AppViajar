@@ -1,7 +1,7 @@
 class PaqueteTuristicosController < ApplicationController
   include EntidadTerritorialsHelper
   
-  before_action :set_paquete_turistico, only: [:show, :edit, :update, :destroy]
+  before_action :set_paquete_turistico, only: [:show, :edit, :update, :destroy, :detalle_plan]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   before_action :initialize_vars, only: [:new, :edit, :show]
   
@@ -27,6 +27,7 @@ class PaqueteTuristicosController < ApplicationController
     @titulo = "Modificar Paquete Turístico"
     @tipos_actividad_turistica = TipoActividadTuristica.all
     @tarifas = Tarifa.where("trf_conceptoCodigo = 'VPAQ' AND trf_conceptoAplicacion = 'PAQUETE' AND trf_tipoProducto = 'PAQUETE TURISTICO' and trf_producto = #{@paquete_turistico.id} AND trf_estadoRegistro = 'A'")
+    @itinerario = Itinerario.where(paquete_turistico_id: @paquete_turistico)
   end
 
   # POST /paquete_turisticos
@@ -36,7 +37,7 @@ class PaqueteTuristicosController < ApplicationController
 
     respond_to do |format|
       if @paquete_turistico.save
-        format.html { redirect_to @paquete_turistico, notice: 'Paquete turistico was successfully created.' }
+        format.html { redirect_to @paquete_turistico, notice: 'Paquete turistico creado exitosamente.' }
         format.json { render :show, status: :created, location: @paquete_turistico }
       else
         format.html { render :new }
@@ -48,9 +49,22 @@ class PaqueteTuristicosController < ApplicationController
   # PATCH/PUT /paquete_turisticos/1
   # PATCH/PUT /paquete_turisticos/1.json
   def update
-    respond_to do |format|
-      if @paquete_turistico.update(paquete_turistico_params)
-        format.html { redirect_to @paquete_turistico, notice: 'Paquete turistico was successfully updated.' }
+    respond_to do |format|    
+      if @paquete_turistico.update(paquete_turistico_params) then
+        Itinerario.where(paquete_turistico_id: @paquete_turistico).destroy_all
+        arrItinerarios = params[:itinerario][:dia]
+        
+        arrItinerarios.each do |t|
+          if t != "" then
+            itinerario = Itinerario.new
+            itinerario.paquete_turistico_id = @paquete_turistico.id
+            itinerario.itnr_actividad = t
+            itinerario.itnr_estadoRegistro = "A"
+            itinerario.save
+          end
+        end
+        
+        format.html { redirect_to @paquete_turistico, notice: 'Paquete turistico actualizado exitosamente.' }
         format.json { render :show, status: :ok, location: @paquete_turistico }
       else
         format.html { render :edit }
@@ -59,12 +73,16 @@ class PaqueteTuristicosController < ApplicationController
     end
   end
 
+  def detalle_plan
+    @itinerario = Itinerario.where(paquete_turistico_id: @paquete_turistico)
+  end
+  
   # DELETE /paquete_turisticos/1
   # DELETE /paquete_turisticos/1.json
   def destroy
     @paquete_turistico.destroy
     respond_to do |format|
-      format.html { redirect_to paquete_turisticos_url, notice: 'Paquete turistico was successfully destroyed.' }
+      format.html { redirect_to paquete_turisticos_url, notice: 'Paquete turistico eliminado exitosamente.' }
       format.json { head :no_content }
     end
   end
@@ -82,6 +100,6 @@ class PaqueteTuristicosController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def paquete_turistico_params
-      params.require(:paquete_turistico).permit(:pqTur_nombre, :pqTur_tipoDestino, :pqTur_destino, :pqTur_portada, :pqTur_descripcion, :pqTur_incluye, :pqTur_noIncluye, :pqTur_opcionales, :pqTur_recomendaciones, :pqTur_fechaVigenciaIni, :pqTur_fechaVigenciaFin, :pqTur_fechaPromocionIni, :pqTur_fechaPromocionFin, :pqTur_estadoRegistro)
+      params.require(:paquete_turistico).permit(:pqTur_nombre, :pqTur_tipoDestino, :pqTur_destino, :pqTur_portada, :pqTur_descripcion, :pqTur_incluye, :pqTur_noIncluye, :pqTur_opcionales, :pqTur_recomendaciones, :pqTur_fechaVigenciaIni, :pqTur_fechaVigenciaFin, :pqTur_fechaPromocionIni, :pqTur_fechaPromocionFin, :pqTur_estadoRegistro, :itinerario)
     end
 end

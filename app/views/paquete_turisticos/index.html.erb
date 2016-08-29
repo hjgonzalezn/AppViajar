@@ -31,6 +31,9 @@
 											<%= link_to(paquete_turistico, class:"btn btn-info") do %>
 					        					<i class="fa fa-book"></i>
 					        				<% end %>
+											<a href="<%= detalle_plan_turistico_path(paquete_turistico) %>" class="btn btn-success">
+					        					<i class="fa fa-list"></i>
+					        				</a>
 											<a href="<%= edit_paquete_turistico_path(paquete_turistico) %>" class="btn btn-warning">
 					        					<i class="fa fa-edit"></i>
 					        				</a>
@@ -45,55 +48,6 @@
 							<% end %>
 						</div>
 					</div>
-					<!--table id="indexTable" class="stripe hover">
-						  <thead>
-						    <tr>
-						      <th>Pqtur nombre</th>
-						      <th>Pqtur descripcion</th>
-						      <th>Pqtur incluye</th>
-						      <th>Pqtur noincluye</th>
-						      <th>Pqtur opcionales</th>
-						      <th>Pqtur recomendaciones</th>
-						      <th>Pqtur fechavigenciaini</th>
-						      <th>Pqtur fechavigenciafin</th>
-						      <th>Pqtur fechapromocionini</th>
-						      <th>Pqtur fechapromocionfin</th>
-						      <th>Pqtur estadoregistro</th>
-						      <th colspan="3"></th>
-						    </tr>
-						  </thead>
-						
-						  <tbody>
-						    <% @paquete_turisticos.each do |paquete_turistico| %>
-						      <tr>
-						        <td><%= paquete_turistico.pqTur_nombre %></td>
-						        <td><%= paquete_turistico.pqTur_descripcion %></td>
-						        <td><%= paquete_turistico.pqTur_incluye %></td>
-						        <td><%= paquete_turistico.pqTur_noIncluye %></td>
-						        <td><%= paquete_turistico.pqTur_opcionales %></td>
-						        <td><%= paquete_turistico.pqTur_recomendaciones %></td>
-						        <td><%= paquete_turistico.pqTur_fechaVigenciaIni %></td>
-						        <td><%= paquete_turistico.pqTur_fechaVigenciaFin %></td>
-						        <td><%= paquete_turistico.pqTur_fechaPromocionIni %></td>
-						        <td><%= paquete_turistico.pqTur_fechaPromocionFin %></td>
-						        <td><%= paquete_turistico.pqTur_estadoRegistro %></td>
-					        		<td><%= link_to(paquete_turistico, class:"btn btn-info") do %>
-					        				<i class="fa fa-book"></i>
-					        			<% end %>
-					        		</td>
-					        		<td><a href="<%= edit_paquete_turistico_path(paquete_turistico) %>" class="btn btn-warning">
-					        				<i class="fa fa-edit"></i>
-					        			</a>
-					        		</td>
-					        		<td>
-					        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/paquete_turisticos/#{paquete_turistico.id}"%> >
-					        				<i class="fa fa-trash"></i>
-					        			</a>
-					        		</td>
-      							</tr>
-    						<% end %>
-  						</tbody>
-					</table-->
 					<div class="section-footer">
 						<%= link_to 'Regresar', administracion_path , class:"button back" %>
 						<%= link_to 'Nuevo registro', new_paquete_turistico_path, class:"button add" %>

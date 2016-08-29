@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719184020) do
+ActiveRecord::Schema.define(version: 20160828200529) do
 
   create_table "actividad_turismos", force: :cascade do |t|
     t.string   "actur_nombre",      limit: 255
@@ -93,6 +93,18 @@ ActiveRecord::Schema.define(version: 20160719184020) do
     t.string   "enter_codigoISO",      limit: 255
     t.string   "enter_nombreCorto",    limit: 255
   end
+
+  create_table "itinerarios", force: :cascade do |t|
+    t.integer  "paquete_turistico_id", limit: 4
+    t.string   "itnr_actividad",       limit: 255
+    t.string   "itnr_estadoRegistro",  limit: 255
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "itnr_userCreate",      limit: 255
+    t.string   "itnr_userUpdate",      limit: 255
+  end
+
+  add_index "itinerarios", ["paquete_turistico_id"], name: "index_itinerarios_on_paquete_turistico_id", using: :btree
 
   create_table "paquete_turisticos", force: :cascade do |t|
     t.string   "pqTur_nombre",            limit: 255
@@ -252,6 +264,7 @@ ActiveRecord::Schema.define(version: 20160719184020) do
 
   add_index "viajes", ["vehiculo_id"], name: "index_viajes_on_vehiculo_id", using: :btree
 
+  add_foreign_key "itinerarios", "paquete_turisticos"
   add_foreign_key "personas", "entidad_territorials", column: "pers_paisOrigen"
   add_foreign_key "viajes", "vehiculos"
 end

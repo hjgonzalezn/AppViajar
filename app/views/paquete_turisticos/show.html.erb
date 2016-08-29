@@ -38,31 +38,123 @@
 								<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="datos">
 									<div class="tm-search-box">
 										<p>&nbsp;</p>
-										<div class="col-lg-6 col-md-6">
-											<p><strong>Nombre:</strong></p>
-											<p><strong>Descripcion:</strong></p>
-											<p><strong>Incluye:</strong></p>
-											<p><strong>No Incluye:</strong></p>
-											<p><strong>Actividades opcionales:</strong></p>
-											<p><strong>Recomendaciones:</strong></p>
-											<p><strong>Fecha inicial de vigencia:</strong></p>
-											<p><strong>Fecha final de vigencia:</strong></p>
-											<p><strong>Fecha inicial de promoción:</strong></p>
-											<p><strong>Fecha final de promoción:</strong></p>
-											<p><strong>Pqtur estadoregistro:</strong></p>
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Nombre:</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<p><%= @paquete_turistico.pqTur_nombre %></p>
+											</div>
 										</div>
-										<div class="col-lg-6 col-md-6">
-											<p><%= @paquete_turistico.pqTur_nombre %></p>
-											<p><%= @paquete_turistico.pqTur_descripcion %></p>
-											<p><%= @paquete_turistico.pqTur_incluye %></p>
-											<p><%= @paquete_turistico.pqTur_noIncluye %></p>
-											<p><%= @paquete_turistico.pqTur_opcionales %></p>
-											<p><%= @paquete_turistico.pqTur_recomendaciones %></p>
-											<p><%= @paquete_turistico.pqTur_fechaVigenciaIni %></p>
-											<p><%= @paquete_turistico.pqTur_fechaVigenciaFin %></p>
-											<p><%= @paquete_turistico.pqTur_fechaPromocionIni %></p>
-											<p><%= @paquete_turistico.pqTur_fechaPromocionFin %></p>
-											<p><%= @paquete_turistico.pqTur_estadoRegistro %></p>
+										<br>
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Descripcion:</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<p><%= @paquete_turistico.pqTur_descripcion %></p>
+											</div>
+										</div>
+										<br>
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Incluye</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<% arrItems = @paquete_turistico.pqTur_incluye.split(13.chr) %>
+												<ul>
+													<% arrItems.each do |i| %>
+														<li><%= i %></li>
+													<% end %>
+												</ul>
+											</div>
+										</div>
+										<br>	
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>No Incluye</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<% arrItems = @paquete_turistico.pqTur_noIncluye.split(13.chr) %>
+												<ul>
+													<% arrItems.each do |i| %>
+														<li><%= i %></li>
+													<% end %>
+												</ul>
+											</div>
+										</div>
+										<br>	
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Actividades opcionales:</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<% arrItems = @paquete_turistico.pqTur_opcionales.split(13.chr) %>
+												<ul>
+													<% arrItems.each do |i| %>
+														<li><%= i %></li>
+													<% end %>
+												</ul>
+											</div>
+										</div>
+										<br>	
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Recomendaciones:</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<% arrItems = @paquete_turistico.pqTur_recomendaciones.split(13.chr) %>
+												<ul>
+													<% arrItems.each do |i| %>
+														<li><%= i %></li>
+													<% end %>
+												</ul>
+											</div>
+										</div>
+										<br>	
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Fecha inicial de vigencia:</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<p><%= @paquete_turistico.pqTur_fechaVigenciaIni %></p>
+											</div>
+										</div>
+										<br>	
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Fecha final de vigencia:</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<p><%= @paquete_turistico.pqTur_fechaVigenciaFin %></p>
+											</div>
+										</div>
+										<br>	
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Fecha inicial de promoción:</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<p><%= @paquete_turistico.pqTur_fechaPromocionIni %></p>
+											</div>
+										</div>
+										<br>	
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Fecha final de promoción:</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<p><%= @paquete_turistico.pqTur_fechaPromocionFin %></p>
+											</div>
+										</div>
+										<br>	
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="col-lg-6 col-md-6">
+												<p><strong>Estado registro:</strong></p>
+											</div>
+											<div class="col-lg-6 col-md-6">
+												<p><%= @estados[@paquete_turistico.pqTur_estadoRegistro] %></p>
+											</div>
 										</div>
 										<p>&nbsp;</p>
 									</div>

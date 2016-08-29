@@ -120,7 +120,7 @@
 	<div class="tm-barra">
 	</div>
 	
-	<% if params[:controller] == "about" and params[:action] != "admon" and params[:action] != "reservas" and params[:action] != "alojamiento" and params[:action] != "carga" and params[:action] != "ofertas" and params[:action] != "planes" then %>
+	<% if (params[:controller] == "about" and params[:action] != "admon" and params[:action] != "reservas" and params[:action] != "alojamiento" and params[:action] != "carga" and params[:action] != "ofertas" and params[:action] != "planes") or (params[:controller] == "paquete_turisticos" and params[:action] == "detalle_plan") then %>
 		<!-- Banner -->
 		<section class="tm-banner">
 			<!-- Flexslider -->

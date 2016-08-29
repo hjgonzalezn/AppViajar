@@ -1,0 +1,170 @@
+	<!-- white bg -->
+	<section class="section-padding-top tm-white-bg">
+		<div class="container">
+			<div class="row">
+				<div class="tm-section-header section-margin-top-med">
+					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
+					<div class="col-lg-6 col-md-6 col-sm-6"><h2 class="tm-section-title"><%= @paquete_turistico.pqTur_nombre %></h2></div>
+					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
+					    <li role="presentation" class="active">
+							<a href="#descripcion" aria-controls="datos" role="tab" data-toggle="tab">Descripción</a>
+					    </li>
+					    <li role="presentation">
+					    	<a href="#itinerario" aria-controls="hotel" role="tab" data-toggle="tab">Itinerario</a>
+					    </li>
+					    <li role="presentation">
+					    	<a href="#tarifas" aria-controls="hotel" role="tab" data-toggle="tab">Tarifas</a>
+					    </li>
+					    <li role="presentation">
+					    	<a href="#reservas" aria-controls="hotel" role="tab" data-toggle="tab">Reservar</a>
+					    </li>
+					</ul>
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="descripcion">
+							<div class="tm-search-box">
+								<p>&nbsp;</p>
+								<div class="col-lg-6">
+								</div>
+								<div class="col-lg-6">
+									<h3>Presentación</h3>
+									<br/>
+									<p><%= @paquete_turistico.pqTur_descripcion %></p>
+									<br>
+									<h3>El plan incluye</h3>
+									<br/>
+									<% arrItems = @paquete_turistico.pqTur_incluye.split(13.chr) %>
+									<ul>
+										<% arrItems.each do |i| %>
+											<li><%= i %></li>
+										<% end %>
+									</ul>
+									<br>
+									<h3>El plan no incluye</h3>
+									<br/>
+									<% arrItems = @paquete_turistico.pqTur_noIncluye.split(13.chr) %>
+									<ul>
+										<% arrItems.each do |i| %>
+											<li><%= i %></li>
+										<% end %>
+									</ul>
+									<br>
+								</div>
+								<p>&nbsp;</p>
+							</div>
+						</div>
+						<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="itinerario">
+							<div class="tm-search-box">
+								<% i = 1 %>
+								<% @itinerario.each do |t| %>
+									<div class="col-lg-12">
+										<h3><%= "Día " + i.to_s %></h3>
+										<%= t.itnr_actividad %>
+										<p>&nbsp;</p>
+									</div>
+									<% i += 1 %>
+								<% end %>
+							</div>
+						</div>
+						<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="tarifas">
+							<div class="tm-search-box">
+							</div>
+						</div>
+						<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="reservas">
+							<div class="tm-search-box">
+								<div class="tm-form-inner">
+									<%= form_tag "about/detalle_reserva", method: "post" do %>
+										<div class="col-lg-6">
+										</div>
+										<div class="col-lg-6">
+											<div class="form-group">
+												<%= select_tag :ciudadOrigen, options_for_select([["Medellín", "EOH"], ["Cali", "CLO"], ["Bogotá", "BOG"]]), options={class:"form-control", prompt: "-- ORIGEN --"} %>
+											</div>
+										</div>
+										<div class="col-lg-6">
+										</div>
+										<div class="col-lg-6">
+								          	<div class="form-group">
+								                <div class='input-group date' id='datetimepicker1'>
+								                	<%= text_field_tag "txtFechaIda", nil, options = {class:"form-control", placeholder:"Fecha de salida"} %>
+								                    <span class="input-group-addon">
+								                        <span class="fa fa-calendar"></span>
+								                    </span>
+								                </div>
+								            </div>
+								      	</div>
+										<div class="col-lg-6">
+										</div>
+										<div class="col-lg-6">
+								          	<div class="form-group">
+								                <div class='input-group date' id='datetimepicker2'>
+								                	<%= text_field_tag "txtFechaRegreso", nil, options = {class:"form-control", placeholder:"Fecha de regreso"} %>
+								                    <span class="input-group-addon">
+								                        <span class="fa fa-calendar"></span>
+								                    </span>
+								                </div>
+								            </div>
+								      	</div>
+										<div class="col-lg-6">
+										</div>
+										<div class="col-lg-6">
+								            <div class="form-group">
+												<div class="row">
+													<div class="col-xs-4">
+														<%= label_tag nil, "Adultos", title: "12 años o más"%>
+													</div>
+													<div class="col-xs-4">
+														<%= label_tag nil, "Menores", title: "2 a 11 años"%>
+													</div>
+													<div class="col-xs-4">
+														<%= label_tag nil, "Infantes", title: "0 a 23 meses"%>
+													</div>				
+												</div>
+												<div class="row">
+													<div class="col-xs-4">
+														<%= select_tag "cboAdultos", options_for_select( (1..10).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"12 años o más", class:"form-control" %>
+													</div>
+													<div class="col-xs-4">
+														<%= select_tag "cboMenores", options_for_select( (0..5).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"2 a 11 años", class:"form-control" %> 
+													</div>
+													<div class="col-xs-4">
+														<%= select_tag "cboInfantes", options_for_select( (0..5).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"0 a 23 meses", class:"form-control" %>
+													</div>
+												</div>
+								          	</div>
+										</div>
+										<div class="col-lg-6">
+										</div>
+										<div class="col-lg-6">
+											<%= hidden_field_tag :authenticity_token, form_authenticity_token %>			
+								            <div class="form-group tm-yellow-gradient-bg text-center">
+								            	<input type="button" id="cmdReservarVuelo" class="tm-orange-btn" value="Reservar">
+								            </div>
+							           </div> 
+									<% end %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+	</section>
+	
+	<script>
+		
+		$(document).on('page:update', function() {
+			$('.date').datetimepicker({
+            	format: 'DD/MM/YYYY',
+            	defaultDate:false,
+            	minDate: moment()
+            });
+            
+            $("#txtFechaIda").val("");
+            $("#txtFechaRegreso").val("");
+		});
+	</script>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  paquete_turistico_id: 
+  itnr_actividad: MyString
+  itnr_estadoRegistro: MyString
+
+two:
+  paquete_turistico_id: 
+  itnr_actividad: MyString
+  itnr_estadoRegistro: MyString

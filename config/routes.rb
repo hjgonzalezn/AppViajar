@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   get 'about/mensaje' => 'about#mensaje', as: :mensaje
   get 'about/detalle_reserva' => 'about#detalle_reserva', as: :detalle_reserva
   post 'about/detalle_reserva' => 'about#detalle_reserva'
-  get 'about/detalle_plan_turistico/:id' => 'about#detalle_plan_turistico', as: :detalle_plan_turistico
-  post 'about/detalle_plan_turistico/:id' => 'about#detalle_plan_turistico'
+  get 'paquete_turisticos/:id/detalle_plan/' => 'paquete_turisticos#detalle_plan', as: :detalle_plan_turistico
+  post 'paquete_turisticos/:id/detalle_plan/' => 'paquete_turisticos#detalle_plan'
   post 'about/registrar_reserva' => 'about#registrar_reserva'
   post 'about/confirmar_reserva' => 'about#confirmar_reserva' 
   get 'about/confirmar_reserva' => 'about#confirmar_reserva'
