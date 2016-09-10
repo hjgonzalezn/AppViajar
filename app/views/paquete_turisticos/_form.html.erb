@@ -70,7 +70,7 @@
 										<tbody>
 											<% @tarifas.each do |tarifa| %>
 												<tr>
-													<td><%= tarifa.trf_concepto %></td>
+													<td><%= tarifa.trf_concepto + " (" + tarifa.trf_detalleAplicacion + ")" %></td>
 													<td><%= number_to_currency(tarifa.trf_promo) %></td>
 													<td><%= number_to_currency(tarifa.trf_econo) %></td>
 													<td><%= number_to_currency(tarifa.trf_base) %></td>

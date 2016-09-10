@@ -1,0 +1,60 @@
+<%= form_for(@accion) do |f| %>
+	<% if @accion.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@accion.errors.count, "error") %> prohibited this region from being saved:</h2>
+  			<ul>
+      			<% @accion.errors.full_messages.each do |message| %>
+        		<li><%= message %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+  	<% end %>
+	<div class="col-lg-6 col-md-6" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+			<div class="form-group">
+		    	<%= f.label :Código %><br>
+		    	<%= f.text_field :acc_codigo, {class:"form-control"} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :Nombre %><br>
+		    	<%= f.text_field :acc_nombre, {class:"form-control"} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :Estado %><br>
+		    	<%= f.select :acc_estadoRegistro, options_for_select(@estados.invert), {}, options={class:"form-control"} %>
+			</div>
+  		</div>
+		
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_accion_<%= @accion.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_accion').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+			
+				<%= link_to 'Regresar', accions_path , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					| <%= link_to 'Consultar', @accion, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<script>
+	$(function(){
+		 $( document ).trigger( "page:update" );
+	});
+</script>

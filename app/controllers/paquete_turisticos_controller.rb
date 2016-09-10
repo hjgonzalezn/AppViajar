@@ -2,8 +2,8 @@ class PaqueteTuristicosController < ApplicationController
   include EntidadTerritorialsHelper
   
   before_action :set_paquete_turistico, only: [:show, :edit, :update, :destroy, :detalle_plan]
-  before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
-  before_action :initialize_vars, only: [:new, :edit, :show]
+  before_action :initialize_vars_global, only: [:index, :new, :show, :edit, :detalle_plan]
+  before_action :initialize_vars, only: [:new, :edit, :show, :detalle_plan]
   
   # GET /paquete_turisticos
   # GET /paquete_turisticos.json
@@ -26,7 +26,6 @@ class PaqueteTuristicosController < ApplicationController
   def edit
     @titulo = "Modificar Paquete Turístico"
     @tipos_actividad_turistica = TipoActividadTuristica.all
-    @tarifas = Tarifa.where("trf_conceptoCodigo = 'VPAQ' AND trf_conceptoAplicacion = 'PAQUETE' AND trf_tipoProducto = 'PAQUETE TURISTICO' and trf_producto = #{@paquete_turistico.id} AND trf_estadoRegistro = 'A'")
     @itinerario = Itinerario.where(paquete_turistico_id: @paquete_turistico)
   end
 
@@ -74,7 +73,9 @@ class PaqueteTuristicosController < ApplicationController
   end
 
   def detalle_plan
+    @ciudadesOrigen = EntidadTerritorial.select("id, enter_nombreCorto").where("enter_nombreCorto IN ('MEDELLIN', 'CALI', 'BOGOTA DC')")
     @itinerario = Itinerario.where(paquete_turistico_id: @paquete_turistico)
+    @fotosPlan = Foto.select("Fotos.foto_nombreArchivo, E.enter_nombreCorto").joins("INNER JOIN Entidad_Territorials E ON E.id = Fotos.foto_entidad_id INNER JOIN Paq_Turistico_Ent_Territorials PE ON PE.Entidad_Territorial_Id = E.id INNER JOIN Paquete_Turisticos PT ON PT.id = PE.paquete_turistico_id").where("Fotos.foto_entidadCodigo = 'ENTER' AND Fotos.foto_estadoRegistro = 'A' AND E.enter_estadoRegistro = 'A' AND PE.PqTurEnTer_estadoRegistro = 'A' AND PT.pqTur_EstadoRegistro = 'A' AND PT.id = ?", @paquete_turistico.id)
   end
   
   # DELETE /paquete_turisticos/1
@@ -96,6 +97,7 @@ class PaqueteTuristicosController < ApplicationController
     def initialize_vars
       @continentes = set_continentes
       @padreRegion = EntidadTerritorial.where("enter_nivel IN (1,2) AND enter_estadoRegistro = 'A'").order(:enter_nivel, :enter_nombreCorto)
+      @tarifas = Tarifa.where("trf_tipoProducto = 'PAQUETE_TURISTICOS' AND trf_producto = ? AND trf_estadoRegistro = 'A'", @paquete_turistico.id).order(:trf_detalleAplicacion)
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -100,6 +100,10 @@ class TarifasController < ApplicationController
             @parentController = @tarifa.trf_tipoProducto.downcase
             @parentId = @tarifa.trf_producto.to_s
             parent_path = "/" + @parentController + "/" + @parentId
+          when "PAQUETE_TURISTICOS"
+            @parentController = @tarifa.trf_tipoProducto.downcase
+            @parentId = @tarifa.trf_producto.to_s
+            parent_path = "/" + @parentController + "/" + @parentId
         end
       end
             
@@ -133,6 +137,9 @@ class TarifasController < ApplicationController
               @producto = @producto + lugar.enter_nombreCorto +  " > "
             end
             @producto = @producto[0, @producto.length - 3]
+          when "paquete_turisticos"
+            paqueteTuristico = PaqueteTuristico.find(@parentId)
+            @producto = paqueteTuristico.pqTur_nombre
         end
     end
     

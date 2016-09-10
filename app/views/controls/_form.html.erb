@@ -1,0 +1,74 @@
+<%= form_for(@control) do |f| %>
+  <% if @control.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@control.errors.count, "error") %> prohibited this control from being saved:</h2>
+
+      <ul>
+      <% @control.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<div class="col-lg-6 col-md-6" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+		  	<div class="form-group">
+		    	<%= f.label :Descripcion, "Descripción*" %><br>
+		    	<%= f.text_field :ctrl_descripcion, {class:"form-control"} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :HTML_Id, "HTML Id" %><br>
+		    	<%= f.text_field :ctrl_html_id, {class:"form-control"} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :Tipo %><br>
+		    	<%= f.text_field :ctrl_tipo, {class: "form-control"} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :Modelo %><br>
+		    	<%= f.text_field :modelo_id, {class:"form-control"} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :Accion %><br>
+		    	<%= f.text_field :accion_id, {class:"form-control"} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :Estado %><br>
+		    	<%= f.text_field :ctrl_estadoRegistro, {class:"form-control"} %>
+	  		</div>
+  		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_control_<%= @control.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_control').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+				
+				<%= link_to 'Regresar', controls_path , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					<% path = request.fullpath %>
+					<% path["/edit"]="" %>
+					| <%= link_to 'Consultar', path, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<script>
+	$(function(){
+		 $( document ).trigger( "page:update" );
+	});
+</script>

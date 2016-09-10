@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Fotos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Foto nombrearchivo</th>
+      <th>Foto ruta</th>
+      <th>Foto titulo</th>
+      <th>Foto descripcion</th>
+      <th>Foto entidadcodigo</th>
+      <th>Foto entidad</th>
+      <th>Foto portada</th>
+      <th>Foto estadoregistro</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fotos.each do |foto| %>
+      <tr>
+        <td><%= foto.foto_nombreArchivo %></td>
+        <td><%= foto.foto_ruta %></td>
+        <td><%= foto.foto_titulo %></td>
+        <td><%= foto.foto_descripcion %></td>
+        <td><%= foto.foto_entidadCodigo %></td>
+        <td><%= foto.foto_entidad_id %></td>
+        <td><%= foto.foto_portada %></td>
+        <td><%= foto.foto_estadoRegistro %></td>
+        <td><%= link_to 'Show', foto %></td>
+        <td><%= link_to 'Edit', edit_foto_path(foto) %></td>
+        <td><%= link_to 'Destroy', foto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Foto', new_foto_path %>

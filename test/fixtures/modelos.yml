@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mdl_codigo: MyString
+  mdl_nombre: MyString
+  mdl_estadoRegistro: MyString
+
+two:
+  mdl_codigo: MyString
+  mdl_nombre: MyString
+  mdl_estadoRegistro: MyString

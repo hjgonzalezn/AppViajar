@@ -42,8 +42,8 @@
 								<% datosPropietario = set_propietario_vehiculo(vehiculo.vehi_tipoPropietario, vehiculo.vehi_propietarioId, vehiculo.vehi_sucursalEmpresaPropId) %>
 								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
 									<div class="tm-tours-box-2">
-										<h3><%= vehiculo.vehi_modeloCodigo %></h3>				
-										<%= image_tag("/assets/models/vehiculos/" + (vehiculo.vehi_foto == nil ? "foto.jpg" : vehiculo.vehi_foto), alt: "#{vehiculo.vehi_modeloCodigo}", class: "img-responsive") %>
+										<h3><%= vehiculo.vehi_modeloCodigo %></h3>
+										<%= image_tag("models/vehiculos/" + (vehiculo.vehi_foto == nil ? "foto.jpg" : vehiculo.vehi_foto), alt: "#{vehiculo.vehi_modeloCodigo}", class: "img-responsive") %>
 										<div class="tm-tours-box-2-info">
 											<h3 class="margin-bottom-15"><%= datosPropietario["nombre"] %></h3>
 											<p><%= datosPropietario["ciudad"] %></p>

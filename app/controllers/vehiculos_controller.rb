@@ -11,7 +11,7 @@ class VehiculosController < ApplicationController
   # GET /vehiculos
   # GET /vehiculos.json
   def index
-    @vehiculos = Vehiculo.all
+    @vehiculos = Vehiculo.all.order(:vehi_tipo)
   end
 
   # GET /vehiculos/1

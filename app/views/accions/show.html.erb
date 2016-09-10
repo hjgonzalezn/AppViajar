@@ -1,0 +1,42 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-6 col-md-6" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Acción</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-4 col-md-4">
+							<p><strong>Código:</strong></p>
+							<p><strong>Nombre:</strong></p>
+							<p><strong>Estado</strong></p>
+						</div>
+						<div class="col-lg-8 col-md-8">
+							<p><%= @accion.acc_codigo %></p>
+							<p><%= @accion.acc_nombre %></p>
+							<p><%= @estados[@accion.acc_estadoRegistro] %></p>
+  							<p>&nbsp;</p>
+  						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', accions_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_accion_path(@accion), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

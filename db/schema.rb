@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828200529) do
+ActiveRecord::Schema.define(version: 20160909181329) do
+
+  create_table "accions", force: :cascade do |t|
+    t.string   "acc_codigo",         limit: 255
+    t.string   "acc_nombre",         limit: 255
+    t.string   "acc_estadoRegistro", limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
 
   create_table "actividad_turismos", force: :cascade do |t|
     t.string   "actur_nombre",      limit: 255
@@ -41,6 +49,22 @@ ActiveRecord::Schema.define(version: 20160828200529) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end
+
+  create_table "controls", force: :cascade do |t|
+    t.string   "ctrl_descripcion",    limit: 255
+    t.string   "ctrl_html_id",        limit: 255
+    t.string   "ctrl_tipo",           limit: 255
+    t.integer  "modelo_id",           limit: 4
+    t.integer  "accion_id",           limit: 4
+    t.string   "ctrl_created_by",     limit: 255
+    t.string   "ctrl_updated_by",     limit: 255
+    t.string   "ctrl_estadoRegistro", limit: 255
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "controls", ["accion_id"], name: "index_controls_on_accion_id", using: :btree
+  add_index "controls", ["modelo_id"], name: "index_controls_on_modelo_id", using: :btree
 
   create_table "costos", force: :cascade do |t|
     t.string   "empr_documentoIdentidad",  limit: 255
@@ -94,17 +118,65 @@ ActiveRecord::Schema.define(version: 20160828200529) do
     t.string   "enter_nombreCorto",    limit: 255
   end
 
+  create_table "fotos", force: :cascade do |t|
+    t.string   "foto_nombreArchivo",  limit: 255
+    t.string   "foto_ruta",           limit: 255
+    t.string   "foto_titulo",         limit: 255
+    t.string   "foto_descripcion",    limit: 255
+    t.string   "foto_entidadCodigo",  limit: 255
+    t.integer  "foto_entidad_id",     limit: 4
+    t.string   "foto_portada",        limit: 255
+    t.string   "foto_estadoRegistro", limit: 255
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
   create_table "itinerarios", force: :cascade do |t|
     t.integer  "paquete_turistico_id", limit: 4
-    t.string   "itnr_actividad",       limit: 255
     t.string   "itnr_estadoRegistro",  limit: 255
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "itnr_userCreate",      limit: 255
     t.string   "itnr_userUpdate",      limit: 255
+    t.text     "itnr_actividad",       limit: 65535
+    t.string   "itnr_titulo",          limit: 255
   end
 
   add_index "itinerarios", ["paquete_turistico_id"], name: "index_itinerarios_on_paquete_turistico_id", using: :btree
+
+  create_table "modelo_accions", force: :cascade do |t|
+    t.integer  "modelo_id",             limit: 4
+    t.integer  "accion_id",             limit: 4
+    t.string   "modAcc_tipoAcceso",     limit: 255
+    t.string   "modAcc_sliderShow",     limit: 255
+    t.string   "modAcc_estadoRegistro", limit: 255
+    t.string   "modAcc_created_by",     limit: 255
+    t.string   "modAcc_updated_by",     limit: 255
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "modelo_accions", ["accion_id"], name: "index_modelo_accions_on_accion_id", using: :btree
+  add_index "modelo_accions", ["modelo_id"], name: "index_modelo_accions_on_modelo_id", using: :btree
+
+  create_table "modelos", force: :cascade do |t|
+    t.string   "mdl_codigo",         limit: 255
+    t.string   "mdl_nombre",         limit: 255
+    t.string   "mdl_estadoRegistro", limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  create_table "paq_turistico_ent_territorials", force: :cascade do |t|
+    t.integer  "paquete_turistico_id",      limit: 4
+    t.integer  "entidad_territorial_id",    limit: 4
+    t.string   "pqTurEnTer_estadoRegistro", limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "paq_turistico_ent_territorials", ["entidad_territorial_id"], name: "index_paq_turistico_ent_territorials_on_entidad_territorial_id", using: :btree
+  add_index "paq_turistico_ent_territorials", ["paquete_turistico_id"], name: "index_paq_turistico_ent_territorials_on_paquete_turistico_id", using: :btree
 
   create_table "paquete_turisticos", force: :cascade do |t|
     t.string   "pqTur_nombre",            limit: 255
@@ -264,7 +336,13 @@ ActiveRecord::Schema.define(version: 20160828200529) do
 
   add_index "viajes", ["vehiculo_id"], name: "index_viajes_on_vehiculo_id", using: :btree
 
+  add_foreign_key "controls", "accions"
+  add_foreign_key "controls", "modelos"
   add_foreign_key "itinerarios", "paquete_turisticos"
+  add_foreign_key "modelo_accions", "accions"
+  add_foreign_key "modelo_accions", "modelos"
+  add_foreign_key "paq_turistico_ent_territorials", "entidad_territorials"
+  add_foreign_key "paq_turistico_ent_territorials", "paquete_turisticos"
   add_foreign_key "personas", "entidad_territorials", column: "pers_paisOrigen"
   add_foreign_key "viajes", "vehiculos"
 end

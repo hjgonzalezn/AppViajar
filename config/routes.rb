@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :fotos
+  resources :controls
+  resources :accions
+  resources :modelos
   resources :viajes
   get 'entidad_territorials/actualizar_lista_dependiente' => 'entidad_territorials#actualizar_lista_dependiente', as: :actualizar_lista_dependiente
   get 'empresas/buscar_datos_empresa' => 'empresas#buscar_datos_empresa', as: :buscar_datos_empresa
@@ -17,6 +21,8 @@ Rails.application.routes.draw do
   get 'about/admon' => 'about#admon', as: :administracion
   get 'about/somos' => 'about#somos', as: :somos
   get 'about/ofertas' => 'about#ofertas', as: :ofertas
+  post 'about/mensaje_contacto' => 'about#mensaje_contacto'
+  get 'about/mensaje_contacto' => 'about#mensaje_contacto', as: :mensaje_contacto
   get 'about/contacto' => 'about#contacto', as: :contactenos
   get 'about/reservas' => 'about#reservas', as: :reservas
   get 'about/planes' => 'about#planes', as: :planes  

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Foto nombrearchivo:</strong>
+  <%= @foto.foto_nombreArchivo %>
+</p>
+
+<p>
+  <strong>Foto ruta:</strong>
+  <%= @foto.foto_ruta %>
+</p>
+
+<p>
+  <strong>Foto titulo:</strong>
+  <%= @foto.foto_titulo %>
+</p>
+
+<p>
+  <strong>Foto descripcion:</strong>
+  <%= @foto.foto_descripcion %>
+</p>
+
+<p>
+  <strong>Foto entidadcodigo:</strong>
+  <%= @foto.foto_entidadCodigo %>
+</p>
+
+<p>
+  <strong>Foto entidad:</strong>
+  <%= @foto.foto_entidad_id %>
+</p>
+
+<p>
+  <strong>Foto portada:</strong>
+  <%= @foto.foto_portada %>
+</p>
+
+<p>
+  <strong>Foto estadoregistro:</strong>
+  <%= @foto.foto_estadoRegistro %>
+</p>
+
+<%= link_to 'Edit', edit_foto_path(@foto) %> |
+<%= link_to 'Back', fotos_path %>

@@ -1,0 +1,49 @@
+<%= form_for(@foto) do |f| %>
+  <% if @foto.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@foto.errors.count, "error") %> prohibited this foto from being saved:</h2>
+
+      <ul>
+      <% @foto.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :foto_nombreArchivo %><br>
+    <%= f.text_field :foto_nombreArchivo %>
+  </div>
+  <div class="field">
+    <%= f.label :foto_ruta %><br>
+    <%= f.text_field :foto_ruta %>
+  </div>
+  <div class="field">
+    <%= f.label :foto_titulo %><br>
+    <%= f.text_field :foto_titulo %>
+  </div>
+  <div class="field">
+    <%= f.label :foto_descripcion %><br>
+    <%= f.text_field :foto_descripcion %>
+  </div>
+  <div class="field">
+    <%= f.label :foto_entidadCodigo %><br>
+    <%= f.text_field :foto_entidadCodigo %>
+  </div>
+  <div class="field">
+    <%= f.label :foto_entidad_id %><br>
+    <%= f.number_field :foto_entidad_id %>
+  </div>
+  <div class="field">
+    <%= f.label :foto_portada %><br>
+    <%= f.text_field :foto_portada %>
+  </div>
+  <div class="field">
+    <%= f.label :foto_estadoRegistro %><br>
+    <%= f.text_field :foto_estadoRegistro %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

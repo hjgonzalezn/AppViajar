@@ -46,12 +46,16 @@
 				<% end %>
 				
 				<% hshRegion = [["-- SELECCIONE --",""]] %>
-				<% unless enteNivel3.region_id.nil? %>
+				<% unless enteNivel3.region_id.blank? %>
 					<% region = Region.find(enteNivel3.region_id) %>
-					<% hshRegion = [[region.reg_nombre, region.id]]%>
+					<% unless region.nil? %>
+						<% hshRegion = [[region.reg_nombre, region.id]]%>
+					<% end %>
 				<% end %>
 			<% end %>
-			$("#entidad_territorial_region_id").html("<%= escape_javascript(options_for_select(hshRegion)) %>");
+			<% unless hshRegion.nil? %>
+				$("#entidad_territorial_region_id").html("<%= escape_javascript(options_for_select(hshRegion)) %>");
+			<% end %>
 		<% end %>
 	<% end %>
 <% else %>

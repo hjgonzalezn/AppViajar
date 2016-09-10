@@ -1,0 +1,15 @@
+<div class="form-group">
+	<%= text_field_tag :pers_nombreCompleto, nil, options={class:"form-control", placeholder: "NOMBRE"} %>
+</div>
+<div class="form-group">
+	<%= email_field_tag :pers_correoElectronico, nil, options={class:"form-control", placeholder: "CORREO ELECTRÓNICO"} %>
+</div>
+<div class="form-group">
+	<%= text_field_tag :pers_telefono, nil, options={class:"form-control", placeholder: "TELÉFONO FIJO O CELULAR"} %>
+</div>
+<div class="form-group">
+	<%= text_field_tag :msj_asunto, nil, options={class:"form-control", placeholder: "ASUNTO"} %>
+</div>
+<div class="form-group">
+	<%= text_area_tag :msj_contenido, nil, options={class:"form-control", placeholder: "MENSAJE", rows: 5 } %>
+</div>

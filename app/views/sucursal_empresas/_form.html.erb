@@ -75,8 +75,8 @@
 			    	<%= f.label :sucEmpr_docIdentContacto1, "Contacto 1" %><br>
 			    	<%= f.hidden_field :sucEmpr_docIdentContacto1 %>
 				    <%= select_tag(:cont1_tipoIdent, options_for_select(@tiposIdentPersona.invert, tipoDocumPersona), prompt: "-- TIPO DOC. IDENT --") %> | 
-				    <%= text_field_tag(:cont1_numeroIdent, nroDocumPersona, options={class:"documPersona", placeholder: "Nro de identificación"}) %> <p>&nbsp;</p>
-				    <%= text_field_tag(:cont1_nombreCompleto, nombrePersona, options={placeholder:"Nombre Completo", size: 60, readonly: true}) %>
+				    <%= text_field_tag(:cont1_numeroIdent, nroDocumPersona, options={placeholder: "Nro de identificación"}) %> <p>&nbsp;</p>
+				    <%= text_field_tag(:cont1_nombreCompleto, nombrePersona, options={class:"form-control nombrePersona", placeholder:"Nombre Completo", size: 60, readonly: true}) %>
 			  	</div>
 			  	<div class="form-group">
 			    	<% tipoDocumPersona = nil %>
@@ -92,8 +92,8 @@
 			    	<%= f.label :sucEmpr_docIdentContacto2, "Contacto 2" %><br>
 			    	<%= f.hidden_field :sucEmpr_docIdentContacto2 %>
 				    <%= select_tag(:cont2_tipoIdent, options_for_select(@tiposIdentPersona.invert, tipoDocumPersona), prompt: "-- TIPO DOC. IDENT --") %> | 
-				    <%= text_field_tag(:cont2_numeroIdent, nroDocumPersona, options={class:"documPersona", placeholder: "Nro de identificación"}) %> <p>&nbsp;</p>
-				    <%= text_field_tag(:cont2_nombreCompleto, nombrePersona, options={placeholder:"Nombre Completo", size: 60, readonly: true}) %>
+				    <%= text_field_tag(:cont2_numeroIdent, nroDocumPersona, options={placeholder: "Nro de identificación"}) %> <p>&nbsp;</p>
+				    <%= text_field_tag(:cont2_nombreCompleto, nombrePersona, options={class:"form-control nombrePersona", placeholder:"Nombre Completo", size: 60, readonly: true}) %>
 			  	</div>
 			  	<div class="form-group">
 			    	<%= f.label :sucEmpr_TipoSucursal, "Tipo de Sucursal*" %><br>
@@ -140,7 +140,7 @@
 		 $("#parents_path").val(<%= @parentalPath %>);
 	});
 	
-	$(document).on('page:update', function() {
+	$(document).on('page:update', function(){
 		
 		$("#empr_numeroIdent").blur(function(){
 			var documIdentEmpresa;
@@ -165,18 +165,20 @@
 			}
 		});
 		
-		$(".documPersona").blur(function(){
+		$(".nombrePersona").focus(function(){
+				
 				var documIdentPersona;
+				var hshDatosControl = new Object();
 				prefijo = $(this).attr('id').split("_");
 				prefijo = prefijo[0];
 				documIdentPersona = $("#" + prefijo + "_numeroIdent").val() + $("#" + prefijo + "_tipoIdent").val();
-								
+				hshDatosControl["nombre"] = prefijo + "_nombreCompleto";
 				$.ajax({
 						url: "<%= buscar_datos_persona_path %>",
 						data: {
 								id: documIdentPersona,
 								dato_requerido: "nombre",
-								nombre_control: prefijo + "_nombreCompleto"
+								datos_control: hshDatosControl
 					  		  },
 						dataType: "script",
 						success: function(){

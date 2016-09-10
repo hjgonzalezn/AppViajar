@@ -22,41 +22,6 @@
   
 </head>
 <body class="tm-gray-bg">
-  	<!--div class="tm-header">
-  		<div class="container">
-  			<div class="row">
-  				<div class="col-lg-3 col-md-4 col-sm-3 tm-site-name-container">
-  					<a href="/accions" class="tm-site-name"><%= image_tag("page/logo.png", width:250) %></a>	
-  				</div>
-	  			<div class="col-lg-9 col-md-8 col-sm-9">
-	  				<div class="mobile-menu-icon">
-		              <i class="fa fa-bars"></i>
-		            </div>
-	  				<nav class="tm-nav">
-						<ul>
-							<li><a href="<%= administracion_path %>" class ="mainmenu" id="mnuAdmin"><i class="fa fa-tasks"></i>Admin</a></li>
-							<li><a href="<%= home_path %>" class="mainmenu" id="mnuHome"><i class="fa fa-home"></i>Inicio</span></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Quienes somos</a></li>
-									<li><a href="#">Nuestros servicios</a></li>
-									<li><a href="#">Terminos</a></li>
-								</ul>
-							</li>
-							<li><a href="about.html" class ="dropdown-top"><i class="fa fa-user"></i>Nosotros<span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Quienes somos</a></li>
-									<li><a href="#">Nuestros servicios</a></li>
-									<li><a href="#">Terminos</a></li>
-								</ul>
-							</li>
-							<li><a href="tours.html" class="mainmenu"><i class="fa fa-camera"></i>Destinos</a></li>
-							<li><a href="contact.html" class="mainmenu"><i class="fa fa-envelope"></i>Cont&aacute;ctenos</a></li>
-						</ul>
-					</nav>
-	  			</div>
-  			</div>
-  		</div>	  	
-  	</div-->
 	<div class="navbar-fixed-top">
 		<div class="row tm-blue-bg">
 			<div class="col-lg-12 col-md-12 col-sm-12 tm-login-bar">
@@ -93,7 +58,6 @@
 							<a href="about.html" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000"><i class="fa fa-user"></i><br>La Agencia<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<%= somos_path %>">Quiénes somos</a></li>
-								<li><a href="#">Políticas</a></li>
 								<li><a href="<%= administracion_path %>">Administración</a></li>
 							</ul>
 						</li>
@@ -116,17 +80,15 @@
 			</div>
 		</nav>
 	</div>
-	
-	<div class="tm-barra">
-	</div>
-	
-	<% if (params[:controller] == "about" and params[:action] != "admon" and params[:action] != "reservas" and params[:action] != "alojamiento" and params[:action] != "carga" and params[:action] != "ofertas" and params[:action] != "planes") or (params[:controller] == "paquete_turisticos" and params[:action] == "detalle_plan") then %>
+	<% sliderShowKey = params[:controller].upcase + "-" + params[:action].upcase %>
+	<% varShowSlider = @slideShow[sliderShowKey] %>
+	<% if varShowSlider == "G" then %>
 		<!-- Banner -->
 		<section class="tm-banner">
 			<!-- Flexslider -->
 			<div class="flexslider flexslider-banner">
 			  <ul class="slides">
-			    <li>
+			    <!--li>
 				    <div class="tm-banner-inner">
 						<h1 class="tm-banner-title">&nbsp;</h1>
 						<p class="tm-banner-subtitle">&nbsp;</p>
@@ -135,7 +97,7 @@
 						<a href="<%= ofertas_path %>" class="tm-banner-link">Leer Más</a>	
 					</div>
 					<%= image_tag("slideshow/banner-4.jpg", alt: "Bahía Solano") %>	
-			    </li>
+			    </li-->
 			    <li>
 				    <div class="tm-banner-inner">
 						<h1 class="tm-banner-title">Reconforta tu <span class="tm-yellow-text">espíritu</span></h1>
@@ -163,6 +125,9 @@
 			  </ul>
 			</div>	
 		</section>
+	<% else %>
+		<div class="tm-barra">
+		</div>
 	<% end %>
 	
 	<%= yield %>
@@ -258,6 +223,13 @@
 		
 		$(document).on("page:update", function(){
 		  $("#cargando").hide();
+		  $('[data-hover="dropdown"]').dropdownHover();
+			//	For images only
+		    $('.flexslider').flexslider({
+			    controlNav: false,
+			    prevText: "",           //String: Set the text for the "previous" directionNav item
+				nextText: ""               //String: Set the text for the "next" directionNav item
+		    });
 		});
 		
 		// HTML document is loaded. DOM is ready.
@@ -281,18 +253,6 @@
 		  	});
 		});
 		
-		// Load Flexslider when everything is loaded.
-		$(window).load(function() {	  		
-			
-			//	For images only
-		    $('.flexslider').flexslider({
-			    controlNav: false,
-			    prevText: "",           //String: Set the text for the "previous" directionNav item
-				nextText: ""               //String: Set the text for the "next" directionNav item
-		    });
-		    	    
-	  	});
-	  	
 	  	$(document).ajaxSend(function(){
 	  		$("#cargando").show();
 	  	});

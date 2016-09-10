@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
     @meses = {1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr", 5 => "May", 6 =>  "Jun", 7 => "Jul", 8 => "Ago", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dic" }
     @estados = Hash.new
     @tiposDocumIdent = Hash.new
+    @slideShow = Hash.new
     
     todoCatalogo = Catalogo.where("ctlg_estadoRegistro = ?", "A")
     
@@ -17,6 +18,13 @@ class ApplicationController < ActionController::Base
         # Tipos de documento de identidad
         @tiposDocumIdent[h.ctlg_valorCdg] = h.ctlg_valorDesc
       end
-    end   
+    end
+    
+    modeloAccion = ModeloAccion.select("M.mdl_nombre, A.acc_nombre, modelo_accions.modAcc_sliderShow").joins("INNER JOIN Modelos M ON M.id = modelo_accions.modelo_id INNER JOIN Accions A ON A.id = modelo_accions.accion_id").where("modelo_accions.modAcc_estadoRegistro = ?", "A")
+    
+    modeloAccion.each do |h|
+      @slideShow[h.mdl_nombre + "-" + h.acc_nombre] = h.modAcc_sliderShow
+    end
+    
   end  
 end

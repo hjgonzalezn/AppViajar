@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  modelo_id: 
+  accion_id: 
+  modAcc_tipoAcceso: MyString
+  modAcc_sliderShow: MyString
+  modAcc_estadoRegistro: MyString
+  modAcc_created_by: MyString
+  modAcc_updated_by: MyString
+
+two:
+  modelo_id: 
+  accion_id: 
+  modAcc_tipoAcceso: MyString
+  modAcc_sliderShow: MyString
+  modAcc_estadoRegistro: MyString
+  modAcc_created_by: MyString
+  modAcc_updated_by: MyString
