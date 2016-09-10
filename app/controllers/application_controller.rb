@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
       end
     end
     
-    modeloAccion = ModeloAccion.select("M.mdl_nombre, A.acc_nombre, modelo_accions.modAcc_sliderShow").joins("INNER JOIN Modelos M ON M.id = modelo_accions.modelo_id INNER JOIN Accions A ON A.id = modelo_accions.accion_id").where("modelo_accions.modAcc_estadoRegistro = ?", "A")
+    modeloAccion = ModeloAccion.select("M.mdl_nombre, A.acc_nombre, modelo_accions.modAcc_sliderShow").joins("INNER JOIN modelos M ON M.id = modelo_accions.modelo_id INNER JOIN accions A ON A.id = modelo_accions.accion_id").where("modelo_accions.modAcc_estadoRegistro = ?", "A")
     
     modeloAccion.each do |h|
       @slideShow[h.mdl_nombre + "-" + h.acc_nombre] = h.modAcc_sliderShow
