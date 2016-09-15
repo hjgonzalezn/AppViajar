@@ -83,6 +83,14 @@ body { overflow-x: hidden; }
 	color: #FFFF00;
 }
 
+.navbar-brand {
+	padding:0; 
+	width: 350px;/*167px;*/
+	height: 105px;
+	background: url(/assets/page/logo.png) left center no-repeat;
+	text-indent: -99999px;
+}
+
 .tm-header {
 	background: #FFFFFF;
 	height: 93px;
@@ -135,7 +143,7 @@ body { overflow-x: hidden; }
 
 /* Banner */
 .tm-banner{
-	margin-top:155px;
+	margin-top:0px;
 }
 
 .tm-banner-inner {
@@ -1118,6 +1126,15 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 	max-width: 555px;
 	overflow: hidden;
 }
+
+.tm-home-box-3 h3 {
+	color:#fa7d04;
+}
+
+.tm-home-box-3 h4 {
+	color:#176637;
+}
+
 .tm-home-box-3-img-container { float: left; }
 .tm-home-box-3-info {
     height: 225px;
@@ -1168,33 +1185,37 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 .tours-1-description { line-height: 1.8; }
 .tm-tours-box-1-link { overflow: hidden }
 .tm-tours-box-1-link-left { 
-	background-color: #1CA7C8;
+	background-color: #606874;
 	padding: 20px 30px;
 	float: left;
-	width: 75%;
+	width: 60%;
 	text-transform: uppercase;
 }
 .tm-tours-box-1-link-right {
 	float: left;
-	background-color: #1687A6;
+	background-color: #E8BA0F;
 	font-weight: 600;
 	font-size: 18px;
 	display: block;
 	padding: 17px 30px;
-	width: 25%;
+	width: 40%;
 	transition: all 0.3s;
 	text-align: center;
 }
 .tm-tours-box-1-link-right:hover,
 .tm-tours-box-1-link-right:focus {
-	color: white;
-	background-color: #1D98B9;
+	color: black;
+	background-color: #F9E58B;
 }
-.tm-tours-box-1-link-left,
-.tm-tours-box-1-link-right {
+.tm-tours-box-1-link-left{
 	color: white;
 	height: 60px;
 }
+.tm-tours-box-1-link-right {
+	color:black;
+	height:60px;
+}
+
 .tm-tours-box-2 {
 	max-width: 254px;
 	width: 100%;
@@ -1717,6 +1738,15 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 		width: 100%;
 		text-align: center;
 	}
+	
+	.navbar-brand {
+		padding:0; 
+		width: 200px;/*167px;*/
+		height:90px;
+		background: url(/assets/page/logo.png) left center no-repeat;
+		background-size: 180px 50px;
+		text-indent: -99999px;
+	}
 }
 
 @media screen and (max-width: 400px) {
@@ -1787,15 +1817,6 @@ ul.navbar-nav li.active .dropdown-menu > .active > a:hover,
 ul.navbar-nav li.active .dropdown-menu > .active > a:focus { background: #2dc970; color: #fff; border: 0; }
 
 .navbar>.container .navbar-brand { margin-left: 0;}
-
-.navbar-brand {
-	padding:0; 
-	width: 350px;/*167px;*/
-	height: 110px;
-	background: url(/assets/page/logo.png) left center no-repeat;
-	text-indent: -99999px;
-	
-}
 
 /* ----- PRICING TABLES PAGE ----- */
 

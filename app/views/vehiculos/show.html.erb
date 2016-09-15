@@ -21,7 +21,7 @@
 					<div id="tm-form-content">
 						<div class="col-lg-12 col-md-12">
 							<div class="view view-first">
-								<%= image_tag("/assets/models/vehiculos/" + (@vehiculo.vehi_foto == nil ? "foto.jpg" : @vehiculo.vehi_foto), alt: "Nuquí", class: "img-responsive") %>
+								<%= image_tag("models/vehiculos/" + (@vehiculo.vehi_foto == nil ? "foto.jpg" : @vehiculo.vehi_foto), alt: @vehiculo.vehi_modeloCodigo , class: "img-responsive") %>
 								<div class="mask">
                         			<h2><%= @tiposVehiculo[@vehiculo.vehi_tipo] + " - " + @vehiculo.vehi_modeloCodigo %></h2>
 										<div class="col-lg-5 col-md-5">

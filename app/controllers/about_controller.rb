@@ -16,7 +16,7 @@ class AboutController < ApplicationController
     
     case @tipoProducto
       when "VUELO" then
-        @producto = "DATOS DEL " + tipoProducto
+        @producto = "DATOS DEL " + @tipoProducto
       when "PAQUETUR" then
         paquete = PaqueteTuristico.find(idProducto)
         @producto = "PLAN " + paquete.pqTur_nombre  

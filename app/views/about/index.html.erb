@@ -20,6 +20,7 @@
 								<form id="frmReservarVuelo" action="about/detalle_reserva" method="post" class="hotel-search-form">
 									<div class="tm-form-inner">
 										<div class="form-group">
+											<%= hidden_field_tag :datosProducto, "VUELO|0"  %>
 											<%= select_tag :cboOrigen, options_from_collection_for_select(@ciudadesAeropuertos, :id, :enter_nombreOficial), options={class:"form-control" , required: :required, prompt: "-- ORIGEN --"} %>
 							          	</div>
 										<div class="form-group">
@@ -234,7 +235,7 @@
 	</section>
 	
 	<!-- white bg -->
-	<!--section class="tm-white-bg section-margin-bottom">
+	<section class="tm-white-bg section-margin-bottom">
 		<div class="container">
 			<div class="row">				
 				<div class="tm-section-header">
@@ -244,7 +245,54 @@
 					<div class="col-lg-3 col-md-3 col-sm-3"><hr></div>	
 				</div>
 			</div>
+			
 			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="tm-tours-box-1">
+						<%= image_tag("sitios/tours-03.jpg", alt:"image", class:"img-responsive") %>
+						<div class="tm-tours-box-1-info">
+							<div class="tm-tours-box-1-info-left">
+								<p class="text-uppercase margin-bottom-20">Alumbrados Navideños</p>	
+								<p class="gray-text">2016</p>
+							</div>
+							<div class="tm-tours-box-1-info-right">
+								<p class="gray-text tours-1-description">Vive una navidad diferente con estos planes que tenemos para ti.</p>	
+							</div>							
+						</div>
+						<div class="tm-tours-box-1-link">
+							<div class="tm-tours-box-1-link-left">
+								Duraci&oacute;n: 3 días
+							</div>
+							<a href="#" class="tm-tours-box-1-link-right">
+								Leer Más								
+							</a>							
+						</div>
+					</div>					
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="tm-tours-box-1">
+						<%= image_tag("sitios/tours-04.jpg", alt:"image", class:"img-responsive")%>
+						<div class="tm-tours-box-1-info">
+							<div class="tm-tours-box-1-info-left">
+								<p class="text-uppercase margin-bottom-20">Habana Varadero</p>	
+								<p class="gray-text">2017</p>
+							</div>
+							<div class="tm-tours-box-1-info-right">
+								<p class="gray-text tours-1-description">En 2017 te invitamos a Cuba, sorpréndete con su música, sus coloridos paisajes y más.</p>	
+							</div>							
+						</div>
+						<div class="tm-tours-box-1-link">
+							<div class="tm-tours-box-1-link-left">
+								Duraci&oacuten: 8 días
+							</div>
+							<a href="#" class="tm-tours-box-1-link-right">
+								Leer Más								
+							</a>							
+						</div>
+					</div>					
+				</div>			
+			
+			<!--div class="row">
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					<div class="tm-tours-box-1">
 						<%= image_tag("sitios/tours-03.jpg", alt:"image", class:"img-responsive") %>
@@ -289,7 +337,7 @@
 						</div>
 					</div>					
 				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<!--div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					<div class="tm-tours-box-1">
 						<%= image_tag("sitios/tours-05.jpg", alt:"image", class:"img-responsive") %>
 						<div class="tm-tours-box-1-info">
@@ -332,10 +380,10 @@
 							</a>							
 						</div>
 					</div>					
-				</div>
+				</div-->
 			</div>		
 		</div>
-	</section-->
+	</section>
 	
 	<script>
 		

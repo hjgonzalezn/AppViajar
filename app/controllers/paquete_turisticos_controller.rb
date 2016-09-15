@@ -75,7 +75,7 @@ class PaqueteTuristicosController < ApplicationController
   def detalle_plan
     @ciudadesOrigen = EntidadTerritorial.select("id, enter_nombreCorto").where("enter_nombreCorto IN ('MEDELLIN', 'CALI', 'BOGOTA DC')")
     @itinerario = Itinerario.where(paquete_turistico_id: @paquete_turistico)
-    @fotosPlan = Foto.select("Fotos.foto_nombreArchivo, E.enter_nombreCorto").joins("INNER JOIN Entidad_Territorials E ON E.id = Fotos.foto_entidad_id INNER JOIN Paq_Turistico_Ent_Territorials PE ON PE.Entidad_Territorial_Id = E.id INNER JOIN Paquete_Turisticos PT ON PT.id = PE.paquete_turistico_id").where("Fotos.foto_entidadCodigo = 'ENTER' AND Fotos.foto_estadoRegistro = 'A' AND E.enter_estadoRegistro = 'A' AND PE.PqTurEnTer_estadoRegistro = 'A' AND PT.pqTur_EstadoRegistro = 'A' AND PT.id = ?", @paquete_turistico.id)
+    @fotosPlan = Foto.select("fotos.foto_nombreArchivo, E.enter_nombreCorto").joins("INNER JOIN entidad_territorials E ON E.id = fotos.foto_entidad_id INNER JOIN paq_turistico_ent_territorials PE ON PE.Entidad_Territorial_Id = E.id INNER JOIN paquete_turisticos PT ON PT.id = PE.paquete_turistico_id").where("fotos.foto_entidadCodigo = 'ENTER' AND fotos.foto_estadoRegistro = 'A' AND E.enter_estadoRegistro = 'A' AND PE.PqTurEnTer_estadoRegistro = 'A' AND PT.pqTur_EstadoRegistro = 'A' AND PT.id = ?", @paquete_turistico.id)
   end
   
   # DELETE /paquete_turisticos/1
