@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  causal_tipo: MyString
+  causal_nivel: 1
+  causal_descripcion: MyString
+  causal_solucion: MyText
+  causal_estadoRegistro: MyString
+
+two:
+  causal_tipo: MyString
+  causal_nivel: 1
+  causal_descripcion: MyString
+  causal_solucion: MyText
+  causal_estadoRegistro: MyString

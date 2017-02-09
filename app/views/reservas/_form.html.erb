@@ -1,0 +1,61 @@
+<%= form_for(@reserva) do |f| %>
+  <% if @reserva.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reserva.errors.count, "error") %> prohibited this reserva from being saved:</h2>
+
+      <ul>
+      <% @reserva.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :rsrv_codigo %><br>
+    <%= f.text_field :rsrv_codigo %>
+  </div>
+  <div class="field">
+    <%= f.label :rsrv_tipoProducto %><br>
+    <%= f.text_field :rsrv_tipoProducto %>
+  </div>
+  <div class="field">
+    <%= f.label :rsrv_productoId %><br>
+    <%= f.number_field :rsrv_productoId %>
+  </div>
+  <div class="field">
+    <%= f.label :rsrv_tipoSolicitante %><br>
+    <%= f.text_field :rsrv_tipoSolicitante %>
+  </div>
+  <div class="field">
+    <%= f.label :rsrv_solicitanteId %><br>
+    <%= f.text_field :rsrv_solicitanteId %>
+  </div>
+  <div class="field">
+    <%= f.label :rsrv_tipoContacto %><br>
+    <%= f.text_field :rsrv_tipoContacto %>
+  </div>
+  <div class="field">
+    <%= f.label :rsrv_contactoId %><br>
+    <%= f.text_field :rsrv_contactoId %>
+  </div>
+  <div class="field">
+    <%= f.label :rsrv_estadoReserva, "Estado Reserva" %><br>
+    <%= f.text_field :rsrv_estadoReserva  %>
+  </div>
+  <div class="field">
+    <%= f.label :rsrv_fechaVencimiento %><br>
+    <%= f.datetime_select :rsrv_fechaVencimiento %>
+  </div>
+  <div class="field">
+    <%= f.label :created_by %><br>
+    <%= f.text_field :created_by %>
+  </div>
+  <div class="field">
+    <%= f.label :updated_by %><br>
+    <%= f.text_field :updated_by %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,33 +1,32 @@
 Rails.application.routes.draw do
 
-  resources :fotos
-  resources :controls
-  resources :accions
-  resources :modelos
-  resources :viajes
   get 'entidad_territorials/actualizar_lista_dependiente' => 'entidad_territorials#actualizar_lista_dependiente', as: :actualizar_lista_dependiente
   get 'empresas/buscar_datos_empresa' => 'empresas#buscar_datos_empresa', as: :buscar_datos_empresa
   get 'personas/buscar_datos_persona' => 'personas#buscar_datos_persona', as: :buscar_datos_persona
   get 'catalogos/cargar_registros_catalogo' => 'catalogos#cargar_registros_catalogo', as: :cargar_registros_catalogo
   get 'about' => 'about#index', as: :home
   get 'about/mensaje' => 'about#mensaje', as: :mensaje
-  get 'about/detalle_reserva' => 'about#detalle_reserva', as: :detalle_reserva
-  post 'about/detalle_reserva' => 'about#detalle_reserva'
+  get 'detalle_reservas/solicitar_reserva' => 'detalle_reservas#solicitar_reserva'
+  post 'detalle_reservas/solicitar_reserva' => 'detalle_reservas#solicitar_reserva'
   get 'paquete_turisticos/:id/detalle_plan/' => 'paquete_turisticos#detalle_plan', as: :detalle_plan_turistico
   post 'paquete_turisticos/:id/detalle_plan/' => 'paquete_turisticos#detalle_plan'
-  post 'about/registrar_reserva' => 'about#registrar_reserva'
-  post 'about/confirmar_reserva' => 'about#confirmar_reserva' 
-  get 'about/confirmar_reserva' => 'about#confirmar_reserva'
+  post 'detalle_reservas/registrar_reserva' => 'detalle_reservas#registrar_reserva'
+  get 'detalle_reservas/confirmar_reserva' => 'detalle_reservas#confirmar_reserva'
+  post 'detalle_reservas/confirmar_reserva' => 'detalle_reservas#confirmar_reserva'
+  get 'reservas/:id/pagos/new/:datos' => 'pagos#new'
+  get 'viajes/:id/pagos/new/:datos' => 'pagos#new'
+  #get 'about/confirmar_reserva' => 'about#confirmar_reserva'
   get 'about/admon' => 'about#admon', as: :administracion
   get 'about/somos' => 'about#somos', as: :somos
   get 'about/ofertas' => 'about#ofertas', as: :ofertas
   post 'about/mensaje_contacto' => 'about#mensaje_contacto'
   get 'about/mensaje_contacto' => 'about#mensaje_contacto', as: :mensaje_contacto
   get 'about/contacto' => 'about#contacto', as: :contactenos
-  get 'about/reservas' => 'about#reservas', as: :reservas
+  #get 'about/reservas' => 'about#reservas', as: :reservas
   get 'about/planes' => 'about#planes', as: :planes  
   get 'about/carga' => 'about#carga', as: :carga
   get 'about/alojamiento' => 'about#alojamiento', as: :alojamiento  
+  get 'hotels/:id/presentacion' => 'hotels#presentacion', as: :presentacion_hotel
   
   resources :empresas do
     resources :sucursal_empresas  
@@ -45,6 +44,13 @@ Rails.application.routes.draw do
     resources :tarifas
   end
   
+  resources :viajes do
+    resources :pagos
+  end
+  
+  resources :hotels  
+  resources :pagos
+  resources :causals
   resources :aeropuertos
   resources :catalogos  
   resources :division_pais
@@ -55,8 +61,15 @@ Rails.application.routes.draw do
   resources :tarifas  
   resources :tipo_actividad_turisticas
   resources :unidad_territorials
-  
-    
+  resources :fotos
+  resources :controls
+  resources :accions
+  resources :modelos
+  resources :detalle_reservas
+  resources :reservas do
+    resources :pagos
+  end
+      
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

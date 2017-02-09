@@ -121,7 +121,7 @@
     			<br><br-->
 			  	<div class="form-group">
 			    	<%= f.label :viaje_estado, "Estado del viaje*" %><br>
-			    	<%= f.select :viaje_estado, options_for_select(@estadosViaje.map{|h|[h.ctlg_valorDesc, h.ctlg_valorCdg]}), {}, options={class:"form-control"} %>
+			    	<%= f.select :viaje_estado, options_for_select(@estadosViaje.invert()), {}, options={class:"form-control"} %>
 			  	</div>
 			  	<div class="form-group">
 					<%= f.label :viaje_estadoRegistro, "Estado de registro" %><br>

@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pago tipoproducto:</strong>
+  <%= @pago.pago_tipoProducto %>
+</p>
+
+<p>
+  <strong>Pago productoid:</strong>
+  <%= @pago.pago_productoId %>
+</p>
+
+<p>
+  <strong>Pago valor:</strong>
+  <%= @pago.pago_valor %>
+</p>
+
+<p>
+  <strong>Pago forma:</strong>
+  <%= @pago.pago_forma %>
+</p>
+
+<p>
+  <strong>Pago ctabancdestino:</strong>
+  <%= @pago.pago_ctaBancDestino %>
+</p>
+
+<p>
+  <strong>Pago fecha:</strong>
+  <%= @pago.pago_fecha %>
+</p>
+
+<p>
+  <strong>Pago entidad:</strong>
+  <%= @pago.pago_entidad %>
+</p>
+
+<p>
+  <strong>Dtpag sucursalid:</strong>
+  <%= @pago.dtpag_sucursalId %>
+</p>
+
+<p>
+  <strong>Pago transaccion:</strong>
+  <%= @pago.pago_transaccion %>
+</p>
+
+<p>
+  <strong>Pago estado:</strong>
+  <%= @pago.pago_estado %>
+</p>
+
+<p>
+  <strong>Pago estadoregistro:</strong>
+  <%= @pago.pago_estadoRegistro %>
+</p>
+
+<p>
+  <strong>Created by:</strong>
+  <%= @pago.created_by %>
+</p>
+
+<p>
+  <strong>Updated by:</strong>
+  <%= @pago.updated_by %>
+</p>
+
+<%= link_to 'Edit', edit_pago_path(@pago) %> |
+<%= link_to 'Back', pagos_path %>

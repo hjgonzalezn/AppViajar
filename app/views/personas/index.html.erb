@@ -64,7 +64,7 @@
 
 <script>
 
-	$(document).on('page:load', function() {
+	$(document).on('page:update', function() {
 			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
 			    table = $('#indexTable').DataTable();
 			}
@@ -80,8 +80,10 @@
 			
     		"pagingType": "full_numbers",
 			"aoColumns" : [
-							{ sWidth : "45%" },
-							{ sWidth : "45%" },
+							{ sWidth : "15%" },
+							{ sWidth : "35%" },
+							{ sWidth : "15%" },
+							{ sWidth : "25%" },
 							{ sWidth : "10%" }
 						]
     		});

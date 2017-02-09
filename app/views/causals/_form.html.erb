@@ -1,0 +1,68 @@
+<%= form_for(@causal) do |f| %>
+  <% if @causal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@causal.errors.count, "error") %> prohibited this causal from being saved:</h2>
+
+      <ul>
+      <% @causal.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<div class="col-lg-6 col-md-6" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+			<div class="form-group">
+    			<%= f.label :causal_tipo, "Tipo*" %><br>
+    			<%= f.text_field :causal_tipo, class:"form-control" %>
+  			</div>
+		  	<div class="form-group">
+		    	<%= f.label :causal_nivel, "Nivel*" %><br>
+		    	<%= f.number_field :causal_nivel, class:"form-control" %>
+		  	</div>
+  			<div class="form-group">
+    			<%= f.label :causal_descripcion, "Descripción*" %><br>
+    			<%= f.text_field :causal_descripcion, class:"form-control" %>
+  			</div>
+  			<div class="form-group">
+    			<%= f.label :causal_solucion, "Solución*" %><br>
+    			<%= f.text_area :causal_solucion, class:"form-control" %>
+  			</div>
+		  	<div class="form-group">
+		    	<%= f.label :causal_estadoRegistro, "Estado*" %><br>
+		    	<%= f.select :causal_estadoRegistro, options_for_select(@estados.invert), {}, html_options={class:"form-control"} %>
+		  	</div>
+		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_causal_<%= @causal.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_causal').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+					
+					<%= link_to 'Regresar', causals_path , class:"button back" %> |
+					<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+					<% if params[:action] == "edit" then %>
+						| <%= link_to 'Consultar', @causal, class:"button find" %>
+					<% end %> 
+				</div>
+			</div>
+		</div>
+	<% end %>
+
+	<script>
+		$(function(){
+			 $( document ).trigger( "page:update" );
+		});
+	</script>

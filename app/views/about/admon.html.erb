@@ -85,11 +85,20 @@
 		                        </a>
 							</li>
 							<li>
-		                        <a href="#">
+		                        <a href="<%= reservas_path %>">
 		                            <span class="ca-icon"><i class="fa fa-list-alt"></i></span>
 		                            <div class="ca-content">
-		                                <h2 class="ca-main">Solicitudes</h2>
-		                                <h3 class="ca-sub">Revisión de pendientes</h3>
+		                                <h2 class="ca-main">Reservas</h2>
+		                                <h3 class="ca-sub">Solicitudes</h3>
+		                            </div>
+		                        </a>
+							</li>
+							<li>
+		                        <a href="<%= hotels_path%>">
+		                            <span class="ca-icon"><i class="fa fa-bed"></i></span>
+		                            <div class="ca-content">
+		                                <h2 class="ca-main">Hoteles</h2>
+		                                <h3 class="ca-sub">Info. establecimientos</h3>
 		                            </div>
 		                        </a>
 							</li>
@@ -108,15 +117,6 @@
 		                            <div class="ca-content">
 		                                <h2 class="ca-main">Planes Turísticos</h2>
 		                                <h3 class="ca-sub">Manejo de agenda</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-calendar"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Calendario</h2>
-		                                <h3 class="ca-sub">Eventos por fecha</h3>
 		                            </div>
 		                        </a>
 							</li>
@@ -187,6 +187,24 @@
 		                            </div>
 		                        </a>							
 							</li>
+							<li>
+		                        <a href="<%= pagos_path %>">
+		                            <span class="ca-icon"><i class="fa fa-warning"></i></span>
+		                            <div class="ca-content">
+		                                <h2 class="ca-main">Pagos</h2>
+		                                <h3 class="ca-sub">Revisión de Pagos</h3>
+		                            </div>
+		                        </a>							
+							</li>
+							<li>
+		                        <a href="#">
+		                            <span class="ca-icon"><i class="fa fa-calendar"></i></span>
+		                            <div class="ca-content">
+		                                <h2 class="ca-main">Calendario</h2>
+		                                <h3 class="ca-sub">Agenda de Eventos</h3>
+		                            </div>
+		                        </a>							
+							</li>
 						</ul>
 					</div>
 					<div class="col-xs-3 col-md-3 col-sm-3">
@@ -244,7 +262,16 @@
 		                                <h3 class="ca-sub">Acciones de la interfaz</h3>
 		                            </div>
 		                        </a>
-							</li>						
+							</li>
+							<li>
+		                        <a href="<%= causals_path %>">
+		                            <span class="ca-icon"><i class="fa fa-book"></i></span>
+		                            <div class="ca-content">
+		                                <h2 class="ca-main">Causales</h2>
+		                                <h3 class="ca-sub">Resultado operación</h3>
+		                            </div>
+		                        </a>
+							</li>
 						</ul>
 					</div>
 					<div class="section-footer">

@@ -14,6 +14,43 @@ class ViajesController < ApplicationController
   # GET /viajes/1
   # GET /viajes/1.json
   def show
+    @ruta = Rutum.find(@viaje.viaje_ruta)
+    @lugares = set_descripcion_ruta(@ruta.ruta_descripcion)
+    
+    instSQL_select = " reservas.id
+                      ,reservas.rsrv_codigo codigoReserva
+                      ,reservas.rsrv_trayectoViaje trayectoViaje
+                      ,reservas.created_at fechaReserva
+                      ,P1.pers_documentoIdentidad documIdentContacto
+                      ,P1.pers_nombres nombreContacto
+                      ,P1.pers_apellidos apellidosContacto
+                      ,P2.pers_documentoIdentidad documIdentCliente
+                      ,P2.pers_nombres nombreCliente
+                      ,P2.pers_apellidos apellidosCliente
+                      ,DR.detRsrv_estadoReserva"
+    instSQL_conditions = "reservas.rsrv_estadoRegistro = 'A'
+                          AND DR.detRsrv_estadoRegistro = 'A'
+                          AND reservas.rsrv_tipoProducto = 'VUELO'
+                          AND V.id = " + @viaje.id.to_s
+    instSQL_joins = "INNER JOIN detalle_reservas DR ON reservas.id = DR.reserva_id
+                     INNER JOIN viajes V ON reservas.rsrv_productoId = V.id
+                     INNER JOIN personas P1 ON P1.pers_documentoIdentidad = reservas.rsrv_contactoId 
+                     INNER JOIN personas P2 ON P2.pers_documentoIdentidad = DR.detRsrv_clienteId "
+                     
+    rsrvViajes = Reserva.select(instSQL_select).joins(instSQL_joins).where(instSQL_conditions).order("reservas.rsrv_trayectoViaje, reservas.created_at, codigoReserva")
+    @rsrvsPendientes = []
+    @rsrvsConfirmadas = []
+    @rsrvsCanceladas = []
+    
+    rsrvViajes.each do |h|
+      if h.detRsrv_estadoReserva == "I" then
+        @rsrvsPendientes.push(h)
+      elsif h.detRsrv_estadoReserva == "C" || h.detRsrv_estadoReserva == "B" then
+        @rsrvsConfirmadas.push(h)
+      elsif h.detRsrv_estadoReserva == "N" then
+        @rsrvsCanceladas.push(h)
+      end      
+    end
   end
 
   # GET /viajes/new
@@ -81,7 +118,8 @@ class ViajesController < ApplicationController
         @rutasViaje[h.id] = h.ruta_medio + "|" + descripcionRuta
       end
       
-      @estadosViaje = Catalogo.where("ctlg_categoria = 'ESTADO DE VIAJE' AND ctlg_estadoRegistro = 'A'").order(:id)
+      @estadosViaje = Catalogo.select("ctlg_valorCdg, ctlg_valorDesc").where("ctlg_categoria = 'ESTADO DE VIAJE' AND ctlg_estadoRegistro = 'A'").order(:id)
+      @estadosViaje = @estadosViaje.map{|h| [h.ctlg_valorCdg, h.ctlg_valorDesc]}.to_h
       
       instSQL_select = "Vehiculos.id, Concat( IfNull(Concat(C.ctlg_subcategoria
                                               ,'|' 

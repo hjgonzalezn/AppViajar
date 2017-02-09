@@ -1,34 +1,372 @@
-<p id="notice"><%= notice %></p>
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-12 col-md-12" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Viaje</h1>
+					</div>
+					<div id="tm-form-content">
+						<%= hidden_field_tag :producto %>
+						<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
+						    <li role="presentation" class="active">
+								<a href="#general" aria-controls="datos" role="tab" data-toggle="tab">GENERAL</a>
+						    </li>
+						    <li role="presentation">
+						    	<a href="#confirmadas" aria-controls="hotel" role="tab" data-toggle="tab">CUPOS CONFIRMADOS</a>
+						    </li>
+						    <li role="presentation">
+						    	<a href="#pendientes" aria-controls="hotel" role="tab" data-toggle="tab">RESERVAS PENDIENTES</a>
+						    </li>
+						    <li role="presentation">
+						    	<a href="#nulas" aria-controls="hotel" role="tab" data-toggle="tab">RESERVAS NULAS</a>
+						    </li>
+						</ul>
+	
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="general">
+								<div class="tm-search-box overflow-auto">
+									<p>&nbsp;</p>
+									<% arrLugares = @lugares.split(" - ")%>
+									<% arrLugaresCdg = @ruta.ruta_descripcion.split("|") %>
+									<% arrHoras = @viaje.viaje_horaSalida.squeeze("|") %>
+									<% arrHoras = arrHoras.split("|") %>
+									<div class="col-lg-2">&nbsp;</div>
+									<div class="col-lg-5 col-md-12">
+										<table class="slider-abstract">
+											<tr>
+												<th colspan="2">
+													<% arrLugares.each do |h| %>
+														<h3><strong><%= h %></strong></h3>
+													<% end %>
+												</th>
+												
+											</tr>
+											<tr>
+												<td colspan="2" class="tm-black-bg"><h3 class="center"><strong><%= (@viaje.viaje_fecha.strftime "%d-") + @meses[(@viaje.viaje_fecha.strftime "%m").to_i].upcase + (@viaje.viaje_fecha.strftime "-%Y") %></strong></h3></td>
+											</tr>
+											<tr>
+												<th colspan="2"><h3><strong>IDA</strong></h3></th>
+											</tr>
+												
+												<% arrTrayectos = {} %>
+												
+												<% for i in 0..arrLugares.length - 2 %>
+													<% arrTrayectos[ arrLugaresCdg[i] + "_" + arrLugaresCdg[i+1] ] = arrLugares[i] + " - " + arrLugares[i + 1] %> 	
+													<tr>
+														<td><h3><strong><%= arrLugares[i] %></strong></h3></td>
+														<td><h3><strong><%= arrHoras[i] %></strong></h3></td>
+													</tr>
+												<% end %>
+												<!--td><%#= @viaje.vehiculo.vehi_modeloCodigo %></td-->
+											
+											<% if @viaje.viaje_trayecto == "RT" then %>
+												<% arrLugares = arrLugares.reverse() %>
+												<% arrLugaresCdg = arrLugaresCdg.reverse() %>
+												<% arrLugares2 = arrLugares %>
+												<% arrLugares = arrLugares[0, arrLugares.length - 1]%>
+												<% arrHoras = arrHoras[(arrHoras.length/2), arrHoras.length - 1]%>
+												
+												<tr><th colspan="2"><h3><strong>REGRESO</strong></h3></th></tr>
+												
+												<% for i in 0..arrLugares.length-1 do %>
+													<% arrTrayectos[ arrLugaresCdg[i] + "_" + arrLugaresCdg[i+1] ] =  arrLugares2[i] + " - " + arrLugares2[i + 1] %>
+													<tr>
+														<td><h3><strong><%= arrLugares[i] %></strong></h3></td><td><h3><strong><%= arrHoras[i].to_s %></strong></h3></td>
+													</tr>
+												<% end %>
+											<% end %>
+											<tr>
+												<th colspan="2"><h3><strong><%= "ESTADO: " + @estadosViaje[@viaje.viaje_estado] %></strong></h3></th>
+											</tr>
+										</table>
+									</div>
+									<div class="col-lg-5">&nbsp;</div>
+								</div>
+								<p>&nbsp;</p>
+							</div>
+							<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="confirmadas">
+								<div class="tm-search-box overflow-auto">
+									<br>
+									<div class="col-lg-12">
+										<div class="tableWrapper">
+											<div class="tm-black-bg tm-command-bar">
+							        			<a href="#" class="btn btn-success" id ="cmdDesloquearCupos">
+							        				<i class="fa fa-edit">&nbsp;</i>Desbloquear cupos
+							        			</a>
+												<a href="<%= edit_control_path(1) %>" class="btn btn-danger">
+							        				<i class="fa fa-edit">&nbsp;</i>Anular reserva
+							        			</a>
+							        			<a href="<%= edit_control_path(1) %>" class="btn btn-info">
+							        				<i class="fa fa-edit">&nbsp;</i>Realizar chequeo
+							        			</a>
+											</div>
+											
+											<!-- ###### PESTAÑAS POR TRAYECTO DE VIAJE ###### -->
+											<ul class="nav nav-tabs <%= "nav-" + arrTrayectos.length.to_s + "tabs" %> tm-white-bg" role="tablist">
+												<% tabClaCss = "active"%>
+												<% arrTrayectos.each do |key, value| %>
+											    	<li role="presentation" class="<%= tabClaCss %>">
+														<a href="#<%= key %>" aria-controls="datos" role="tab" data-toggle="tab"><%= value %></a>
+											    	</li>
+											    	<% tabClaCss = ""%>
+											   	<% end %>
+											</ul>
+											<div class="tab-content">													
+												<% index = 1 %>
+												<% tabClaCss = "active"%>
+												<% arrTrayectos.each do |key, value| %>
+													<div role="tabpanel" class="tab-pane fade <%= tabClaCss %> in tm-white-bg" id="<%= key %>">
+														<div class="tm-search-box overflow-auto">
+															<br>
+															<table id="tblReservasActivas<%= key %>" class="stripe hover jqTable">
+																<thead>
+																	<tr>
+																		<th>Seleccion</th>
+																		<th>Reserva</th>
+																		<th>Docum. Identidad</th>
+																		<th>Nombres</th>
+																		<th>Apellidos</th>
+																		<th>Fecha<br>Reserva</th>
+																		<th>Vendedor</th>
+																	</tr>
+																</thead>
+																<tbody>
+																<% @rsrvsConfirmadas.each do |reserva| %>
+																	<% if reserva.trayectoViaje == key.gsub("_", "|") then %>
+																			<tr>
+																				<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
+																				<td><%= reserva.codigoReserva %></td>
+																				<td><%= formato_documento_identidad(reserva.documIdentCliente) %></td>
+																				<td><%= reserva.nombreCliente %></td>
+																				<td><%= reserva.apellidosCliente %></td>
+																				<td><%= reserva.fechaReserva.strftime("%Y-%m-%d %H:%M") %></td>
+																				<td>NAISATOURS</td>
+																			</tr>
+																	
+																			<% index = index + 1 %>
+																	<% end %>
+																<% end %>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+															<% tabClaCss = ""%>
+														<% end %>
+													</div>	<!-- Tab Content--> 
+										</div>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="pendientes">
+								<div class="tm-search-box overflow-auto">
+									<br>
+									<div class="col-lg-12">
+										<div class="tableWrapper">
+											<div class="tm-black-bg tm-command-bar">
+							        			<a href="#" class="btn btn-success" id ="cmdRegistrarPago">
+							        				<i class="fa fa-edit">&nbsp;</i>Registrar pago
+							        			</a>
+												<a href="<%= edit_control_path(1) %>" class="btn btn-danger">
+							        				<i class="fa fa-edit">&nbsp;</i>Bloquear cupos
+							        			</a>
+											</div>
+											<table id="tblReservasPendientes" class="stripe hover jqTable">
+												<thead>
+													<tr>
+														<th>Seleccion</th>
+														<th>Reserva</th>
+														<th>Docum. Identidad</th>
+														<th>Nombres</th>
+														<th>Apellidos</th>
+														<th>Fecha<br>Reserva</th>
+														<th>Vendedor</th>
+													</tr>
+												</thead>
+												<tbody>
+													<% index = 1 %>
+													<% @rsrvsPendientes.each do |reserva| %>
+														<% tipoDocumIdent = reserva.documIdentCliente[-2, 2] %>
+														<% documtIdentFormat = reserva.documIdentCliente[0, reserva.documIdentCliente.length - 2] %>
+														<% documtIdentFormat = documtIdentFormat.insert(-4, ".") %>
+														<% documtIdentFormat = documtIdentFormat.insert(-8, ".") %>
 
-<p>
-  <strong>Viaje ruta:</strong>
-  <%= @viaje.viaje_ruta %>
-</p>
+														<tr>
+															<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
+															<td><%= reserva.codigoReserva %></td>
+															<td><%= reserva.documIdentCliente[-2, 2] + " " + documtIdentFormat %></td>
+															<td><%= reserva.nombreCliente %></td>
+															<td><%= reserva.apellidosCliente %></td>
+															<td><%= reserva.fechaReserva.strftime("%Y-%m-%d %H:%M") %></td>
+															<td>NAISATOURS</td>
+														</tr>
+														<% index = index + 1 %>
+													<% end %>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<p>&nbsp;</p>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="nulas">
+								<div class="tm-search-box overflow-auto">
+									<br>
+									<div class="col-lg-12">
+										<div class="tableWrapper">
+											<!--div class="tm-black-bg tm-command-bar">
+							        			<a href="#" class="btn btn-success" id ="cmdRegistrarPago">
+							        				<i class="fa fa-edit">&nbsp;</i>Registrar pago
+							        			</a>
+												<a href="<%= edit_control_path(1) %>" class="btn btn-danger">
+							        				<i class="fa fa-edit">&nbsp;</i>Bloquear cupos
+							        			</a>
+											</div-->
+											<table id="tblReservasNulas" class="stripe hover jqTable">
+												<thead>
+													<tr>
+														<th>Seleccion</th>
+														<th>Reserva</th>
+														<th>Docum. Identidad</th>
+														<th>Nombres</th>
+														<th>Apellidos</th>
+														<th>Fecha<br>Reserva</th>
+														<th>Vendedor</th>
+													</tr>
+												</thead>
+												<tbody>
+													<% index = 1 %>
+													<% @rsrvsCanceladas.each do |reserva| %>
+														<% tipoDocumIdent = reserva.documIdentCliente[-2, 2] %>
+														<% documtIdentFormat = reserva.documIdentCliente[0, reserva.documIdentCliente.length - 2] %>
+														<% documtIdentFormat = documtIdentFormat.insert(-4, ".") %>
+														<% documtIdentFormat = documtIdentFormat.insert(-8, ".") %>
 
-<p>
-  <strong>Viaje fecha:</strong>
-  <%= @viaje.viaje_fecha %>
-</p>
+														<tr>
+															<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
+															<td><%= reserva.codigoReserva %></td>
+															<td><%= reserva.documIdentCliente[-2, 2] + "-" + documtIdentFormat %></td>
+															<td><%= reserva.nombreCliente %></td>
+															<td><%= reserva.apellidosCliente %></td>
+															<td><%= reserva.fechaReserva.strftime("%Y-%m-%d %H:%M") %></td>
+															<td>NAISATOURS</td>
+														</tr>
+														<% index = index + 1 %>
+													<% end %>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<p>&nbsp;</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', viajes_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_viaje_path(@viaje), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script>
 
-<p>
-  <strong>Viaje horasalida:</strong>
-  <%= @viaje.viaje_horaSalida %>
-</p>
-
-<p>
-  <strong>Viaje estado:</strong>
-  <%= @viaje.viaje_estado %>
-</p>
-
-<p>
-  <strong>Vehiculo:</strong>
-  <%= @viaje.vehiculo.vehi_modeloCodigo %>
-</p>
-
-<p>
-  <strong>Viaje estadoregistro:</strong>
-  <%= @viaje.viaje_estadoRegistro %>
-</p>
-
-<%= link_to 'Edit', edit_viaje_path(@viaje) %> |
-<%= link_to 'Back', viajes_path %>
+	$(document).on('page:update', function() {
+			$("#cmdRegistrarPago").click(function(e){
+				e.preventDefault();
+				document.location.href ="/viajes/8/pagos/new/" + $("#producto").val();
+			});
+			
+			$("input[name='chkReserva[]']").click(function(){
+				$("#producto").val("RESERVA|" + $(this).val());
+				valor = $(this).val();
+				valCheck = $(this).prop('checked');
+				arr = $("input[name='chkReserva[]']");
+				for (h=0; h < arr.length; h++){
+					if(arr[h].value == valor){
+						arr[h].checked = valCheck;
+					}
+					else{
+						arr[h].checked = false;
+					}
+				}
+			});
+			
+			// Aplicando funcionalidad Datatable
+			if ( $.fn.dataTable.isDataTable( '.jqTable' ) ) {
+			    table = $('.jqTable').DataTable();
+			}
+			else {
+			    	table = $('.jqTable').DataTable( {
+			        pagingType: "full_numbers",
+			        "lengthMenu": [[-1], [ "Todos"]]
+			    } );
+			}
+			
+		});
+		
+	$(function() {
+		$('.jqTable').DataTable({
+			
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "2%" },
+							{ sWidth : "10%" },
+							{ sWidth : "28%" },
+							{ sWidth : "25%" },
+							{ sWidth : "25%" },
+							{ sWidth : "5%" },
+							{ sWidth : "5%" }
+							
+						],
+			"lengthMenu": [[-1], [ "Todos"]]
+    		});
+    		
+		/*$('#tblReservasPendientes').DataTable({
+			
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "2%" },
+							{ sWidth : "10%" },
+							{ sWidth : "28%" },
+							{ sWidth : "25%" },
+							{ sWidth : "25%" },
+							{ sWidth : "5%" },
+							{ sWidth : "5%" }
+							
+						],
+			"lengthMenu": [[-1], [ "Todos"]]
+    		});
+    		
+		$('#tblReservasNulas').DataTable({
+			
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "2%" },
+							{ sWidth : "10%" },
+							{ sWidth : "28%" },
+							{ sWidth : "25%" },
+							{ sWidth : "25%" },
+							{ sWidth : "5%" },
+							{ sWidth : "5%" }
+							
+						],
+			"lengthMenu": [[-1], [ "Todos"]]
+    		});*/
+	});
+</script>

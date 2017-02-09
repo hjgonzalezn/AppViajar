@@ -1,6 +1,7 @@
 class FotosController < ApplicationController
   before_action :set_foto, only: [:show, :edit, :update, :destroy]
-
+  before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
+  
   # GET /fotos
   # GET /fotos.json
   def index
@@ -28,7 +29,7 @@ class FotosController < ApplicationController
 
     respond_to do |format|
       if @foto.save
-        format.html { redirect_to @foto, notice: 'Foto was successfully created.' }
+        format.html { redirect_to @foto, notice: 'Foto creada exitosamente.' }
         format.json { render :show, status: :created, location: @foto }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class FotosController < ApplicationController
   def update
     respond_to do |format|
       if @foto.update(foto_params)
-        format.html { redirect_to @foto, notice: 'Foto was successfully updated.' }
+        format.html { redirect_to @foto, notice: 'Foto actualizada exitosamente.' }
         format.json { render :show, status: :ok, location: @foto }
       else
         format.html { render :edit }
@@ -56,7 +57,7 @@ class FotosController < ApplicationController
   def destroy
     @foto.destroy
     respond_to do |format|
-      format.html { redirect_to fotos_url, notice: 'Foto was successfully destroyed.' }
+      format.html { redirect_to fotos_url, notice: 'Foto eliminada exitosamente.' }
       format.json { head :no_content }
     end
   end

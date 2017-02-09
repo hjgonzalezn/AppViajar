@@ -20,26 +20,38 @@
 									<div class="tm-tours-box-2">
 										<% ruta = Rutum.find(viaje.viaje_ruta) %>
 										<% lugares = set_descripcion_ruta(ruta.ruta_descripcion)%>
-										<% arrLugares = lugares.split(" > ") %>
-										<% arrHoras = viaje.viaje_horaSalida.split("|") %>
-										<h3><%= set_descripcion_ruta_aeroptos(ruta.ruta_descripcion) %></h3>				
-										<div class="tm-tours-box-2-info">
-											<h3 class="margin-bottom-15"><%= (viaje.viaje_fecha.strftime "%d-") + @meses[(viaje.viaje_fecha.strftime "%m").to_i] + (viaje.viaje_fecha.strftime "-%Y") %></h3>
-											<p>IDA</p>
+										<% arrLugares = lugares.split(" - ") %>
+										<% arrHoras = viaje.viaje_horaSalida.squeeze("|").split("|") %>
+										<!--<%#= set_descripcion_ruta_aeroptos(ruta.ruta_descripcion) %>-->
+										
+										<h3 class="titulo-viajes">
+											<!--ul-->
+												<% arrLugares.each do |h| %>
+													<%= h %><br>
+												<% end %>
+											<!--/ul-->
+										</h3>
+										<h3><%= (viaje.viaje_fecha.strftime "%d-") + @meses[(viaje.viaje_fecha.strftime "%m").to_i] + (viaje.viaje_fecha.strftime "-%Y") %><br>
+											<%= viaje.vehiculo.vehi_capacPasajeros.to_s + " Pax" %>
+										</h3>				
+										<div class="tm-tours-box-2-info info-viajes">
+											
+											<h4><strong>IDA</strong></h4>
+											
 											<% for i in 0..arrLugares.length-2 do %>
 												<p><%= arrLugares[i] + " - " + arrHoras[i] %></p>
 											<% end %>
 											<% if viaje.viaje_trayecto == "RT" then %>
 												<% arrLugares = arrLugares.reverse() %>
-												<% puts arrHoras.length %>
+												<% arrLugares = arrLugares[0, arrLugares.length - 1]%>
 												<% arrHoras = arrHoras[(arrHoras.length/2), arrHoras.length - 1]%>
-												<% puts arrHoras %>
-												<p>REGRESO</p>
-												<% for i in 0..arrLugares.length-2 do %>
-													<p><%= arrLugares[i] + " - " + arrHoras[i] %></p>
+												<h4><strong>REGRESO</strong></h4>
+												<% for i in 0..arrLugares.length-1 do %>
+													<p><%= arrLugares[i] + " - " + arrHoras[i].to_s %></p>
 												<% end %>
 											<% end %>
-										</div>						
+										</div>
+										<!--h3><%= (viaje.viaje_fecha.strftime "%d-") + @meses[(viaje.viaje_fecha.strftime "%m").to_i] + (viaje.viaje_fecha.strftime "-%Y") %></h3-->
 										<div class="tm-tours-box-2-bottom-bar">
 											<%= link_to(viaje, class:"btn btn-info") do %>
 					        					<i class="fa fa-book"></i>
@@ -104,7 +116,6 @@
 		</div>
 	</div>
 </section>
-
 
 <script>
 

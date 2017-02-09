@@ -1,0 +1,73 @@
+<%= form_for(@hotel) do |f| %>
+	<% if @hotel.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@hotel.errors.count, "error") %> prohibited this hotel from being saved:</h2>
+      		<ul>
+      			<% @hotel.errors.full_messages.each do |message| %>
+        			<li><%= message %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+  	<% end %>
+	<div class="col-lg-6 col-md-6" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+		  	<div class="form-group">
+    			<%= f.label :empresa_id, "Empresa*" %><br>
+    			<%= f.text_field :empresa_id, options={class: "form-control"} %>
+  			</div>
+		  	<div class="form-group">
+		    	<%= f.label :hotel_datosGenerales, "Datos generales*" %><br>
+		    	<%= f.text_area :hotel_datosGenerales, options={class:"form-control", rows: 5} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :hotel_presentacion, "Presentación*" %><br>
+		    	<%= f.text_area :hotel_presentacion, options={class: "form-control", rows: 5} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :hotel_servicios, "Servicios*" %><br>
+		    	<%= f.text_area :hotel_servicios, options={class:"form-control", rows:5} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :hotel_atractivos, "Atractivos*" %><br>
+		    	<%= f.text_area :hotel_atractivos, options={class: "form-control", rows: 5} %>
+		  	</div>
+		  	<div class="form-group">
+		    	<%= f.label :hotel_estadoRegistro, "Estado*" %><br>
+		    	<%= f.select(:hotel_estadoRegistro, options_for_select(@estados.invert), {}, options_html={class:"form-control"}) %>
+		  	</div>
+  		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_hotel_<%= @hotel.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_hotel').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+				
+				<%= link_to 'Regresar', hotels_path , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					<% path = request.fullpath %>
+					<% path["/edit"]="" %>
+					| <%= link_to 'Consultar', path, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<script>
+	$(function(){
+		 $( document ).trigger( "page:update" );
+	});
+</script>

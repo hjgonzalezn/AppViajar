@@ -1,0 +1,91 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<br>
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p id="notice"><%= notice %></p>
+					</div>
+				<% end %>
+				<div class="tableWrapper">
+					<div class="section-header">
+						<h1>HOTELES</h1>
+					</div>
+					
+					<table id="indexTable" class="stripe hover">
+						<thead>
+					    	<tr>
+					      		<th>Empresa</th>
+					      		<th>Datos Generales</th>
+					      		<th>Presentacion</th>
+					      		<th>Servicios</th>
+					      		<th>Atractivos</th>
+					      		<th>Estado</th>
+					      		<th colspan="3"></th>
+					    	</tr>
+  						</thead>
+					  	<tbody>
+							<% @hotels.each do |hotel| %>
+							    <tr>
+							    	<td><%= hotel.empresa.empr_razonSocial %></td>
+							        <td><%= hotel.hotel_datosGenerales %></td>
+							        <td><%= hotel.hotel_presentacion %></td>
+							        <td><%= hotel.hotel_servicios %></td>
+							        <td><%= hotel.hotel_atractivos %></td>
+					        <td><%= @estados[hotel.hotel_estadoRegistro] %></td>
+					        		<td><%= link_to(hotel, class:"btn btn-info") do %>
+					        				<i class="fa fa-book"></i>
+					        			<% end %>
+					        		</td>
+					        		<td><a href="<%= edit_hotel_path(hotel) %>" class="btn btn-warning">
+					        				<i class="fa fa-edit"></i>
+					        			</a>
+					        		</td>
+					        		<td>
+					        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/hotel/#{hotel.id}"%> >
+					        				<i class="fa fa-trash"></i>
+					        			</a>
+					        		</td>
+      							</tr>
+    						<% end %>
+  						</tbody>
+					</table>
+					<div class="section-footer">
+						<%= link_to 'Regresar', administracion_path , class:"button back" %>
+						<%= link_to 'Nuevo registro', new_hotel_path, class:"button add" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script>
+
+	$(document).on('page:load', function() {
+			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
+			    table = $('#indexTable').DataTable();
+			}
+			else {
+			    table = $('#indexTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+		});
+		
+	$(function() {
+		$('#indexTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "10%" },
+							{ sWidth : "40%" },
+							{ sWidth : "10%" },
+							{ sWidth : "30%" },
+							{ sWidth : "10%" }
+						]
+    		});
+	});
+</script>

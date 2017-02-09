@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Detalle Reservas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Reserva</th>
+      <th>Detrsrv estado</th>
+      <th>Detrsrv tipocliente</th>
+      <th>Detrsrv clienteid</th>
+      <th>Detrsrv tarifacodigo</th>
+      <th>Detrsrv valor</th>
+      <th>Created by</th>
+      <th>Updated by</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @detalle_reservas.each do |detalle_reserva| %>
+      <tr>
+        <td><%= detalle_reserva.reserva %></td>
+        <td><%= detalle_reserva.detRsrv_estado %></td>
+        <td><%= detalle_reserva.detRsrv_tipoCliente %></td>
+        <td><%= detalle_reserva.detRsrv_clienteId %></td>
+        <td><%= detalle_reserva.detRsrv_tarifaCodigo %></td>
+        <td><%= detalle_reserva.detRsrv_valor %></td>
+        <td><%= detalle_reserva.created_by %></td>
+        <td><%= detalle_reserva.updated_by %></td>
+        <td><%= link_to 'Show', detalle_reserva %></td>
+        <td><%= link_to 'Edit', edit_detalle_reserva_path(detalle_reserva) %></td>
+        <td><%= link_to 'Destroy', detalle_reserva, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Detalle reserva', new_detalle_reserva_path %>

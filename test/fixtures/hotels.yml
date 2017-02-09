@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  empresa_id: 
+  hotel_datosGenerales: MyText
+  hotel_presentacion: MyText
+  hotel_servicios: MyText
+  hotel_atractivos: MyText
+  hotel_estadoRegistro: MyString
+
+two:
+  empresa_id: 
+  hotel_datosGenerales: MyText
+  hotel_presentacion: MyText
+  hotel_servicios: MyText
+  hotel_atractivos: MyText
+  hotel_estadoRegistro: MyString

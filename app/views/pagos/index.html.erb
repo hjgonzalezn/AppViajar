@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pagos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pago tipoproducto</th>
+      <th>Pago productoid</th>
+      <th>Pago valor</th>
+      <th>Pago forma</th>
+      <th>Pago ctabancdestino</th>
+      <th>Pago fecha</th>
+      <th>Pago entidad</th>
+      <th>Dtpag sucursalid</th>
+      <th>Pago transaccion</th>
+      <th>Pago estado</th>
+      <th>Pago estadoregistro</th>
+      <th>Created by</th>
+      <th>Updated by</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pagos.each do |pago| %>
+      <tr>
+        <td><%= pago.pago_tipoProducto %></td>
+        <td><%= pago.pago_productoId %></td>
+        <td><%= pago.pago_valor %></td>
+        <td><%= pago.pago_forma %></td>
+        <td><%= pago.pago_ctaBancDestino %></td>
+        <td><%= pago.pago_fecha %></td>
+        <td><%= pago.pago_entidad %></td>
+        <td><%= pago.dtpag_sucursalId %></td>
+        <td><%= pago.pago_transaccion %></td>
+        <td><%= pago.pago_estado %></td>
+        <td><%= pago.pago_estadoRegistro %></td>
+        <td><%= pago.created_by %></td>
+        <td><%= pago.updated_by %></td>
+        <td><%= link_to 'Show', pago %></td>
+        <td><%= link_to 'Edit', edit_pago_path(pago) %></td>
+        <td><%= link_to 'Destroy', pago, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pago', new_pago_path %>

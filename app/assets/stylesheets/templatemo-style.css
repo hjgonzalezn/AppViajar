@@ -114,6 +114,20 @@ body { overflow-x: hidden; }
 	display: block;
 	overflow: hidden;
 }
+.reserva{
+	width:100%;
+	font-size:35px;
+	text-align:center;
+}
+
+.reserva.pendiente{
+	background-color: #fffffe;
+}
+
+.reserva.confirmada{
+	background-color:#2BC76E;
+	color:white;
+}
 
 .tm-nav i{
 	padding: 6px 0 10px 0;
@@ -315,7 +329,13 @@ body { overflow-x: hidden; }
             .delete:before{ 
                 content: "\2718";
             } 
-
+			.pay:before{ 
+                content: "$"; 
+ 				background-color:rgba(0,200,0,1);
+            }
+			.print:before{ 
+                content: "P"; 
+            }
             .button.save:before{ 
                 content: "\2714";
                 background-color:rgba(0,200,0,1);
@@ -362,6 +382,13 @@ body { overflow-x: hidden; }
 	border-color: #FFFF00;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(252, 221, 68, 0.6);
 }
+input[type="checkbox"].form-control{
+	height:20px;
+	border:none;
+	box-shadow:none;
+	cursor: pointer;
+}
+
 .tm-yellow-gradient-bg {
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f5d11d+0,f3d10e+1,efcf1c+2,fccd0d+4,f7ca0d+5,f9cb1e+6,f7cb10+7,f8cc14+8,f0c40c+54,edc50c+55,e9c108+71,ecc008+78,e6be06+91,e9bd06+93,e8bc06+100 */
 	background: #f5d11d; /* Old browsers */ /* FF3.6+ */ /* Chrome,Safari4+ */ /* Chrome10+,Safari5.1+ */ /* Opera 11.10+ */ /* IE10+ */
@@ -498,7 +525,7 @@ body { overflow-x: hidden; }
 	text-align:center;
 	background-color:#606874;
 	color:white;
-	font-size:16px;
+	font-size:18px;
 	padding: 10px 0;
 }
 
@@ -515,6 +542,10 @@ body { overflow-x: hidden; }
 	border-radius:5px;
 }
 
+.slider-abstract td, .datos-persona td, .datos-contacto td{
+	font-size:16px;
+}
+
 .hotel-search-form h3{
 	background-color: #606874;
 	color: white;
@@ -525,14 +556,18 @@ body { overflow-x: hidden; }
 }
 
 .datos-persona td:nth-child(1){
-	width: 15%;
+	width: 5%;
 }
 
 .datos-persona td:nth-child(2){
-	width: 25%;
+	width: 15%;
 }
 
 .datos-persona td:nth-child(3){
+	width: 20%;
+}
+
+.datos-persona td:nth-child(4){
 	width: 30%;
 }
 
@@ -679,25 +714,25 @@ input:out-of-range {
 	margin-left: auto;
 }
 .input-group-addon { border-radius: 0; }
-#hotelCarTabs, #personTabs {
+#hotelCarTabs, #personTabs, .nav-2tabs, .nav-3tabs, .nav-4tabs, .nav-5tabs{
 	border-bottom: none;
 	height: 52px;
 }
-#hotelCarTabs li {
+#hotelCarTabs li, .nav-2tabs li{
 	width: 50%;
 	height: 100%;
 }
 
-#generalTabs li{
+#generalTabs li, .nav-5tabs{
 	width: 20%;
 	height: 100%;
 }
 
-#personTabs li {
+#personTabs li, .nav-3tabs {
 	width: 30%;
 	height: 100%;
 }
-#hotelCarTabs > li > a, #personTabs > li > a, #generalTabs li > a {
+#hotelCarTabs > li > a, #personTabs > li > a, #generalTabs li > a, .nav-2tabs li > a, .nav-3tabs li > a, .nav-4tabs li > a, .nav-5tabs li > a {
 	margin-right: 0;
 	padding-top: 15px;
 	padding-bottom: 15px;
@@ -714,7 +749,16 @@ input:out-of-range {
 #personTabs > li > a:hover, 
 #personTabs > li > a:focus,
 #generalTabs li > a:hover,
-#generalTabs li > a:focus {
+#generalTabs li > a:focus,
+.nav-2tabs li > a:hover,
+.nav-2tabs li > a:focus,
+.nav-3tabs li > a:hover,
+.nav-3tabs li > a:focus,
+.nav-4tabs li > a:hover,
+.nav-4tabs li > a:focus,
+.nav-5tabs li > a:hover,
+.nav-5tabs li > a:focus
+ {
 	border: none;
 	background: #F9E58B;
 }
@@ -724,13 +768,21 @@ input:out-of-range {
 #personTabs > li.active > a:focus, 
 #personTabs > li.active > a:hover,
 #generalTabs > li.active > a:hover,
-#generalTabs > li.active > a:focus
+#generalTabs > li.active > a:focus,
+.nav-2tabs > li.active > a:hover,
+.nav-2tabs > li.active > a:focus,
+.nav-3tabs > li.active > a:hover,
+.nav-3tabs > li.active > a:focus,
+.nav-4tabs > li.active > a:hover,
+.nav-4tabs > li.active > a:focus,
+.nav-5tabs > li.active > a:hover,
+.nav-5tabs > li.active > a:focus
 {
 	background: transparent;
 	border: none;	
 }
 
-#personTabs > li.active > a, #hotelCarTabs > li.active > a, #generalTabs > li.active > a{
+#personTabs > li.active > a, #hotelCarTabs > li.active > a, #generalTabs > li.active > a , .nav-2tabs > li.active > a, .nav-3tabs > li.active > a, .nav-4tabs > li.active > a, .nav-5tabs > li.active > a {
 	background: white;
 	border: none;	
 }
@@ -820,6 +872,12 @@ footer {
 
 .tm-copyright-text a:hover {
 	color: white;
+}
+
+.tm-command-bar{
+	margin:0 auto 10px;
+	padding:10px;
+	width:100%;
 }
 
 .hotel-search-form .form-group { margin-bottom: 15px; }
@@ -1156,7 +1214,7 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 	font-weight: bold;
 }
 .tm-home-box-3-description { padding: 5px 30px 7px; background-color: white;min-height:55px;max-height:55px;}
-.section-padding-bottom { margin-top: 40px; padding: 40px 0 60px; }
+.section-padding-bottom { margin-top: 0px; padding: 40px 0 60px; }
 
 /* Tours */
 .tm-tours-box-1 {
@@ -1760,11 +1818,31 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 	padding:5px 0;
 }
 
+.tm-tours-box-2 h3:nth-child(2), .tm-tours-box-2 h3:nth-child(4) 
+{
+	background-color:#2DC970;
+	color:white;
+	font-weight:bold;
+}
+
 .tm-tours-box-2-bottom-bar{
 	background-color:rgba(0,0,0,0.8);
 	color:#e0e0e0;
 	border-top: 4px solid #2dc970;
 	padding:5px;
+}
+
+.titulo-viajes
+{
+	min-height: 100px;
+	font-weight:bold;
+}
+.info-viajes{
+	min-height: 200px;
+}
+
+.overflow-auto{
+	overflow: auto;
 }
 
 .section-margin-top-med{

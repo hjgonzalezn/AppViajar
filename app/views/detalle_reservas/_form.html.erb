@@ -1,0 +1,49 @@
+<%= form_for(@detalle_reserva) do |f| %>
+  <% if @detalle_reserva.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@detalle_reserva.errors.count, "error") %> prohibited this detalle_reserva from being saved:</h2>
+
+      <ul>
+      <% @detalle_reserva.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :reserva_id %><br>
+    <%= f.text_field :reserva_id %>
+  </div>
+  <div class="field">
+    <%= f.label :detRsrv_estado %><br>
+    <%= f.text_field :detRsrv_estado %>
+  </div>
+  <div class="field">
+    <%= f.label :detRsrv_tipoCliente %><br>
+    <%= f.text_field :detRsrv_tipoCliente %>
+  </div>
+  <div class="field">
+    <%= f.label :detRsrv_clienteId %><br>
+    <%= f.text_field :detRsrv_clienteId %>
+  </div>
+  <div class="field">
+    <%= f.label :detRsrv_tarifaCodigo %><br>
+    <%= f.text_field :detRsrv_tarifaCodigo %>
+  </div>
+  <div class="field">
+    <%= f.label :detRsrv_valor %><br>
+    <%= f.text_field :detRsrv_valor %>
+  </div>
+  <div class="field">
+    <%= f.label :created_by %><br>
+    <%= f.text_field :created_by %>
+  </div>
+  <div class="field">
+    <%= f.label :updated_by %><br>
+    <%= f.text_field :updated_by %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

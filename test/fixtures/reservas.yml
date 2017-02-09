@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rsrv_codigo: MyString
+  rsrv_tipoProducto: MyString
+  rsrv_productoId: 1
+  rsrv_tipoSolicitante: MyString
+  rsrv_solicitanteId: MyString
+  rsrv_tipoContacto: MyString
+  rsrv_contactoId: MyString
+  rsrv_estado: MyString
+  rsrv_fechaVencimiento: 2016-09-22 15:21:08
+  created_by: MyString
+  updated_by: MyString
+
+two:
+  rsrv_codigo: MyString
+  rsrv_tipoProducto: MyString
+  rsrv_productoId: 1
+  rsrv_tipoSolicitante: MyString
+  rsrv_solicitanteId: MyString
+  rsrv_tipoContacto: MyString
+  rsrv_contactoId: MyString
+  rsrv_estado: MyString
+  rsrv_fechaVencimiento: 2016-09-22 15:21:08
+  created_by: MyString
+  updated_by: MyString

@@ -1,0 +1,21 @@
+<section class="tm-banner">
+	<!-- Flexslider -->
+	<div class="flexslider flexslider-banner">
+	  <ul class="slides">
+	    <li>
+		    <div class="tm-banner-inner">
+				<h1 class="tm-banner-title"><%= @hotel.empresa.empr_razonSocial %></span></h1>
+			</div>
+	      <%= image_tag(@hotel.hotel_portada, alt: "Bahía Solano") %>
+	    </li>
+	  	<% @fotosHotel.each do |h| %>
+		    <li>
+			    <!--div class="tm-banner-inner">
+			    	<p class="tm-banner-subtitle"><span><%#= h.enter_nombreCorto %></span></p>
+				</div-->
+		      <%= image_tag("models/hotels/" + h.foto_nombreArchivo, alt: "Bahía Solano") %>
+		    </li>
+	    <% end %>
+	  </ul>
+	</div>	
+</section>

@@ -1,0 +1,115 @@
+<%= form_for(@pago) do |f| %>
+	<% if @pago.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@pago.errors.count, "error") %> prohibited this region from being saved:</h2>
+  			<ul>
+      			<% @pago.errors.full_messages.each do |message| %>
+        		<li><%= message %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+  	<% end %>
+	<div class="col-lg-9 col-md-9" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+			<div class="col-lg-6">
+	  			<div class="form-group">
+	    			<%= f.label :pago_tipoProducto, "Tipo de Producto*" %><br>
+	    			<%= f.text_field :pago_tipoProducto, {class:"form-control", readonly: :readonly} %>
+	  			</div>
+  				<div class="form-group">
+    				<%= f.label :pago_productoId, "ID Producto*" %><br>
+    				<%= f.text_field :pago_productoId, {class:"form-control", readonly: :readonly} %>
+  				</div>
+				<div class="form-group">
+				    <%= label_tag "Valor pendiente*" %><br>
+				    <%= text_field_tag :valor_pendiente, number_to_currency(@pago_valorPendiente), {class:"form-control", readonly: :readonly} %>
+				</div>
+				<div class="form-group">
+				    <%= f.label :pago_valor, "Valor a pagar*" %><br>
+				    <%= f.text_field :pago_valor, {class:"form-control"} %>
+				</div>
+				<div class="form-group">
+				    <%= f.label :pago_forma, "Forma de pago*" %><br>
+				    <%= f.select :pago_forma, options_for_select(@hshFormasDePago), {prompt: "-- SELECCIONE --"},{class:"form-control"} %>
+				</div>
+  			</div>
+  			<div class="col-lg-6">
+			  <!--div class="form-group">
+			    <%#= f.label :pago_entidad, "Entidad" %><br>
+			    <%#= f.text_field :pago_entidad, {class: "form-control"} %>
+			  </div>
+			  <div class="form-group">
+			    <%#= f.label :dtpag_sucursalId, "Sucursal" %><br>
+			    <%#= f.number_field :dtpag_sucursalId, {class: "form-control"} %>
+			  </div-->
+				<div class="form-group">
+				    <%= f.label :pago_fecha, "Fecha de pago*" %><br>
+					<div class='input-group date' id='datetimepicker1'>
+						<%= f.text_field :pago_fecha, options = {class:"form-control"} %>
+						<span class="input-group-addon">
+					   		<span class="fa fa-calendar"></span>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+				    <%= f.label :pago_ctaBancDestino, "Canal de recaudo*" %><br>
+				    <%= f.select :pago_ctaBancDestino, options_for_select(@hshCtaBancarias), {prompt:"-- SELECCIONE --"}, {class:"form-control"} %>
+				</div>
+			  <div class="form-group">
+			    <%= f.label :pago_transaccion, "ID Transacción" %><br>
+			    <%= f.text_field :pago_transaccion, {class: "form-control"} %>
+			  </div>
+			  <div class="form-group">
+			    <%= f.label :pago_estado, "Estado del pago*" %><br>
+			    <%= f.select :pago_estado, options_for_select(@hshEstadosDePago), {prompt: "-- SELECCIONE --"},{class:"form-control"} %>
+			  </div>
+			  <div class="form-group">
+			    <%= f.label :pago_estadoRegistro, "Estado del registro*" %><br>
+			    <%= f.select :pago_estadoRegistro, options_for_select(@estados.invert), {}, {class: "form-control"} %>
+			  </div>
+   				<%= f.hidden_field :created_by %>
+   				<%= f.hidden_field :updated_by %>
+  			</div>
+		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_pago_<%= @pago.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_pago').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+			
+				<%= link_to 'Regresar', @parentPath, class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					| <%= link_to 'Consultar', @pago, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<script>
+	$(function(){
+		 $( document ).trigger( "page:update" );
+	});
+	
+	$(document).on('page:update', function() {
+		
+		$('.date').datetimepicker({
+            	format: 'YYYY-MM-DD',
+            	defaultDate:moment(),
+            	maxDate: moment()
+       	});
+	});	
+</script>

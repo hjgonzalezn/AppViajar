@@ -1,0 +1,2 @@
+module CausalsHelper
+end

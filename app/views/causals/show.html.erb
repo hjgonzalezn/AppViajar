@@ -1,0 +1,46 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-12 col-md-12" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar Causal</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-3 col-md-3">
+							<p><strong>Tipo:</strong></p>
+							<p><strong>Nivel:</strong></p>
+							<p><strong>Descripción:</strong></p>
+							<p><strong>Solución:</strong></p>
+							<p><strong>Estado:</strong></p>
+  							<p>&nbsp;</p>
+  						</div>
+  						<div class="col-lg-9 col-md-9">
+  							<p><%= @causal.causal_tipo %></p>
+  							<p><%= @causal.causal_nivel %></p>
+  							<p><%= @causal.causal_descripcion %></p>
+  							<p><%= @causal.causal_solucion %></p>
+  							<p><%= @causal.causal_estadoRegistro %></p>
+  						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', causals_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_causal_path(@causal), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

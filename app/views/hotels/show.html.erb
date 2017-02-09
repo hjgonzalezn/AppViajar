@@ -1,0 +1,89 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-9 col-md-9" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar hotel</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-12 col-md-12">
+							<div class="col-lg-3 col-md-3">
+							  <strong>Nombre:</strong>
+							</div>
+							<div class="col-lg-9 col-md-9 margin-bottom-15">
+							  <%= @hotel.empresa.empr_razonSocial %>
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 margin-bottom-15">
+							<div class="col-lg-3 col-md-3">
+							  <strong>Datos generales:</strong>
+							</div>
+							<div class="col-lg-9 col-md-9">
+							  <%= @hotel.hotel_datosGenerales %>
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 margin-bottom-15">
+							<div class="col-lg-3 col-md-3">
+							  <strong>Presentacion:</strong>
+							</div>
+							<div class="col-lg-9 col-md-9">
+							  <%= @hotel.hotel_presentacion %>
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 margin-bottom-15">
+							<div class="col-lg-3 col-md-3">
+							  <strong>Servicios:</strong>
+							</div>
+							<div class="col-lg-9 col-md-9">
+								<% arrItems = @hotel.hotel_servicios.split(13.chr) %>
+								<!--ul-->
+									<% arrItems.each do |i| %>
+										<!--li--><%= i %><br><!--/li-->
+									<% end %>
+								<!--/ul-->
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 margin-bottom-15">
+							<div class="col-lg-3 col-md-3">
+								<strong>Atractivos:</strong>
+							</div>
+							<div class="col-lg-9 col-md-9">
+								<% arrItems = @hotel.hotel_atractivos.split(13.chr) %>
+								<!--ul-->
+									<% arrItems.each do |i| %>
+										<!--li--><%= i %><br><!--/li-->
+									<% end %>
+								<!--/ul-->
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 margin-bottom-15">	
+							<div class="col-lg-3 col-md-3">
+							  <strong>Estado:</strong>
+							</div>
+							<div class="col-lg-9 col-md-9">
+							  <%= @estados[@hotel.hotel_estadoRegistro] %>
+							</div>
+  						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', hotels_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_hotel_path(@hotel), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reserva:</strong>
+  <%= @detalle_reserva.reserva %>
+</p>
+
+<p>
+  <strong>Detrsrv estado:</strong>
+  <%= @detalle_reserva.detRsrv_estado %>
+</p>
+
+<p>
+  <strong>Detrsrv tipocliente:</strong>
+  <%= @detalle_reserva.detRsrv_tipoCliente %>
+</p>
+
+<p>
+  <strong>Detrsrv clienteid:</strong>
+  <%= @detalle_reserva.detRsrv_clienteId %>
+</p>
+
+<p>
+  <strong>Detrsrv tarifacodigo:</strong>
+  <%= @detalle_reserva.detRsrv_tarifaCodigo %>
+</p>
+
+<p>
+  <strong>Detrsrv valor:</strong>
+  <%= @detalle_reserva.detRsrv_valor %>
+</p>
+
+<p>
+  <strong>Created by:</strong>
+  <%= @detalle_reserva.created_by %>
+</p>
+
+<p>
+  <strong>Updated by:</strong>
+  <%= @detalle_reserva.updated_by %>
+</p>
+
+<%= link_to 'Edit', edit_detalle_reserva_path(@detalle_reserva) %> |
+<%= link_to 'Back', detalle_reservas_path %>

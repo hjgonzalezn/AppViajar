@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pago_tipoProducto: MyString
+  pago_productoId: 1
+  pago_valor: 1.5
+  pago_forma: MyString
+  pago_ctaBancDestino: 1
+  pago_fecha: 2016-10-20
+  pago_entidad: MyString
+  dtpag_sucursalId: 1
+  pago_transaccion: MyString
+  pago_estado: MyString
+  pago_estadoRegistro: MyString
+  created_by: MyString
+  updated_by: MyString
+
+two:
+  pago_tipoProducto: MyString
+  pago_productoId: 1
+  pago_valor: 1.5
+  pago_forma: MyString
+  pago_ctaBancDestino: 1
+  pago_fecha: 2016-10-20
+  pago_entidad: MyString
+  dtpag_sucursalId: 1
+  pago_transaccion: MyString
+  pago_estado: MyString
+  pago_estadoRegistro: MyString
+  created_by: MyString
+  updated_by: MyString

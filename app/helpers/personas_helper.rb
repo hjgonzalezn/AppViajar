@@ -1,4 +1,50 @@
 module PersonasHelper
+  def calcular_edad(fechaNacimiento)
+    #fechaNacimiento YYYY-MM-DD
+    edad = 200
+    
+    unless fechaNacimiento.blank?
+      anioNac = fechaNacimiento.to_s[0, 4].to_i
+      mesNac = fechaNacimiento.to_s[5, 7].to_i
+      diaNac = fechaNacimiento.to_s[9, 10].to_i
+      
+      fechaActual = Time.new
+      arrFecha = fechaActual.to_s.split(" ")
+      arrFecha = arrFecha[0].split("-")
+      anio = arrFecha[0].to_i
+      mes = arrFecha[1].to_i
+      dia = arrFecha[2].to_i
+      
+      edad = anio - anioNac
+      
+      if mes < mesNac then
+        edad = edad - 1
+      end
+    end
+    
+    return edad
+  end
+  
+  def grupo_edad_persona(fechaNacimiento)
+    resultado = "ADULTO"
+
+    unless fechaNacimiento.blank?
+      edad = calcular_edad(fechaNacimiento)
+      
+      @gruposEdad.each do |key, value|
+        arrValue = value.split("-")
+        limInf = arrValue[0].to_i
+        limSup = arrValue[1].to_i
+        if edad >= limInf && edad <= limSup then
+          resultado = key
+          break
+        end  
+      end
+    end
+    
+    return resultado
+  end
+  
   def set_tipos_id_persona(categoria="TODOS")
     tiposIdPersona = Hash.new
     if categoria == "TODOS" then

@@ -40,7 +40,7 @@
 						</div>
 						</div>
 						<div class="col-lg-12">
-							<form id="frm" action="/about/confirmar_reserva" method="post" class="hotel-search-form">
+							<form id="frmConfirmarReserva" action="/detalle_reservas/confirmar_reserva" method="post" class="hotel-search-form">
 								<div class="col-lg-12">
 									<div class="col-lg-12">
 										<h3>INFORMACIÓN DE CONTACTO</h3>
@@ -213,7 +213,7 @@
 						            <div class="form-group tm-yellow-gradient-bg text-center">
 						            	<%= hidden_field_tag :datos_viaje, @producto + "|" + @enterOrigen.id.to_s + "|" + @enterDestino.id.to_s + "|" + @dtFechaIda + "|" + @dtFechaRegreso + "|" + @nroAdultos.to_s + "|" + @nroMenores.to_s + "|" + @nroInfantes.to_s %>
 						            	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-						            	<button type="submit" name="submit" class="tm-orange-btn">Enviar</button>
+						            	<input type="button" id="cmdEnviar" value="Enviar" class="tm-orange-btn">
 						            </div>	
 								</div>
 							</form>
@@ -248,7 +248,26 @@
 			else{
 				$("#reserva_tipo_identificacion1").val("");
 				$("#reserva_numero_identificacion1").val("");
+				$("#reserva_nombres1").val("");
+				$("#reserva_apellidos1").val("");
 			}
+		});
+		
+		$("#cmdEnviar").click(function(e){
+			e.preventDefault();
+			
+			$("#contacto_nombres").val($("#contacto_nombres").val().toUpperCase());
+			$("#contacto_apellidos").val($("#contacto_apellidos").val().toUpperCase());
+			
+			$("input[name='reserva[nombres][]']").each(function(){
+				$(this).val($(this).val().toUpperCase());	
+			});
+			
+			$("input[name*='reserva[apellidos][]']").each(function(){
+				$(this).val($(this).val().toUpperCase());	
+			});
+
+			$("#frmConfirmarReserva").submit();
 		});
 	});
 </script>

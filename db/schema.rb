@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160909181329) do
+ActiveRecord::Schema.define(version: 20170201220143) do
 
   create_table "accions", force: :cascade do |t|
     t.string   "acc_codigo",         limit: 255
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(version: 20160909181329) do
     t.datetime "updated_at",                      null: false
   end
 
+  create_table "causals", force: :cascade do |t|
+    t.string   "causal_tipo",           limit: 255
+    t.integer  "causal_nivel",          limit: 4
+    t.string   "causal_descripcion",    limit: 255
+    t.text     "causal_solucion",       limit: 65535
+    t.string   "causal_estadoRegistro", limit: 255
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
   create_table "controls", force: :cascade do |t|
     t.string   "ctrl_descripcion",    limit: 255
     t.string   "ctrl_html_id",        limit: 255
@@ -78,6 +88,22 @@ ActiveRecord::Schema.define(version: 20160909181329) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
   end
+
+  create_table "detalle_reservas", force: :cascade do |t|
+    t.integer  "reserva_id",             limit: 4
+    t.string   "detRsrv_tipoCliente",    limit: 255
+    t.string   "detRsrv_clienteId",      limit: 255
+    t.string   "detRsrv_tarifaCodigo",   limit: 255
+    t.float    "detRsrv_valor",          limit: 24
+    t.string   "created_by",             limit: 255
+    t.string   "updated_by",             limit: 255
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "detRsrv_estadoReserva",  limit: 255
+    t.string   "detRsrv_estadoRegistro", limit: 255
+  end
+
+  add_index "detalle_reservas", ["reserva_id"], name: "index_detalle_reservas_on_reserva_id", using: :btree
 
   create_table "division_pais", force: :cascade do |t|
     t.integer  "entidad_territorial_id", limit: 4
@@ -131,6 +157,20 @@ ActiveRecord::Schema.define(version: 20160909181329) do
     t.datetime "updated_at",                      null: false
   end
 
+  create_table "hotels", force: :cascade do |t|
+    t.integer  "empresa_id",           limit: 4
+    t.text     "hotel_datosGenerales", limit: 65535
+    t.text     "hotel_presentacion",   limit: 65535
+    t.text     "hotel_servicios",      limit: 65535
+    t.text     "hotel_atractivos",     limit: 65535
+    t.string   "hotel_estadoRegistro", limit: 255
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "hotel_portada",        limit: 255
+  end
+
+  add_index "hotels", ["empresa_id"], name: "index_hotels_on_empresa_id", using: :btree
+
   create_table "itinerarios", force: :cascade do |t|
     t.integer  "paquete_turistico_id", limit: 4
     t.string   "itnr_estadoRegistro",  limit: 255
@@ -143,6 +183,21 @@ ActiveRecord::Schema.define(version: 20160909181329) do
   end
 
   add_index "itinerarios", ["paquete_turistico_id"], name: "index_itinerarios_on_paquete_turistico_id", using: :btree
+
+  create_table "logs", force: :cascade do |t|
+    t.string   "log_modeloDesc",      limit: 255
+    t.integer  "log_modeloId",        limit: 4
+    t.text     "log_valoresAntes",    limit: 65535
+    t.text     "log_valoresDespues",  limit: 65535
+    t.string   "log_ruta",            limit: 255
+    t.string   "log_operacion",       limit: 255
+    t.string   "log_resultOperacion", limit: 255
+    t.string   "log_equipo",          limit: 255
+    t.string   "created_by",          limit: 255
+    t.string   "updated_by",          limit: 255
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
 
   create_table "modelo_accions", force: :cascade do |t|
     t.integer  "modelo_id",             limit: 4
@@ -165,6 +220,24 @@ ActiveRecord::Schema.define(version: 20160909181329) do
     t.string   "mdl_estadoRegistro", limit: 255
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+  end
+
+  create_table "pagos", force: :cascade do |t|
+    t.string   "pago_tipoProducto",   limit: 255
+    t.float    "pago_valor",          limit: 24
+    t.string   "pago_forma",          limit: 255
+    t.integer  "pago_ctaBancDestino", limit: 4
+    t.date     "pago_fecha"
+    t.string   "pago_entidad",        limit: 255
+    t.integer  "dtpag_sucursalId",    limit: 4
+    t.string   "pago_transaccion",    limit: 255
+    t.string   "pago_estado",         limit: 255
+    t.string   "pago_estadoRegistro", limit: 255
+    t.string   "created_by",          limit: 255
+    t.string   "updated_by",          limit: 255
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "pago_productoId",     limit: 255
   end
 
   create_table "paq_turistico_ent_territorials", force: :cascade do |t|
@@ -234,6 +307,26 @@ ActiveRecord::Schema.define(version: 20160909181329) do
     t.string   "reg_estadoRegistro",         limit: 255
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
+  end
+
+  create_table "reservas", force: :cascade do |t|
+    t.string   "rsrv_codigo",           limit: 255
+    t.string   "rsrv_tipoProducto",     limit: 255
+    t.integer  "rsrv_productoId",       limit: 4
+    t.string   "rsrv_tipoSolicitante",  limit: 255
+    t.string   "rsrv_solicitanteId",    limit: 255
+    t.string   "rsrv_tipoContacto",     limit: 255
+    t.string   "rsrv_contactoId",       limit: 255
+    t.datetime "rsrv_fechaVencimiento"
+    t.string   "created_by",            limit: 255
+    t.string   "updated_by",            limit: 255
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "rsrv_estadoRegistro",   limit: 255
+    t.string   "rsrv_estadoReserva",    limit: 255
+    t.string   "rsrv_trayectoViaje",    limit: 255
+    t.date     "rsrv_fechaIda"
+    t.date     "rsrv_fechaRegreso"
   end
 
   create_table "ruta", force: :cascade do |t|
@@ -332,12 +425,15 @@ ActiveRecord::Schema.define(version: 20160909181329) do
     t.datetime "updated_at",                       null: false
     t.string   "viaje_operadorId",     limit: 255
     t.string   "viaje_trayecto",       limit: 255
+    t.string   "viaje_tarifas",        limit: 255
   end
 
   add_index "viajes", ["vehiculo_id"], name: "index_viajes_on_vehiculo_id", using: :btree
 
   add_foreign_key "controls", "accions"
   add_foreign_key "controls", "modelos"
+  add_foreign_key "detalle_reservas", "reservas"
+  add_foreign_key "hotels", "empresas"
   add_foreign_key "itinerarios", "paquete_turisticos"
   add_foreign_key "modelo_accions", "accions"
   add_foreign_key "modelo_accions", "modelos"

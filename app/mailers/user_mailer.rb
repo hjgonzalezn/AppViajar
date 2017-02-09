@@ -9,6 +9,10 @@ class UserMailer < ActionMailer::Base
     @enterOrigen = EntidadTerritorial.find(arrDatosViaje[1])
     unless arrDatosViaje[2].blank?
       @enterDestino = EntidadTerritorial.find(arrDatosViaje[2])
+      
+      if @producto.include? "VUELO" then
+        @producto = @enterOrigen.enter_nombreCorto + " - " + @enterDestino.enter_nombreCorto 
+      end
     end
     @dtFechaIda = arrDatosViaje[3]
     @dtFechaRegreso = arrDatosViaje[4]

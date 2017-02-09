@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
     @estados = Hash.new
     @tiposDocumIdent = Hash.new
     @slideShow = Hash.new
+    @gruposEdad = Hash.new
     
     todoCatalogo = Catalogo.where("ctlg_estadoRegistro = ?", "A")
     
@@ -17,7 +18,11 @@ class ApplicationController < ActionController::Base
       elsif h.ctlg_categoria == "TIPO DE DOCUMENTO DE IDENTIDAD" then
         # Tipos de documento de identidad
         @tiposDocumIdent[h.ctlg_valorCdg] = h.ctlg_valorDesc
+      elsif h.ctlg_categoria == "RANGO DE EDAD" then
+        #Grupo de edad
+        @gruposEdad[h.ctlg_valorDesc] = h.ctlg_observacion
       end
+      
     end
     
     modeloAccion = ModeloAccion.select("M.mdl_nombre, A.acc_nombre, modelo_accions.modAcc_sliderShow").joins("INNER JOIN modelos M ON M.id = modelo_accions.modelo_id INNER JOIN accions A ON A.id = modelo_accions.accion_id").where("modelo_accions.modAcc_estadoRegistro = ?", "A")
@@ -25,6 +30,5 @@ class ApplicationController < ActionController::Base
     modeloAccion.each do |h|
       @slideShow[h.mdl_nombre + "-" + h.acc_nombre] = h.modAcc_sliderShow
     end
-    
-  end  
+  end
 end
