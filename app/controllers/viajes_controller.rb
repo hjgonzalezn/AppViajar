@@ -121,7 +121,7 @@ class ViajesController < ApplicationController
       @estadosViaje = Catalogo.select("ctlg_valorCdg, ctlg_valorDesc").where("ctlg_categoria = 'ESTADO DE VIAJE' AND ctlg_estadoRegistro = 'A'").order(:id)
       @estadosViaje = @estadosViaje.map{|h| [h.ctlg_valorCdg, h.ctlg_valorDesc]}.to_h
       
-      instSQL_select = "Vehiculos.id, Concat( IfNull(Concat(C.ctlg_subcategoria
+      instSQL_select = "vehiculos.id, Concat( IfNull(Concat(C.ctlg_subcategoria
                                               ,'|' 
                                               ,E.empr_nombreCorto
                                               ,' - '
@@ -153,21 +153,21 @@ class ViajesController < ApplicationController
                                                  )
                                        )
                                , ', '
-                               , Vehiculos.vehi_modeloCodigo
+                               , vehiculos.vehi_modeloCodigo
                                ,' => '
-                               , LPad(Vehiculos.vehi_capacPasajeros, 2, 0)
+                               , LPad(vehiculos.vehi_capacPasajeros, 2, 0)
                                , ' PAX') vehi_modeloCodigo"
       
-      instSQL_joins = "LEFT OUTER JOIN Empresas E 
-                         ON Vehiculos.vehi_propietarioId = E.empr_documentoIdentidad
-                       LEFT OUTER JOIN Personas P
-                         ON Vehiculos.vehi_propietarioId = P.pers_documentoIdentidad
-                       LEFT OUTER JOIN Sucursal_Empresas S 
-                         ON (E.empr_documentoIdentidad = S.empr_documentoIdentidad AND Vehiculos.vehi_sucursalEmpresaPropId = S.id)
-                      INNER JOIN Catalogos C
-                         ON C.ctlg_valorCdg = Vehiculos.vehi_tipo
+      instSQL_joins = "LEFT OUTER JOIN empresas E 
+                         ON vehiculos.vehi_propietarioId = E.empr_documentoIdentidad
+                       LEFT OUTER JOIN personas P
+                         ON vehiculos.vehi_propietarioId = P.pers_documentoIdentidad
+                       LEFT OUTER JOIN sucursal_empresas S 
+                         ON (E.empr_documentoIdentidad = S.empr_documentoIdentidad AND vehiculos.vehi_sucursalEmpresaPropId = S.id)
+                      INNER JOIN catalogos C
+                         ON C.ctlg_valorCdg = vehiculos.vehi_tipo
                       WHERE C.ctlg_categoria = 'TIPO DE VEHÍCULO'
-                        AND Vehiculos.vehi_estadoRegistro = 'A'"
+                        AND vehiculos.vehi_estadoRegistro = 'A'"
       
       @vehiculos = Vehiculo.select(instSQL_select).joins(instSQL_joins)
     end
