@@ -1,4 +1,4 @@
-class PagosController < ApplicationController
+class PayController < ApplicationController
   include ApplicationHelper
   include ReservasHelper
   
@@ -43,25 +43,26 @@ class PagosController < ApplicationController
         reserva = Reserva.where("rsrv_codigo = '#{@pago.pago_productoId}'").take
         detallesReserva = DetalleReserva.where("reserva_id = ? AND detRsrv_estadoReserva = 'P'" ,reserva.id)
         @parentPath = "/reservas/" + reserva.id.to_s
-        tarifasViaje = tarifas_viaje(@pago.pago_productoId)
-        if tarifasViaje.viaje_tarifas.nil?
-          detallesReserva.each do |h|
-            if @pagoPendAplicar > 0 then
-              h.detRsrv_tarifaCodigo = "BASE"
-              h.detRsrv_estadoReserva = "C"
-              if @pagoPendAplicar > tarifasViaje.trf_base then
-                h.detRsrv_valor = tarifasViaje.trf_base 
-                @pagoPendAplicar = @pagoPendAplicar - tarifasViaje.trf_base
-              else
-                 h.detRsrv_valor = @pagoPendAplicar
-                 @pagoPendAplicar = 0
+        if reserva.rsrv_tipoProducto == "VUELO" then
+          tarifasViaje = tarifas_viaje(@pago.pago_productoId)
+          if tarifasViaje.viaje_tarifas.nil?
+            detallesReserva.each do |h|
+              if @pagoPendAplicar > 0 then
+                h.detRsrv_tarifaCodigo = "BASE"
+                h.detRsrv_estadoReserva = "C"
+                if @pagoPendAplicar > tarifasViaje.trf_base then
+                  h.detRsrv_valor = tarifasViaje.trf_base 
+                  @pagoPendAplicar = @pagoPendAplicar - tarifasViaje.trf_base
+                else
+                   h.detRsrv_valor = @pagoPendAplicar
+                   @pagoPendAplicar = 0
+                end
               end
+              h.save
             end
-            h.save
+          else
           end
-        else
-        end
-            
+         end   
         reserva.rsrv_estadoReserva = "C"
         reserva.save
     end

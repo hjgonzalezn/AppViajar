@@ -102,16 +102,18 @@
 									<div class="col-lg-12">
 										<br>
 										<% i = 1 %>
-										<% @itinerario.each do |t| %>
-											<div class="col-lg-12 plan-section-wrapper">
-												<div class="col-lg-4 itinr-title">
-													<h3><%= "Día " + i.to_s + " - " + t.itnr_titulo %></h3>
+										<% unless @itinerario.nil? %>
+											<% @itinerario.each do |t| %>
+												<div class="col-lg-12 plan-section-wrapper">
+													<div class="col-lg-4 itinr-title">
+														<h3><%= "Día " + i.to_s + (t.itnr_titulo == nil ? "" : " - " + t.itnr_titulo) %></h3>
+													</div>
+													<div class="col-lg-8 itinr-desc">
+														<p class="itinr-desc"><%= t.itnr_actividad %></p>
+													</div>
 												</div>
-												<div class="col-lg-8 itinr-desc">
-													<p class="itinr-desc"><%= t.itnr_actividad %></p>
-												</div>
-											</div>
-											<% i += 1 %>
+												<% i += 1 %>
+											<% end %>
 										<% end %>
 									</div>
 									<p>&nbsp;</p>
@@ -131,13 +133,15 @@
 						            				<th>ACOMODACIÓN<br>MULTIPLE</th>
 						            				<th>ACOMODACIÓN<br>DOBLE</th>
 						            			</tr>
-						            			<% @tarifas.each do |h| %>
-							            			<tr>
-							            				<td><%= h.trf_detalleAplicacion %></td>
-							            				<td><%= number_to_currency(h.trf_base) %></td>
-							            				<td><%= number_to_currency(h.trf_flexi) %></td>
-							            			</tr>
-						            			<% end %>
+						            			<% unless @tarifas.nil? %>
+							            			<% @tarifas.each do |h| %>
+								            			<tr>
+								            				<td><%= h.trf_detalleAplicacion %></td>
+								            				<td><%= number_to_currency(h.trf_base) %></td>
+								            				<td><%= number_to_currency(h.trf_flexi) %></td>
+								            			</tr>
+							            			<% end %>
+							            		<% end %>
 						            		</table>
 							            </div>
 						            </div>
@@ -160,7 +164,7 @@
 											<div class="col-lg-3">
 											</div>
 											<div class="col-lg-6 div-form" id="RESERVA">
-												<%= form_tag "#{detalle_reserva_path}", {method: "post", id: "frmReserva"} do %>
+												<%= form_tag "/detalle_reservas/solicitar_reserva", {method: "post", id: "frmReserva"} do %>
 													<div class="col-lg-12">
 														<div class="form-group">
 															<%= select_tag :cboOrigen, options_from_collection_for_select(@ciudadesOrigen, :id, :enter_nombreCorto), options={class:"form-control", prompt: "-- ORIGEN --"} %>

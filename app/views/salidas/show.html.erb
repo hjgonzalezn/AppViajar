@@ -1,0 +1,195 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				
+  				<div class="col-lg-12 col-md-12" id="form-wrapper">
+	  				<div id="tm-form-header">
+						<h1>Consultar salida</h1>
+					</div>
+					<div id="tm-form-content">
+						<div class="col-lg-12 col-md-12">
+							<div class="col-lg-1 col-md-1"></div>
+							<div class="col-lg-10 col-md-10">
+								<table class="slider-abstract">
+							  		<th><%= @salida.paquete_turistico.pqTur_nombre %></th>
+							  		<th><%= @salida.sld_fecha %></th>
+							  	</table>
+							</div>
+							<div class="col-lg-1 col-md-1"></div>
+						</div>
+						<p>&nbsp;</p>
+						<div class="col-lg-12 col-md-12">
+							<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
+							    <li role="presentation">
+							    	<a href="#confirmadas" aria-controls="hotel" role="tab" data-toggle="tab">CUPOS CONFIRMADOS</a>
+							    </li>
+							    <li role="presentation">
+							    	<a href="#pendientes" aria-controls="hotel" role="tab" data-toggle="tab">RESERVAS PENDIENTES</a>
+							    </li>
+							    <li role="presentation">
+							    	<a href="#nulas" aria-controls="hotel" role="tab" data-toggle="tab">RESERVAS NULAS</a>
+							    </li>
+							</ul>
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="confirmadas">
+									<div class="tm-search-box overflow-auto">
+										<div class="col-lg-12 margin-bottom-15">
+											<p>&nbsp;</p>
+											<div class="tm-black-bg tm-command-bar">
+							        			<a href="#" class="btn btn-success" id ="cmdDesloquearCupos">
+							        				<i class="fa fa-edit">&nbsp;</i>Desbloquear cupos
+							        			</a>
+												<a href="<%= edit_control_path(1) %>" class="btn btn-danger">
+							        				<i class="fa fa-edit">&nbsp;</i>Anular reserva
+							        			</a>
+							        			<a href="<%= edit_control_path(1) %>" class="btn btn-info">
+							        				<i class="fa fa-edit">&nbsp;</i>Realizar chequeo
+							        			</a>
+											</div>
+		  									<p>&nbsp;</p>
+				  							<!--table id="tblReservasActivas" class="stripe hover jqTable">
+												<thead>
+													<tr>
+														<th>RESERVA</th>
+														<th>DOCUM. IDENTIDAD</th>
+														<th>NOMBRES</th>
+														<th>APELLIDOS</th>
+													</tr>
+												</thead>
+												<tbody>
+													<%# index = 1 %>
+													<%# @confirmadas.each do |h| %>
+														<%# grupoEdad = grupo_edad_persona(h.pers_fechaNacimiento) %>
+														<tr>
+															<td><%#= h.rsrv_codigo %></td>
+															<td><%#= formato_documento_identidad(h.detRsrv_clienteId) %></td>
+															<td><%#= h.pers_nombres %></td>
+															<td><%#= h.pers_apellidos %></td>
+														</tr>
+													<%# end %>
+												</tbody>
+											</table-->
+										</div>
+									</div>
+								</div>
+								<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="pendientes">
+									<div class="tm-search-box overflow-auto">
+										<div class="col-lg-12 margin-bottom-15">
+		  									<p>&nbsp;</p>
+											<div class="tm-black-bg tm-command-bar">
+							        			<a href="#" class="btn btn-success" id ="cmdRegistrarPago">
+							        				<i class="fa fa-edit">&nbsp;</i>Registrar pago
+							        			</a>
+												<a href="<%= edit_control_path(1) %>" class="btn btn-danger">
+							        				<i class="fa fa-edit">&nbsp;</i>Bloquear cupos
+							        			</a>
+											</div>
+											<p>&nbsp;</p>
+				  							<table id="tblReservasPendientes" class="stripe hover jqTable">
+												<thead>
+													<tr>
+														<th>RESERVA</th>
+														<th>DOCUM. IDENTIDAD</th>
+														<th>NOMBRES</th>
+														<th>APELLIDOS</th>
+													</tr>
+												</thead>
+												<tbody>
+													<% index = 1 %>
+													<% @pendientes.each do |h| %>
+														<% grupoEdad = grupo_edad_persona(h.pers_fechaNacimiento) %>
+														<tr>
+															<td><%= h.rsrv_codigo %></td>
+															<td><%= formato_documento_identidad(h.detRsrv_clienteId) %></td>
+															<td><%= h.pers_nombres %></td>
+															<td><%= h.pers_apellidos %></td>
+														</tr>
+													<% end %>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="nulas">
+									<div class="tm-search-box overflow-auto">
+										<div class="col-lg-12 margin-bottom-15">
+		  									<p>&nbsp;</p>
+				  							<!--table id="tblReservasNulas" class="stripe hover jqTable">
+												<thead>
+													<tr>
+														<th>RESERVA</th>
+														<th>DOCUM. IDENTIDAD</th>
+														<th>NOMBRES</th>
+														<th>APELLIDOS</th>
+													</tr>
+												</thead>
+												<tbody>
+													<%# index = 1 %>
+													<%# @confirmadas.each do |h| %>
+														<%# grupoEdad = grupo_edad_persona(h.pers_fechaNacimiento) %>
+														<tr>
+															<td><%#= h.rsrv_codigo %></td>
+															<td><%#= formato_documento_identidad(h.detRsrv_clienteId) %></td>
+															<td><%#= h.pers_nombres %></td>
+															<td><%#= h.pers_apellidos %></td>
+														</tr>
+													<%# end %>
+												</tbody>
+											</table-->
+										</div>
+									</div>
+								</div>
+								<div class="margin-bottom-15"></div>
+							</div>
+  						</div>
+					</div>
+					<div id="tm-form-footer">
+						<%= link_to 'Regresar', salidas_path, class:"button back" %> |
+						<%= link_to 'Modificar', edit_salida_path(@salida), class:"button edit" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	$(document).on('page:update', function() {
+			// Aplicando funcionalidad Datatable
+			if ( $.fn.dataTable.isDataTable( '.jqTable' ) ) {
+			    table = $('.jqTable').DataTable();
+			}
+			else {
+			    	table = $('.jqTable').DataTable( {
+			        pagingType: "full_numbers",
+			        "lengthMenu": [[-1], [ "Todos"]]
+			    } );
+			}
+		});
+		
+	$(function() {
+		$('.jqTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "20%" },
+							{ sWidth : "20%" },
+							{ sWidth : "30%" },
+							{ sWidth : "30%" }
+						],
+			"lengthMenu": [[-1], [ "Todos"]]
+    		});
+	});
+</script>

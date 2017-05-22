@@ -1,9 +1,11 @@
 class DetalleReservasController < ApplicationController
   
   include PersonasHelper
+  include ActividadTuristicasHelper
+  include ReservasHelper
   
   before_action :set_detalle_reserva, only: [:show, :edit, :update, :destroy]
-  before_action :initialize_vars_global, only: [:index, :new, :show, :edit, :solicitar_reserva, :detalle_reserva, :confirmar_reserva]
+  before_action :initialize_vars_global, only: [:index, :new, :show, :edit, :solicitar_reserva, :detalle_reserva, :confirmar_reserva, :registrar_reserva]
   before_action :initialize_vars, only: [:new, :edit, :show]
   
   # GET /detalle_reservas
@@ -76,13 +78,13 @@ class DetalleReservasController < ApplicationController
     else
       @datosProducto = params[:datosProducto].split("|")
       @tipoProducto = @datosProducto[0]
-      idProducto = @datosProducto[1]
+      @idProducto = @datosProducto[1]
       
       case @tipoProducto
         when "VUELO" then
           @producto = "DATOS DEL " + @tipoProducto
         when "PAQUETUR" then
-          paquete = PaqueteTuristico.find(idProducto)
+          paquete = PaqueteTuristico.find(@idProducto)
           @producto = "PLAN " + paquete.pqTur_nombre  
       end
       
@@ -111,6 +113,7 @@ class DetalleReservasController < ApplicationController
     @datosContacto = params[:contacto]
     @datosReserva = params[:reserva]
     @datosViaje = params[:datos_viaje]
+     
     
     if params[:datos_viaje].nil?
       respond_to do |format|
@@ -131,7 +134,10 @@ class DetalleReservasController < ApplicationController
       @nroAdultos = arrDatosViaje[5].to_i
       @nroMenores = arrDatosViaje[6].to_i
       @nroInfantes = arrDatosViaje[7].to_i
+      @idProducto = arrDatosViaje[8].to_i
     end
+    
+    @actividadesPlan = set_actividades_plan(@idProducto)
     
   end
   
@@ -142,34 +148,32 @@ class DetalleReservasController < ApplicationController
       datosContacto = params[:contacto]      
       datosReserva = params[:datos_reserva]
       datosViaje = params[:datos_viaje]
+      opcionalesReserva = params[:opcionales]
+      tarifaDefMenor = 0
+      tarifaDefAdulto = 0
+      valorTotalReserva = 0
+      
+      arrViaje = datosViaje.split("|")
+      enterOrigen = EntidadTerritorial.find(arrViaje[1])
+      enterDestino = EntidadTerritorial.find(arrViaje[2])
+      arrFecha = arrViaje[3].split("/")
+      fechaIda = arrFecha[2].to_s + "-" + arrFecha[1].to_s + "-" + arrFecha[0].to_s
+      arrFecha = arrViaje[4].split("/")
+      fechaRegreso = arrFecha[2].to_s + "-" + arrFecha[1].to_s + "-" + arrFecha[0].to_s
       
       if datosViaje.include? "VUELO" then
         producto = "VUELO"
-        arrViaje = datosViaje.split("|")
-        enterOrigen = EntidadTerritorial.find(arrViaje[1])
-        enterDestino = EntidadTerritorial.find(arrViaje[2])
-        arrFecha = arrViaje[3].split("/")
-        fechaIda = arrFecha[2].to_s + "-" + arrFecha[1].to_s + "-" + arrFecha[0].to_s
-        arrFecha = arrViaje[4].split("/")
-        fechaRegreso = arrFecha[2].to_s + "-" + arrFecha[1].to_s + "-" + arrFecha[0].to_s
-        
+                
         str_select = "Viajes.id viaje_id, Viajes.viaje_fecha, Viajes.viaje_trayecto, R.id ruta_id, R.ruta_descripcion"
         str_condiciones = "(viaje_fecha = STR_TO_DATE('#{fechaIda}', '%Y-%m-%d') OR viaje_fecha = STR_TO_DATE('#{fechaRegreso}', '%Y-%m-%d')) AND viaje_estado IN('PROG', 'CONF') AND viaje_estadoRegistro = 'A' AND R.ruta_estadoRegistro = 'A'"
-        str_condiciones = str_condiciones + " AND R.ruta_descripcion LIKE '%#{enterOrigen.id.to_s}%' AND R.ruta_descripcion LIKE '%#{enterDestino.id.to_s}%'"
+        str_condiciones = str_condiciones + " AND R.ruta_descripcion LIKE '%#{enterOrigen.id.to_s}%' AND R.ruseeeeta_descripcion LIKE '%#{enterDestino.id.to_s}%'"
         str_joins = "INNER JOIN Ruta R ON Viajes.viaje_ruta = R.id"
         
         viajes = Viaje.select(str_select).where(str_condiciones).joins(str_joins)
-        idProducto = nil
-        
+                
         #Inner join ruta
         viajes.each do |h|
-          #puts ">>>>>>>>>>>>>>>>>>>>>>>>>>"
-          #puts fechaIda
-          #puts fechaRegreso
-          #puts h.viaje_fecha
-          # puts h.ruta_descripcion.index(enterOrigen.id.to_s)
-          # puts h.ruta_descripcion.index(enterDestino.id.to_s)
-          
+         
           #Viaje de ida
           if fechaIda == h.viaje_fecha.to_s then
             if h.ruta_descripcion.index(enterOrigen.id.to_s) < h.ruta_descripcion.index(enterDestino.id.to_s) then
@@ -199,6 +203,7 @@ class DetalleReservasController < ApplicationController
         
       elsif datosViaje.include? "PLAN" then
         producto = "PLAN"
+        idProducto = arrViaje[8]
       end
       
       tiposDocumIdent = Catalogo.where(ctlg_categoria: "TIPO DE DOCUMENTO DE IDENTIDAD")
@@ -237,10 +242,14 @@ class DetalleReservasController < ApplicationController
         
         #Creando las personas no registradas en la base de datos
         personasIds = []
+        fechasNacimiento = []
         
         for nmIndex in 0..datosReserva["tipo_identificacion"].length - 1
           flagInsert = true
           personasIds << datosReserva["numero_identificacion"][nmIndex] + datosReserva["tipo_identificacion"][nmIndex]
+          arrFechaNac = datosReserva["fecha_nacimiento"][nmIndex].split("/")
+          fechasNacimiento << arrFechaNac[2].to_s + "-" + arrFechaNac[1].to_s + "-" + arrFechaNac[0].to_s  
+          
           persExistentes.each do |h|
             if h.pers_documentoIdentidad == personasIds.last then
               flagInsert = false
@@ -250,8 +259,11 @@ class DetalleReservasController < ApplicationController
           if flagInsert then
             persona = Persona.new
             persona.pers_documentoIdentidad = personasIds.last
-            persona.pers_nombres = datosReserva["nombres"][nmIndex] 
+            persona.pers_nombres = datosReserva["nombres"][nmIndex]
             persona.pers_apellidos = datosReserva["apellidos"][nmIndex]
+            unless datosReserva["fecha_nacimiento"][nmIndex].blank?
+              persona.pers_fechaNacimiento = datosReserva["fecha_nacimiento"][nmIndex]
+            end
             persona.pers_estadoRegistro = "A"
             persona.save
           end 
@@ -275,20 +287,97 @@ class DetalleReservasController < ApplicationController
       reserva.updated_by ="NAISATOURS"
       reserva.save
       
-      #Creando los detalles de la reserva
-      personasIds.each do |h|
-        #Verificando si la persona ya tiene reserva para en esa fecha y ruta
-        detalleReserva = DetalleReserva.new
-        detalleReserva.reserva_id = reserva.id
-        detalleReserva.detRsrv_tipoCliente = "P" #Persona
-        detalleReserva.detRsrv_estadoReserva = 'I'
-        detalleReserva.detRsrv_estadoRegistro = 'A'
-        detalleReserva.detRsrv_clienteId = h
-        detalleReserva.created_by ="NAISATOURS"
-        detalleReserva.updated_by ="NAISATOURS"
-        detalleReserva.save
-      end
+      tarifaDef = 0
       
+      if datosViaje.include? "PLAN" then
+        
+        rsrv = Reserva.select("(rsrv_fechaRegreso - rsrv_fechaIda) dias").where("id = ?", reserva.id).take
+        tarifasPlan = tarifas_plan(reserva.rsrv_productoId)
+        claveTarifa = rsrv.dias.to_s + "D/" + (rsrv.dias - 1).to_s + "N"
+        idsActivOpcionales = ""
+        
+        opcionalesReserva.each do |h|
+          servOpcReserva = ActividadTuristicaReserva.new
+          servOpcReserva.actividad_turistica_id = h.to_i
+          servOpcReserva.reserva_id = reserva.id
+          servOpcReserva.atr_estadoRegistro = "A"
+          servOpcReserva.save
+          idsActivOpcionales = idsActivOpcionales + h + ","  
+        end
+        
+        #Actividades opcionales
+        
+        idsActivOpcionales = idsActivOpcionales[0, idsActivOpcionales.length - 1] 
+        instSQL_select = "T.trf_base"
+        instSQL_where = "ATR.actividad_turistica_id IN (" + idsActivOpcionales + ") AND ATR.reserva_id = " + reserva.id.to_s + " AND atr_estadoRegistro = 'A' AND T.trf_estadoRegistro = 'A'"
+        instSQL_joins = "AS ATR INNER JOIN tarifas T ON (T.trf_conceptoCodigo = 'VACTUR' AND T.trf_tipoProducto = 'ACTIVIDAD_TURISTICAS' AND T.trf_producto = ATR.actividad_turistica_id)"
+        
+        valorOpcionalesAdulto = 0
+        valorOpcionalesMenor = 0
+        activOpcionales = ActividadTuristicaReserva.select(instSQL_select).where(instSQL_where).joins(instSQL_joins)
+        
+        #Calculando el valor total por individuo de las actividades opcionales
+        activOpcionales.each do |j|
+          valorOpcionalesAdulto += j.trf_base
+          valorOpcionalesMenor += j.trf_base  
+        end
+        
+        # puts "###########>>>>>>>>>>>>"
+        # puts claveTarifa
+        # puts "###########>>>>>>>>>>>>" + reserva.rsrv_productoId.to_s
+        # puts tarifas.length
+        # puts "###########>>>>>>>>>>>>***"
+        # puts tarifas
+        
+        tarifasPlan.each do |h|
+          if h.trf_detalleAplicacion == claveTarifa then
+            
+            case h.trf_conceptoAplicacion
+              when "ADULTO" then
+                tarifaDefAdulto = h.trf_base
+              when "MENOR" then
+                tarifaDefMenor = h.trf_base
+            end
+          end
+        end
+       end #Plan
+      
+      #Creando los detalles de la reserva
+        index = 0
+        personasIds.each do |h|
+          tarifaDef = 0
+          if datosViaje.include? "PLAN" then
+            #Verificando si la persona ya tiene reserva para en esa fecha y ruta
+            grupoEdad = grupo_edad_persona(fechasNacimiento[index])
+          
+              unless grupoEdad == "INFANTE" then
+                if grupoEdad == "ADULTO" then
+                  tarifaDef = tarifaDefAdulto + valorOpcionalesAdulto 
+                elsif grupoEdad == "MENOR" then
+                  tarifaDef = tarifaDefMenor + valorOpcionalesMenor
+                end 
+              end
+            end
+        
+  
+            detalleReserva = DetalleReserva.new
+            detalleReserva.reserva_id = reserva.id
+            detalleReserva.detRsrv_tipoCliente = "P" #Persona
+            detalleReserva.detRsrv_estadoReserva = "I"
+            detalleReserva.detRsrv_estadoRegistro = "A"
+            detalleReserva.detRsrv_clienteId = h
+            detalleReserva.detRsrv_tarifaCodigo = "BASE"
+            detalleReserva.detRsrv_valor = tarifaDef
+            detalleReserva.created_by ="NAISATOURS"
+            detalleReserva.updated_by ="NAISATOURS"
+            detalleReserva.save
+            index += 1
+            valorTotalReserva += tarifaDef
+        end
+      
+      reserva.rsrv_valorTotal = valorTotalReserva
+      reserva.save 
+              
       UserMailer.correo_reservas(datosViaje, datosContacto, datosReserva).deliver_now
       
       respond_to do |format|

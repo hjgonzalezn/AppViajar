@@ -1,0 +1,89 @@
+<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-sm-12">
+				<% unless notice.nil? %>
+					<br>
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<p id="notice"><%= notice %></p>
+					</div>
+				<% end %>
+				<div class="tableWrapper">
+					<div class="section-header">
+						<h1>ACTIVIDADES DEL PAQUETE TURÍSTICO</h1>
+					</div>
+					<div class="col-lg-12 col-md-12">
+						<%= form_tag("/paquete_turisticos/" + @paquete_turistico.id.to_s + "/registrar_actividades", {id: :frmActividades}) do %>
+						<table id="indexTable" class="stripe hover">
+						  	<thead>
+						    	<tr>
+						    		<th>Seleccion</th>
+							   		<th>Descripcion</th>
+							      	<th>Tipo Actividad</th>
+							      	<th>Bloque</th>
+	    						</tr>
+	  						</thead>
+	  						<tbody>
+	  							<% index = 1 %>
+	    						<% @actividad_turisticas.each do |actividad_turistica| %>
+	    							<% actividad_turistica.ATP_id == nil ? checkVal = false : checkVal = true %>
+		      						<tr>
+		      							<td><%= check_box_tag "chkActividad[]", actividad_turistica.id, checked = checkVal, {class:"form-control", id:"chkReserva_" + index.to_s} %></td>
+								        <td><%= actividad_turistica.actur_descripcion %></td>
+								        <td><%= actividad_turistica.tiAcT_nombre %></td>
+								        <td><%= select_tag "atp_clasificacion[]", options_for_select([["PLAN BÁSICO", "PB"],["OPCIONAL", "OP"]], actividad_turistica.atp_clasificacion), {class:"form-control", prompt:"-- SELECCIONE --", id:"cboActividad_" + index.to_s, disabled: !checkVal} %></td>
+		      						</tr>
+		      						<% index += 1 %>
+	    						<% end %>
+	  						</tbody>
+						</table>
+						<% end %>
+						<p>&nbsp;</p>
+					</div>
+					<div class="section-footer">
+						<%= link_to 'Regresar', administracion_path , class:"button back" %> | 
+						<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+
+	$(document).on('page:update', function() {
+			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
+			    table = $('#indexTable').DataTable();
+			}
+			else {
+			    table = $('#indexTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+			
+			$("#cmd_aceptar").click(function(e){
+				$("#frmActividades").submit();
+				e.preventDefault();
+			});
+			
+			$("input[name='chkActividad[]']").click(function(){
+				idControl = $(this).prop('id');
+				arrNombre = idControl.split("_");
+				$("#cboActividad_" + arrNombre[1]).prop("disabled", !($(this).prop('checked')));
+			});	
+		});
+		
+	$(function() {
+		$('#indexTable').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth: "10%" },
+							{ sWidth : "40%" },
+							{ sWidth : "30%" },
+							{ sWidth : "20%" }
+						]
+    		});
+	});
+</script>

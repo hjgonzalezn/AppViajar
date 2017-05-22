@@ -1,6 +1,7 @@
 include PersonasHelper
 include EmpresasHelper
 include ReservasHelper
+include ActividadTuristicasHelper
   
 class ReservasController < ApplicationController
   before_action :set_reserva, only: [:show, :edit, :update, :destroy]
@@ -20,10 +21,19 @@ class ReservasController < ApplicationController
   # GET /reservas/1
   # GET /reservas/1.json
   def show
-    @producto = "DATOS DEL " + @reserva.rsrv_tipoProducto
+    if @reserva.rsrv_tipoProducto == "VUELO" then
+      @producto = "DATOS DEL " + @reserva.rsrv_tipoProducto
+    elsif @reserva.rsrv_tipoProducto == "PLAN" then
+      paquete = PaqueteTuristico.find(@reserva.rsrv_productoId)
+      @producto = @reserva.rsrv_tipoProducto + " " + paquete.pqTur_nombre
+    end
+    
     @contacto = Persona.where(pers_documentoIdentidad: @reserva.rsrv_contactoId).take
     @reserva.rsrv_solicitanteId == nil ? @solicitante = @contacto : @solicitante = Persona.where(pers_documentoIdentidad: @reserva.rsrv_solicitanteId).take
     @reservas = reservas_buscar("","","", codigoReserva = @reserva.rsrv_codigo, "", "", "")
+    @servOpcReserva = set_actividades_reserva(@reserva.id)
+    @valorTotalReserva = reserva_calcular_tarifa(@reserva.rsrv_codigo)
+    @pagos = Pago.select("pago_fecha, pago_forma, pago_valor, pago_estado, pago_transaccion").where("pago_tipoProducto = 'RESERVA' AND pago_productoId = ? AND pago_estadoRegistro = 'A'", @reserva.rsrv_codigo)
     arrCiudad = @reserva.rsrv_trayectoViaje.split("|")
     @enterOrigen = EntidadTerritorial.find(arrCiudad[0])
     @enterDestino = EntidadTerritorial.find(arrCiudad[1])
@@ -31,11 +41,13 @@ class ReservasController < ApplicationController
 
   # GET /reservas/new
   def new
+    @titulo = "Nueva reserva"
     @reserva = Reserva.new
   end
 
   # GET /reservas/1/edit
   def edit
+    @titulo = "Modificar reserva"
   end
 
   # POST /reservas

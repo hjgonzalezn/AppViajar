@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  actur_descripcion: MyString
+  tipo_actividad_turistica_id: 
+  actur_estadoRegistro: MyString
+
+two:
+  actur_descripcion: MyString
+  tipo_actividad_turistica_id: 
+  actur_estadoRegistro: MyString

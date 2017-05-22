@@ -33,6 +33,10 @@
 		    <%= f.text_field :tiAcT_icono, {class:"form-control"}  %>
 		  </div>
 		  <div class="form-group">
+		    <%= f.label :tiAcT_visibilidad, "Visible*" %><br>
+		    <%= f.select :tiAcT_visibilidad, options_for_select([["NO", "NO"], ["SI", "SI"]], @tipo_actividad_turistica.tiAcT_visibilidad),{}, {class:"form-control"}  %>
+		  </div>
+		  <div class="form-group">
 		    <%= f.label :tiAcT_estadoRegistro, "Estado*" %><br>
 		    <%= f.select :tiAcT_estadoRegistro, options_for_select(@estados.invert), {}, {class:"form-control"}  %>
 		  </div>

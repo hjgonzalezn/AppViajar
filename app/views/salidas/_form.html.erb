@@ -1,0 +1,79 @@
+<%= form_for(@salida) do |f| %>
+  <% if @salida.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@salida.errors.count, "error") %> prohibited this control from being saved:</h2>
+
+      <ul>
+      <% @salida.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<div class="col-lg-6 col-md-6" id="form-wrapper">
+  		<div id="tm-form-header">
+			<h1><%= @titulo %></h1>
+		</div>
+		<div id="tm-form-content">
+		  	<div class="form-group">
+		  		<%= f.hidden_field :paquete_turistico_id %>
+    			<%= f.label :paquete_turistico_id, "Paquete turístico*" %><br>
+    			<%= text_field_tag :txtNomgrePaquete , @paqueteTuristico.pqTur_nombre, options = {class: "form-control", readonly: :readonly} %>
+  			</div>
+  			<div class="form-group">
+    			<%= f.label :sld_fecha, "Fecha de salida*" %><br>
+    			<div class='input-group date' id='datetimepicker1'>
+    				<%= f.text_field :sld_fecha, options = {class: "form-control"} %>
+                	<span class="input-group-addon">
+                    	<span class="fa fa-calendar"></span>
+                	</span>    				
+    			</div>
+  			</div>
+  			<div class="form-group">
+		    	<%= f.label "Estado*" %><br>
+		    	<%= f.select :sld_estadoRegistro, options_for_select(@estados.invert), {selected: @salida.sld_estadoRegistro}, class: "form-control" %>
+		  	</div>
+  		</div>
+		<div id="tm-form-footer">
+			<div class="actions">
+				<script>
+					$(document).on('page:update', function() {
+						$("#cmd_aceptar").click(function(e){
+							<% if params[:action] == "edit" then %>
+								$('#<%= params[:action] %>_salida_<%= @salida.id %>').submit();
+							<% elsif params[:action] == "new" or params[:action] == "create"%>
+								$('#<%= params[:action] %>_salida').submit();
+							<% end %>
+							e.preventDefault();
+						});
+					});
+				</script>
+				
+				<%= link_to 'Regresar', ("/" + @parentController + "/" + @parentId) , class:"button back" %> |
+				<%= link_to 'Aceptar', nil, class:"button save", id:"cmd_aceptar" %>
+				<% if params[:action] == "edit" then %>
+					<% path = request.fullpath %>
+					<% path["/edit"]="" %>
+					| <%= link_to 'Consultar', path, class:"button find" %>
+				<% end %> 
+			</div>
+		</div>
+	</div>
+<% end %>
+
+<script>
+	$(function(){
+		 $( document ).trigger( "page:update" );
+	});
+	
+	$(document).on('page:update', function() {
+		
+		$('.date').datetimepicker({
+            	format: 'YYYY-MM-DD',
+            	defaultDate:false,
+            	minDate: moment()
+       	});
+       	
+       	$("#salida_sld_fecha").val("");
+   	});
+</script>

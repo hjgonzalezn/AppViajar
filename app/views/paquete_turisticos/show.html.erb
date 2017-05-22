@@ -14,162 +14,232 @@
 					</div>
 				<% end %>
 				
-  				<div class="col-lg-11 col-md-11" id="form-wrapper">
+  				<div class="col-lg-12 col-md-12" id="form-wrapper">
 	  				<div id="tm-form-header">
 						<h1>Consultar Paquete Turístico</h1>
 					</div>
 					<div id="tm-form-content">
-						<div class="tm-home-box-h">
-							<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
-							    <li role="presentation" class="active">
-									<a href="#datos" aria-controls="datos" role="tab" data-toggle="tab">Datos Básicos</a>
-							    </li>
-							    <li role="presentation">
-							    	<a href="#actividades" aria-controls="hotel" role="tab" data-toggle="tab">Actividades</a>
-							    </li>
-							    <li role="presentation">
-							    	<a href="#itinerario" aria-controls="hotel" role="tab" data-toggle="tab">Itinerario</a>
-							    </li>
-							    <li role="presentation">
-							    	<a href="#fechas" aria-controls="hotel" role="tab" data-toggle="tab">Agenda</a>
-							    </li>
-							</ul>
-							<div class="tab-content tm-white-bg">
-								<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="datos">
-									<div class="tm-search-box">
-										<p>&nbsp;</p>
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Nombre:</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<p><%= @paquete_turistico.pqTur_nombre %></p>
-											</div>
+						<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
+						    <li role="presentation" class="active">
+								<a href="#datos" aria-controls="datos" role="tab" data-toggle="tab">Datos Básicos</a>
+						    </li>
+						    <li role="presentation">
+						    	<a href="#detallePlan" aria-controls="hotel" role="tab" data-toggle="tab">Detalle Plan</a>
+						    </li>
+						    <li role="presentation">
+						    	<a href="#itinerario" aria-controls="hotel" role="tab" data-toggle="tab">Itinerario</a>
+						    </li>
+						    <li role="presentation">
+						    	<a href="#fechas" aria-controls="hotel" role="tab" data-toggle="tab">Salidas</a>
+						    </li>
+						</ul>
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="datos">
+								<div class="tm-search-box">
+									<p>&nbsp;</p>
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Nombre:</strong></p>
 										</div>
+										<div class="col-lg-6 col-md-6">
+											<p><%= @paquete_turistico.pqTur_nombre %></p>
+										</div>
+									</div>
+									<br>
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Descripcion:</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<p><%= @paquete_turistico.pqTur_descripcion %></p>
+										</div>
+									</div>
+									<br>
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Incluye</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<% arrItems = @paquete_turistico.pqTur_incluye.split(13.chr) %>
+											<ul>
+												<% arrItems.each do |i| %>
+													<li><%= i %></li>
+												<% end %>
+											</ul>
+										</div>
+									</div>
+									<br>	
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>No Incluye</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<% arrItems = @paquete_turistico.pqTur_noIncluye.split(13.chr) %>
+											<ul>
+												<% arrItems.each do |i| %>
+													<li><%= i %></li>
+												<% end %>
+											</ul>
+										</div>
+									</div>
+									<br>	
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Actividades opcionales:</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<% arrItems = @paquete_turistico.pqTur_opcionales.split(13.chr) %>
+											<ul>
+												<% arrItems.each do |i| %>
+													<li><%= i %></li>
+												<% end %>
+											</ul>
+										</div>
+									</div>
+									<br>	
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Recomendaciones:</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<% arrItems = @paquete_turistico.pqTur_recomendaciones.split(13.chr) %>
+											<ul>
+												<% arrItems.each do |i| %>
+													<li><%= i %></li>
+												<% end %>
+											</ul>
+										</div>
+									</div>
+									<br>	
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Fecha inicial de vigencia:</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<p><%= @paquete_turistico.pqTur_fechaVigenciaIni %></p>
+										</div>
+									</div>
+									<br>	
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Fecha final de vigencia:</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<p><%= @paquete_turistico.pqTur_fechaVigenciaFin %></p>
+										</div>
+									</div>
+									<br>	
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Fecha inicial de promoción:</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<p><%= @paquete_turistico.pqTur_fechaPromocionIni %></p>
+										</div>
+									</div>
+									<br>	
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Fecha final de promoción:</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<p><%= @paquete_turistico.pqTur_fechaPromocionFin %></p>
+										</div>
+									</div>
+									<br>	
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="col-lg-6 col-md-6">
+											<p><strong>Estado registro:</strong></p>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<p><%= @estados[@paquete_turistico.pqTur_estadoRegistro] %></p>
+										</div>
+									</div>
+									<p>&nbsp;</p>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="detallePlan">
+								<div class="tm-search-box">
+									<p>&nbsp;</p>
+									<div class="col-lg-12 col-md-12">
+										<table id="tblActividades" class="stripe hover jqTable">
+										  	<thead>
+										    	<tr>
+											      <th>Descripción</th>
+											      <th>Tipo Actividad</th>
+											      <th>Clasificación</th>
+					    						</tr>
+					  						</thead>
+										  	<tbody>
+										  		<% unless @actividad_turisticas.nil? %>
+													<% @actividad_turisticas.each do |h| %>
+												    	<tr>
+												        	<td><%= h.descripcion %></td>
+												        	<td><%= h.tipo_actividad %></td>
+												        	<td><%= @clasifActividad[h.clasificacion] %></td>
+						      							</tr>
+						    						<% end %>
+						    					<% end %>
+					  						</tbody>
+										</table>
+									</div>
+									<p>&nbsp;</p>								
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="itinerario">
+								<div class="tm-search-box">
+									<div class="col-lg-12">
 										<br>
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Descripcion:</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<p><%= @paquete_turistico.pqTur_descripcion %></p>
-											</div>
-										</div>
-										<br>
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Incluye</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<% arrItems = @paquete_turistico.pqTur_incluye.split(13.chr) %>
-												<ul>
-													<% arrItems.each do |i| %>
-														<li><%= i %></li>
-													<% end %>
-												</ul>
-											</div>
-										</div>
-										<br>	
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>No Incluye</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<% arrItems = @paquete_turistico.pqTur_noIncluye.split(13.chr) %>
-												<ul>
-													<% arrItems.each do |i| %>
-														<li><%= i %></li>
-													<% end %>
-												</ul>
-											</div>
-										</div>
-										<br>	
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Actividades opcionales:</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<% arrItems = @paquete_turistico.pqTur_opcionales.split(13.chr) %>
-												<ul>
-													<% arrItems.each do |i| %>
-														<li><%= i %></li>
-													<% end %>
-												</ul>
-											</div>
-										</div>
-										<br>	
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Recomendaciones:</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<% arrItems = @paquete_turistico.pqTur_recomendaciones.split(13.chr) %>
-												<ul>
-													<% arrItems.each do |i| %>
-														<li><%= i %></li>
-													<% end %>
-												</ul>
-											</div>
-										</div>
-										<br>	
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Fecha inicial de vigencia:</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<p><%= @paquete_turistico.pqTur_fechaVigenciaIni %></p>
-											</div>
-										</div>
-										<br>	
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Fecha final de vigencia:</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<p><%= @paquete_turistico.pqTur_fechaVigenciaFin %></p>
-											</div>
-										</div>
-										<br>	
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Fecha inicial de promoción:</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<p><%= @paquete_turistico.pqTur_fechaPromocionIni %></p>
-											</div>
-										</div>
-										<br>	
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Fecha final de promoción:</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<p><%= @paquete_turistico.pqTur_fechaPromocionFin %></p>
-											</div>
-										</div>
-										<br>	
-										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="col-lg-6 col-md-6">
-												<p><strong>Estado registro:</strong></p>
-											</div>
-											<div class="col-lg-6 col-md-6">
-												<p><%= @estados[@paquete_turistico.pqTur_estadoRegistro] %></p>
-											</div>
-										</div>
-										<p>&nbsp;</p>
+										<% i = 1 %>
+										<% unless @itinerario.nil? %>
+											<% @itinerario.each do |t| %>
+												<div class="col-lg-12 plan-section-wrapper">
+													<div class="col-lg-4 itinr-title">
+														<h3><%= "Día " + i.to_s + (t.itnr_titulo == nil ? "" : " - " + t.itnr_titulo) %></h3>
+													</div>
+													<div class="col-lg-8 itinr-desc">
+														<p class="itinr-desc"><%= t.itnr_actividad %></p>
+													</div>
+												</div>
+												<% i += 1 %>
+											<% end %>
+										<% end %>
 									</div>
+									<p>&nbsp;</p>									
 								</div>
-								<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="actividades">
-									<div class="tm-search-box">
+							</div>
+							<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="fechas">
+								<div class="tm-search-box">
+									<p>&nbsp;</p>
+									<div class="col-lg-12">
+										<div class="col-lg-2 col-md-2"></div>
+										<div class="col-lg-8 col-md-8"|>
+										<table id="tblSalidas" class="jqTable stripe hover" align="center" width="80%">
+												<thead>
+												    <tr>
+												      <th>Fechas de salida</th>
+												      <th>Nro. Viajeros</th>
+												      <th></th>
+												    </tr>
+												</thead>
+												<tbody>
+													<% @salidas.each do |h| %>
+											      		<tr>
+											        		<td><%= h.sld_fecha %></td>
+											        		<td><%= h.nro_viajeros %></td>
+											        		<td><%= link_to(h, {class:"btn btn-info", target: "_blank"}) do %>
+								        							<i class="fa fa-book"></i>
+								        						<% end %>
+								        					</td>
+				      									</tr>
+					    							<% end %>
+					  							</tbody>
+											</table>
+											</div>
+											<div class="col-lg-2 col-md-2"></div>
+										</div>
 									</div>
-								</div>
-								<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="itinerario">
-									<div class="tm-search-box">
-									</div>
-								</div>
-								<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="fechas">
-									<div class="tm-search-box">
-									</div>
+									<p>&nbsp;</p>
 								</div>
 							</div>
 						</div>
@@ -183,3 +253,37 @@
 		</div>
 	</div>
 </section>
+<script>
+	$(function(){
+		$('#tblActividades').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "50%" },
+							{ sWidth : "30%" },
+							{ sWidth : "20%" }
+						]
+    		});
+    		
+		$('#tblSalidas').DataTable({
+    		"pagingType": "full_numbers",
+			"aoColumns" : [
+							{ sWidth : "50%" },
+							{ sWidth : "40%" },
+							{ sWidth : "10%" }
+						]
+    		});
+	});
+	
+	
+	$(document).on('page:update', function() {
+		
+		if ( $.fn.dataTable.isDataTable( '.jqTable' ) ) {
+			    table = $('.jqTable').DataTable();
+			}
+			else {
+			    table = $('.jqTable').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
+	});
+</script>

@@ -79,6 +79,7 @@
 			</div>
 		</nav>
 	</div>
+	<%#= puts params[:controller].upcase + "-" + params[:action].upcase %> 
 	<% sliderShowKey = params[:controller].upcase + "-" + params[:action].upcase %>
 	<% varShowSlider = "N" %>
 	<% if @slideShow.has_key? sliderShowKey then %>

@@ -14,43 +14,76 @@
 						<h1>Personas</h1>
 					</div>
 					
-					<table id="indexTable" class="stripe hover">
-				  	<thead>
-				    	<tr>
-				      		<th>Docum. Identidad</th>
-				      		<th>Nombre Completo</th>
-				      		<th>Teléfono 1</th>
-				      		<th>Correo Electrónico</th>
-				      		<th>Estado</th>
-				      		<th colspan="3"></th>
-				    	</tr>
-				  	</thead>
-
-  					<tbody>
-						<% @personas.each do |persona| %>
-					      <tr>
-					        <td><%= persona.pers_documentoIdentidad[-2, 2] + " " +  persona.pers_documentoIdentidad[0, persona.pers_documentoIdentidad.length - 2]  %></td>
-					        <td><%= persona.pers_nombres.to_s + " " + persona.pers_apellidos.to_s %></td>
-					        <td><%= persona.pers_telefonoPersonal1 %></td>
-					        <td><%= persona.pers_correoElectrPersonal %></td>
-					        <td><%= @estados[persona.pers_estadoRegistro] %></td>
-					        <td><%= link_to(persona, class:"btn btn-info") do %>
-					        				<i class="fa fa-book"></i>
-					        			<% end %>
-					        		</td>
-					        		<td><a href="<%= edit_persona_path(persona) %>" class="btn btn-warning">
-					        				<i class="fa fa-edit"></i>
-					        			</a>
-					        		</td>
-					        		<td>
-					        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/personas/#{persona.id}"%> >
-					        				<i class="fa fa-trash"></i>
-					        			</a>
-					        		</td>
-					      		</tr>
-					    	<% end %>
-					  	</tbody>
-					</table>
+				<div class="col-lg-12">
+						<%= form_tag(personas_path, method: :get, id: :frmBuscar) do %>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<%= select_tag(:tipoIdentificacion, options_for_select(@tiposIdentPersona.invert), options={class:"form-control", prompt: "-- TIPO DOC. IDENT --"})%>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<%= text_field_tag :nroDocumIdentificacion, nil, options={class:"form-control", placeholder: "NRO. DOCUM. IDENTIDAD"} %>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<%= text_field_tag :pers_apellidos, nil, options={class:"form-control", placeholder: "APELLIDOS"} %>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<%= text_field_tag :pers_nombres, nil, options={class:"form-control", placeholder: "NOMBRES"} %>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-12 margin-bottom-30">
+							<center>
+								<%= link_to 'Buscar', nil, class:"button find", id: :cmd_buscar %>
+							</center>
+						</div>
+					<% end %>
+					<% unless @personas.nil? %>
+						<div class="col-lg-12">
+							<table id="indexTable" class="stripe hover">
+						  	<thead>
+						    	<tr>
+						      		<th>Docum. Identidad</th>
+						      		<th>Nombre Completo</th>
+						      		<th>Teléfono 1</th>
+						      		<th>Correo Electrónico</th>
+						      		<th>Estado</th>
+						      		<th colspan="3"></th>
+						    	</tr>
+						  	</thead>
+		
+		  					<tbody>
+								<% @personas.each do |persona| %>
+							      <tr>
+							        <td><%= formato_documento_identidad(persona.pers_documentoIdentidad)  %></td>
+							        <td><%= persona.pers_nombres.to_s + " " + persona.pers_apellidos.to_s %></td>
+							        <td><%= persona.pers_telefonoPersonal1 %></td>
+							        <td><%= persona.pers_correoElectrPersonal %></td>
+							        <td><%= @estados[persona.pers_estadoRegistro] %></td>
+							        <td><%= link_to(persona, class:"btn btn-info") do %>
+							        				<i class="fa fa-book"></i>
+							        			<% end %>
+							        		</td>
+							        		<td><a href="<%= edit_persona_path(persona) %>" class="btn btn-warning">
+							        				<i class="fa fa-edit"></i>
+							        			</a>
+							        		</td>
+							        		<td>
+							        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/personas/#{persona.id}"%> >
+							        				<i class="fa fa-trash"></i>
+							        			</a>
+							        		</td>
+							      		</tr>
+							    	<% end %>
+							  	</tbody>
+							</table>
+						</div>
+					<% end %>
 					<div class="section-footer">
 						<%= link_to 'Regresar', administracion_path , class:"button back" %>
 						<%= link_to 'Nuevo registro', new_persona_path, class:"button add" %>
@@ -65,6 +98,11 @@
 <script>
 
 	$(document).on('page:update', function() {
+		$('#cmd_buscar').click(function(e){
+        	e.preventDefault();
+        	$("#frmBuscar").submit();
+        });
+		
 			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
 			    table = $('#indexTable').DataTable();
 			}

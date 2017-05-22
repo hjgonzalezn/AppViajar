@@ -4,55 +4,22 @@
 			<!-- slider -->
 			<div class="flexslider flexslider-about effect2">
 			  <ul class="slides">
-			    <li>
-			      <%= image_tag("page/about-1.jpg") %>
-			      <div class="flex-caption">
-			      	<h2 class="slider-title">Bienvenidos a Naisa Tours SAS</h2>
-			      	<h3 class="slider-subtitle">La agencia de viajes y turismo del Pacífico colombiano</h3>
-			      	<p class="slider-description">Somos una empresa de turismo con experiencia y amplios conocimientos en destinos del Pacífico colombiano, con gran empeño en ofrecer servicios que superen 
-			      								  las expectativas de nuestros clientes mientras disfrutan la exuberante belleza natural de los lugares que proponemos visitar.<br><br>
-			      								  En nuestros años de operación también hemos llevados grupos de clientes a recorrer toda la geografía nacional desde el eje cafetero a los llanos orientales, 
-			      								  pasando por la región andina y terminando en la costa atlántica. Además, hemos visitado destinos internacionales como Isla Margarita en Venezuela,
-			      								  Ecuador, Panamá y Cancún en México.
-			      								  
-			      								  ¡Bienvenidos!
-			      	</p>
-			      								  
-			      	<div class="slider-social">
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-twitter"></i></a>
-			      		<a href="https://www.facebook.com/naisa.tours" target="_blank"><i class="fa fa-facebook"></i></a>
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-pinterest"></i></a>
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-google-plus"></i></a>
-			      	</div>
-			      </div>			      
-			    </li>
-			    <li>
-			      <%= image_tag("page/about-1.jpg") %>
-			      <div class="flex-caption">
-			      	<h2 class="slider-title">Nuestra Misión</h2>
-			      	<p class="slider-description">Ofrecer productos y servicios turísticos con calidad, responsabilidad y cumplimiento gracias al profesionalismo de un talento humano que trabaja en equipo, con metas de mejoramiento continuo, que se apoya en soluciones tecnológicas para estar a la vanguardia de las necesidades de nuestros clientes.
-			      								  </p>
-			      	<div class="slider-social">
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-twitter"></i></a>
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-facebook"></i></a>
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-pinterest"></i></a>
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-google-plus"></i></a>
-			      	</div>
-			      </div>			      
-			    </li>
-			    <li>
-			      <%= image_tag("page/about-1.jpg") %>
-			      <div class="flex-caption">
-			      	<h2 class="slider-title">Nuestra Visión</h2>
-			      	<p class="slider-description">En el año 2020 seremos una agencia de viajes y turismo de referencia en Colombia y especialmente en la región pacífica por la satisfacción de sus clientes y por ser un ente integrador y dinamizador de la cadena de productos y servicios alrededor de la industria turística de la zona.</p>
-			      	<div class="slider-social">
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-twitter"></i></a>
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-facebook"></i></a>
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-pinterest"></i></a>
-			      		<a href="#" class="tm-social-icon"><i class="fa fa-google-plus"></i></a>
-			      	</div>
-			      </div>			      
-			    </li>
+			  	<% @somos.each do |h| %>
+			    	<li>
+			      		<%= image_tag("page/about-1.jpg") %>
+			      		<div class="flex-caption">
+			      			<h2 class="slider-title"><%= h.about_titulo %></h2>
+			      			<!--h3 class="slider-subtitle"></h3-->
+			      			<p class="slider-description"><%= h.about_contenido %></p>
+					      	<div class="slider-social">
+					      		<a href="#" class="tm-social-icon"><i class="fa fa-twitter"></i></a>
+					      		<a href="https://www.facebook.com/naisa.tours" target="_blank"><i class="fa fa-facebook"></i></a>
+					      		<a href="#" class="tm-social-icon"><i class="fa fa-pinterest"></i></a>
+					      		<a href="#" class="tm-social-icon"><i class="fa fa-google-plus"></i></a>
+					      	</div>
+			      		</div>			      
+			    	</li>
+			    <% end %>
 			    <li>
 			      <%= image_tag("page/about-1.jpg") %>
 			      <div class="flex-caption">

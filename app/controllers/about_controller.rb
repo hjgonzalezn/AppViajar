@@ -8,6 +8,10 @@ class AboutController < ApplicationController
     @ciudadesAeropuertos = set_ciudades_aeropuertos
   end
   
+  def somos
+    @somos = About.where("about_estadoRegistro = 'A'")
+  end
+  
   def mensaje_contacto
       msj = "Apreciado(a) cliente, agradecemos nos haya contactado. En breve daremos respuesta a su solicitud."
       

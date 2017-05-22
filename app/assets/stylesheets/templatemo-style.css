@@ -377,7 +377,7 @@ body { overflow-x: hidden; }
 
 
 .form-control {	border-radius: 0; }
-.form-control-inline{ display:inline-block;}
+.form-control-inline, .inline{ display:inline-block;}
 .form-control:focus, .form-control-inline:focus {
 	border-color: #FFFF00;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(252, 221, 68, 0.6);
@@ -482,7 +482,15 @@ input[type="checkbox"].form-control{
 .tm-form-inner { padding: 25px 30px 5px; width:100%; }
 
 .frm-reservas{
-	overflow: auto;
+	overflow:hidden;
+}
+
+.margin-bottom-100{
+	margin-bottom:100px;
+}
+
+.margin-bottom-130{
+	margin-bottom:130px;
 }
 
 .frm-reservas h4{

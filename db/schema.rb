@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201220143) do
+ActiveRecord::Schema.define(version: 20170516232144) do
+
+  create_table "abouts", force: :cascade do |t|
+    t.string   "about_codigo",         limit: 255
+    t.string   "about_titulo",         limit: 255
+    t.text     "about_contenido",      limit: 65535
+    t.string   "about_estadoRegistro", limit: 255
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
 
   create_table "accions", force: :cascade do |t|
     t.string   "acc_codigo",         limit: 255
@@ -21,14 +30,40 @@ ActiveRecord::Schema.define(version: 20170201220143) do
     t.datetime "updated_at",                     null: false
   end
 
-  create_table "actividad_turismos", force: :cascade do |t|
-    t.string   "actur_nombre",      limit: 255
-    t.string   "actur_descripcion", limit: 255
-    t.string   "actur_foto",        limit: 255
-    t.string   "actur_icono",       limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+  create_table "actividad_turistica_plans", force: :cascade do |t|
+    t.integer  "paquete_turistico_id",   limit: 4
+    t.integer  "actividad_turistica_id", limit: 4
+    t.string   "atp_clasificacion",      limit: 255
+    t.string   "atp_estadoRegistro",     limit: 255
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
+
+  add_index "actividad_turistica_plans", ["actividad_turistica_id"], name: "index_actividad_turistica_plans_on_actividad_turistica_id", using: :btree
+  add_index "actividad_turistica_plans", ["paquete_turistico_id"], name: "index_actividad_turistica_plans_on_paquete_turistico_id", using: :btree
+
+  create_table "actividad_turistica_reservas", force: :cascade do |t|
+    t.integer  "actividad_turistica_id", limit: 4
+    t.integer  "reserva_id",             limit: 4
+    t.string   "atr_estadoRegistro",     limit: 255
+    t.string   "created_by",             limit: 255
+    t.string   "updated_by",             limit: 255
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "actividad_turistica_reservas", ["actividad_turistica_id"], name: "index_actividad_turistica_reservas_on_actividad_turistica_id", using: :btree
+  add_index "actividad_turistica_reservas", ["reserva_id"], name: "index_actividad_turistica_reservas_on_reserva_id", using: :btree
+
+  create_table "actividad_turisticas", force: :cascade do |t|
+    t.string   "actur_descripcion",           limit: 255
+    t.integer  "tipo_actividad_turistica_id", limit: 4
+    t.string   "actur_estadoRegistro",        limit: 255
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "actividad_turisticas", ["tipo_actividad_turistica_id"], name: "index_actividad_turisticas_on_tipo_actividad_turistica_id", using: :btree
 
   create_table "aeropuertos", force: :cascade do |t|
     t.string   "aeropt_nombre",         limit: 255
@@ -270,6 +305,9 @@ ActiveRecord::Schema.define(version: 20170201220143) do
     t.string   "pqTur_tipoDestino",       limit: 255
     t.integer  "pqTur_destino",           limit: 4
     t.string   "pqTur_portada",           limit: 255
+    t.string   "pqTur_programacion",      limit: 255
+    t.integer  "pqTur_reservaMin",        limit: 4
+    t.integer  "pqTur_reservaMax",        limit: 4
   end
 
   create_table "personas", force: :cascade do |t|
@@ -327,6 +365,7 @@ ActiveRecord::Schema.define(version: 20170201220143) do
     t.string   "rsrv_trayectoViaje",    limit: 255
     t.date     "rsrv_fechaIda"
     t.date     "rsrv_fechaRegreso"
+    t.float    "rsrv_valorTotal",       limit: 24
   end
 
   create_table "ruta", force: :cascade do |t|
@@ -339,6 +378,18 @@ ActiveRecord::Schema.define(version: 20170201220143) do
     t.datetime "updated_at",                      null: false
     t.integer  "ruta_prioridad",      limit: 4
   end
+
+  create_table "salidas", force: :cascade do |t|
+    t.integer  "paquete_turistico_id", limit: 4
+    t.date     "sld_fecha"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "sld_estadoRegistro",   limit: 255
+    t.string   "created_by",           limit: 255
+    t.string   "updated_by",           limit: 255
+  end
+
+  add_index "salidas", ["paquete_turistico_id"], name: "index_salidas_on_paquete_turistico_id", using: :btree
 
   create_table "sucursal_empresas", force: :cascade do |t|
     t.string   "empr_documentoIdentidad",   limit: 255
@@ -386,6 +437,7 @@ ActiveRecord::Schema.define(version: 20170201220143) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.string   "tiAcT_estadoRegistro", limit: 255
+    t.string   "tiAcT_visibilidad",    limit: 255
   end
 
   create_table "unidad_territorials", force: :cascade do |t|
@@ -430,6 +482,11 @@ ActiveRecord::Schema.define(version: 20170201220143) do
 
   add_index "viajes", ["vehiculo_id"], name: "index_viajes_on_vehiculo_id", using: :btree
 
+  add_foreign_key "actividad_turistica_plans", "actividad_turisticas"
+  add_foreign_key "actividad_turistica_plans", "paquete_turisticos"
+  add_foreign_key "actividad_turistica_reservas", "actividad_turisticas"
+  add_foreign_key "actividad_turistica_reservas", "reservas"
+  add_foreign_key "actividad_turisticas", "tipo_actividad_turisticas"
   add_foreign_key "controls", "accions"
   add_foreign_key "controls", "modelos"
   add_foreign_key "detalle_reservas", "reservas"
@@ -440,5 +497,6 @@ ActiveRecord::Schema.define(version: 20170201220143) do
   add_foreign_key "paq_turistico_ent_territorials", "entidad_territorials"
   add_foreign_key "paq_turistico_ent_territorials", "paquete_turisticos"
   add_foreign_key "personas", "entidad_territorials", column: "pers_paisOrigen"
+  add_foreign_key "salidas", "paquete_turisticos"
   add_foreign_key "viajes", "vehiculos"
 end

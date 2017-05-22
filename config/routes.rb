@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  
+  resources :actividad_turisticas
   get 'entidad_territorials/actualizar_lista_dependiente' => 'entidad_territorials#actualizar_lista_dependiente', as: :actualizar_lista_dependiente
   get 'empresas/buscar_datos_empresa' => 'empresas#buscar_datos_empresa', as: :buscar_datos_empresa
   get 'personas/buscar_datos_persona' => 'personas#buscar_datos_persona', as: :buscar_datos_persona
@@ -10,6 +12,9 @@ Rails.application.routes.draw do
   post 'detalle_reservas/solicitar_reserva' => 'detalle_reservas#solicitar_reserva'
   get 'paquete_turisticos/:id/detalle_plan/' => 'paquete_turisticos#detalle_plan', as: :detalle_plan_turistico
   post 'paquete_turisticos/:id/detalle_plan/' => 'paquete_turisticos#detalle_plan'
+  get 'paquete_turisticos/:id/actividades_plan/' => 'paquete_turisticos#actividades_plan', as: :actividades_plan_turistico
+  post 'paquete_turisticos/:id/actividades_plan/' => 'paquete_turisticos#actividades_plan'
+  post 'paquete_turisticos/:id/registrar_actividades/' => 'paquete_turisticos#registrar_actividades', as: :registrar_actividades_plan
   post 'detalle_reservas/registrar_reserva' => 'detalle_reservas#registrar_reserva'
   get 'detalle_reservas/confirmar_reserva' => 'detalle_reservas#confirmar_reserva'
   post 'detalle_reservas/confirmar_reserva' => 'detalle_reservas#confirmar_reserva'
@@ -38,6 +43,10 @@ Rails.application.routes.draw do
   
   resources :paquete_turisticos do
     resources :tarifas
+  end
+
+  resources :paquete_turisticos do
+    resources :salidas
   end
   
   resources :ruta do
@@ -69,6 +78,7 @@ Rails.application.routes.draw do
   resources :reservas do
     resources :pagos
   end
+  resources :salidas
       
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

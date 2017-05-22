@@ -9,53 +9,54 @@
       </ul>
     </div>
   <% end %>
-	<div class="col-lg-11 col-md-11" id="form-wrapper">
+	<div class="col-lg-12 col-md-12" id="form-wrapper">
   		<div id="tm-form-header">
 			<h1><%= @titulo %></h1>
 		</div>
 		<div id="tm-form-content">
-			<div class="tm-home-box-h">
-				<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
-				    <li role="presentation" class="active">
-						<a href="#datos" aria-controls="datos" role="tab" data-toggle="tab">Datos Básicos</a>
-				    </li>
-				    <li role="presentation">
-				    	<a href="#itinerario" aria-controls="hotel" role="tab" data-toggle="tab">Itinerario</a>
-				    </li>
-				    <li role="presentation">
-				    	<a href="#actividades" aria-controls="hotel" role="tab" data-toggle="tab">Actividades</a>
-				    </li>
-				    <li role="presentation">
-				    	<a href="#fechas" aria-controls="hotel" role="tab" data-toggle="tab">Agenda</a>
-				    </li>
-				</ul>
-				<div class="tab-content tm-white-bg">
-					<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="datos">
-						<div class="tm-search-box">
+			<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
+			    <li role="presentation" class="active">
+					<a href="#datos" aria-controls="datos" role="tab" data-toggle="tab">Datos Básicos</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#actividades" aria-controls="hotel" role="tab" data-toggle="tab">Detalle Plan</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#itinerario" aria-controls="hotel" role="tab" data-toggle="tab">Itinerario</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#fechas" aria-controls="hotel" role="tab" data-toggle="tab">Salidas</a>
+			    </li>
+			</ul>
+			<div class="tab-content tm-white-bg margin-bottom-15">
+				<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="datos">
+					<div class="tm-search-box">
+						<p>&nbsp;</p>
+						<div class="col-lg-12 tm-white-bg">
+							<div class="col-lg-6 col-md-6">
+								<%= label_tag :lugar, "Destino del plan turístico*" %><br>
+								<%= radio_button_tag :paquete_turistico_pqTur_tipoDestino, "ENTIDAD TERRITORIAL", checked = true %>
+								<%= label_tag :paquete_turistico_pqTur_tipoDestino_ENTIDAD_TERRITORIAL, "Municipio o ciudad" %>
+								<div id="div_paquete_turistico_pqTur_tipoDestino_ENTIDAD_TERRITORIAL">
+									<!--++++++++++++++++++++++++++++++++++++++++++++-->
+									<%= render 'entidad_territorials/jerarquia_form'%>
+									<!--++++++++++++++++++++++++++++++++++++++++++++-->
+									<%= f.hidden_field :pqTur_destino %>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6">
+								<%= label_tag :lugar, " " %><br>
+								<%= radio_button_tag :paquete_turistico_pqTur_tipoDestino, "REGION" %>
+								<%= label_tag :paquete_turistico_pqTur_tipoDestino_REGION, "Región" %><br>
+								<div id="div_paquete_turistico_pqTur_tipoDestino_REGION">
+									<%= label_tag :entidad_territorial_region, "Entidad Territorial" %><br>
+									<%= select_tag :entidad_territorial_region, options_for_select(@padreRegion.map{|reg| [reg.enter_nombreCorto, reg.id]}), {class:"form-control", prompt:"--SELECCIONE--"}  %> <br>
+									<%= label_tag :region_id, "Región" %>
+									<%= select_tag :region_id, options_for_select([["SELECCIONE", ""]]), {class:"form-control"} %>
+								</div>
+							</div>
 							<p>&nbsp;</p>
-							<div class="col-lg-12 tm-white-bg">
-								<div class="col-lg-6 col-md-6">
-									<%= label_tag :lugar, "Destino del plan turístico*" %><br>
-									<%= radio_button_tag :paquete_turistico_pqTur_tipoDestino, "ENTIDAD TERRITORIAL", checked = true %>
-									<%= label_tag :paquete_turistico_pqTur_tipoDestino_ENTIDAD_TERRITORIAL, "Municipio o ciudad" %>
-									<div id="div_paquete_turistico_pqTur_tipoDestino_ENTIDAD_TERRITORIAL">
-										<!--++++++++++++++++++++++++++++++++++++++++++++-->
-										<%= render 'entidad_territorials/jerarquia_form'%>
-										<!--++++++++++++++++++++++++++++++++++++++++++++-->
-									</div>
-								</div>
-								<div class="col-lg-6 col-md-6">
-									<%= label_tag :lugar, " " %><br>
-									<%= radio_button_tag :paquete_turistico_pqTur_tipoDestino, "REGION" %>
-									<%= label_tag :paquete_turistico_pqTur_tipoDestino_REGION, "Región" %><br>
-									<div id="div_paquete_turistico_pqTur_tipoDestino_REGION">
-										<%= label_tag :entidad_territorial_region, "Entidad Territorial" %><br>
-										<%= select_tag :entidad_territorial_region, options_for_select(@padreRegion.map{|reg| [reg.enter_nombreCorto, reg.id]}), {class:"form-control", prompt:"--SELECCIONE--"}  %> <br>
-										<%= label_tag :region_id, "Región" %>
-										<%= select_tag :region_id, options_for_select([["SELECCIONE", ""]]), {class:"form-control"} %>
-									</div>
-								</div>
-								<p>&nbsp;</p>
+							<% if params[:action] == "edit" then %>
 								<div class="col-lg-12 col-md-12">
 									<table id="tarifas">
 										<thead>
@@ -68,103 +69,107 @@
 											</tr>
 										</thead>
 										<tbody>
-											<% @tarifas.each do |tarifa| %>
-												<tr>
-													<td><%= tarifa.trf_concepto + " (" + tarifa.trf_detalleAplicacion + ")" %></td>
-													<td><%= number_to_currency(tarifa.trf_promo) %></td>
-													<td><%= number_to_currency(tarifa.trf_econo) %></td>
-													<td><%= number_to_currency(tarifa.trf_base) %></td>
-													<td><%= number_to_currency(tarifa.trf_flexi) %></td>
-												</tr>
+											<% unless @tarifas.nil? %>
+												<% @tarifas.each do |tarifa| %>
+													<tr>
+														<td><%= tarifa.trf_concepto + " (" + tarifa.trf_detalleAplicacion + ")" %></td>
+														<td><%= number_to_currency(tarifa.trf_promo) %></td>
+														<td><%= number_to_currency(tarifa.trf_econo) %></td>
+														<td><%= number_to_currency(tarifa.trf_base) %></td>
+														<td><%= number_to_currency(tarifa.trf_flexi) %></td>
+													</tr>
+												<% end %>
 											<% end %>
 										</tbody>
 									</table>
 									<%= link_to 'Nueva tarifa', new_paquete_turistico_tarifa_path(@paquete_turistico), class:"button add" %>
 								</div>
-								<p>&nbsp;</p>
-								<div class="col-lg-6 col-md-6 tm-white-bg">
-								  	<div class="form-group">
-								    	<%= f.label :pqTur_portada, "Foto de portada*" %><br>
-								    	<%= f.file_field :pqTur_portada, options={class:"form-control"} %>
-								  	</div>								
-								  	<div class="form-group">
-								    	<%= f.label :pqTur_nombre, "Nombre del Plan*" %><br>
-								    	<%= f.text_field :pqTur_nombre, options={class:"form-control", required: :required} %>
-								  	</div>
-								  	<div class="form-group">
-								    	<%= f.label :pqTur_duracion, "Duración (días)*" %><br>
-								    	<%= f.select :pqTur_duracion, options_for_select( (1..10).step(1).map{|n| n%1 == 0 ? n.to_i : n}, @paquete_turistico.pqTur_duracion ), {prompt:"--SELECCIONE--"},options={class:"form-control", required: :required} %>
-								  	</div>
-						  			<div class="form-group">
-						    			<%= f.label :pqTur_descripcion, "Descripción*" %><br>
-						    			<%= f.text_area :pqTur_descripcion, options={class:"form-control", required: :required, cols:20, rows:8} %>
-						  			</div>
-									<div class="form-group">
-									    <%= f.label :pqTur_incluye, "Paquete incluye*" %><br>
-									    <%= f.text_area :pqTur_incluye, options={class:"form-control", required: :required, cols:20, rows:9} %>
-									</div>
-									<div class="form-group">
-									    <%= f.label :pqTur_noIncluye, "Paquete No Incluye*" %><br>
-									    <%= f.text_area :pqTur_noIncluye, options={class:"form-control", required: :required, cols:20, rows:8} %>
-									</div>
+							<% end %>
+							<p>&nbsp;</p>
+							<div class="col-lg-6 col-md-6 tm-white-bg">
+							  	<div class="form-group">
+							    	<%= f.label :pqTur_portada, "Foto de portada*" %><br>
+							    	<%= f.file_field :pqTur_portada, options={class:"form-control"} %>
+							  	</div>								
+							  	<div class="form-group">
+							    	<%= f.label :pqTur_nombre, "Nombre del Plan*" %><br>
+							    	<%= f.text_field :pqTur_nombre, options={class:"form-control", required: :required} %>
+							  	</div>
+							  	<div class="form-group">
+							    	<%= f.label :pqTur_duracion, "Duración (días)*" %><br>
+							    	<%= f.select :pqTur_duracion, options_for_select( (1..10).step(1).map{|n| n%1 == 0 ? n.to_i : n}, @paquete_turistico.pqTur_duracion ), {prompt:"--SELECCIONE--"},options={class:"form-control", required: :required} %>
+							  	</div>
+					  			<div class="form-group">
+					    			<%= f.label :pqTur_descripcion, "Descripción*" %><br>
+					    			<%= f.text_area :pqTur_descripcion, options={class:"form-control", required: :required, cols:20, rows:8} %>
+					  			</div>
+								<div class="form-group">
+								    <%= f.label :pqTur_incluye, "Paquete incluye*" %><br>
+								    <%= f.text_area :pqTur_incluye, options={class:"form-control", required: :required, cols:20, rows:9} %>
 								</div>
-								<div class="col-lg-6 col-md-6 tm-white-bg">
-									<div class="form-group">
-									    <%= f.label :pqTur_opcionales, "Actividades Opcionales" %><br>
-									    <%= f.text_area :pqTur_opcionales, options={class:"form-control", required: :required, rows:8} %>
-									</div>
-									<div class="form-group">
-									    <%= f.label :pqTur_recomendaciones, "Recomendaciones*" %><br>
-									    <%= f.text_area :pqTur_recomendaciones, options={class:"form-control", required: :required, rows:8} %>
-									</div>
-									<div class="form-group">
-									    <%= f.label :pqTur_fechaVigenciaIni, "Fecha inicial de vigencia*" %><br>
-						                <div class='input-group date' id='datetimepicker1'>
-					                		<%= f.text_field :pqTur_fechaVigenciaIni, options = {class:"form-control"} %>
-					                    	<span class="input-group-addon">
-					                        	<span class="fa fa-calendar"></span>
-					                    	</span>
-					                	</div> 
-									</div>
-									<div class="form-group">
-									    <%= f.label :pqTur_fechaVigenciaFin, "Fecha final de vigencia*" %><br>
-						                <div class='input-group date' id='datetimepicker1'>
-					                		<%= f.text_field :pqTur_fechaVigenciaFin, options = {class:"form-control"} %>
-					                    	<span class="input-group-addon">
-					                        	<span class="fa fa-calendar"></span>
-					                    	</span>
-					                	</div>
-									</div>
-									<div class="form-group">
-									    <%= f.label :pqTur_fechaPromocionIni, "Fecha inicial de promoción" %><br>
-						                <div class='input-group date' id='datetimepicker1'>
-					                		<%= f.text_field :pqTur_fechaPromocionIni, options = {class:"form-control"} %>
-					                    	<span class="input-group-addon">
-					                        	<span class="fa fa-calendar"></span>
-					                    	</span>
-					                	</div>
-									</div>
-									<div class="form-group">
-									    <%= f.label :pqTur_fechaPromocionFin, "Fecha final de promoción" %><br>
-						                <div class='input-group date' id='datetimepicker1'>
-					                		<%= f.text_field :pqTur_fechaPromocionFin, options = {class:"form-control"} %>
-					                    	<span class="input-group-addon">
-					                        	<span class="fa fa-calendar"></span>
-					                    	</span>
-					                	</div>
-									</div>
-									<div class="form-group">
-									    <%= f.label :pqTur_estadoRegistro, "Estado" %><br>
-									    <%= f.select :pqTur_estadoRegistro, options_for_select(@estados.invert), {}, {class:"form-control"} %>
-									</div>
+								<div class="form-group">
+								    <%= f.label :pqTur_noIncluye, "Paquete No Incluye*" %><br>
+								    <%= f.text_area :pqTur_noIncluye, options={class:"form-control", required: :required, cols:20, rows:8} %>
 								</div>
-								<p>&nbsp;</p>
 							</div>
+							<div class="col-lg-6 col-md-6 tm-white-bg">
+								<div class="form-group">
+								    <%= f.label :pqTur_opcionales, "Actividades Opcionales" %><br>
+								    <%= f.text_area :pqTur_opcionales, options={class:"form-control", required: :required, rows:8} %>
+								</div>
+								<div class="form-group">
+								    <%= f.label :pqTur_recomendaciones, "Recomendaciones*" %><br>
+								    <%= f.text_area :pqTur_recomendaciones, options={class:"form-control", required: :required, rows:8} %>
+								</div>
+								<div class="form-group">
+								    <%= f.label :pqTur_fechaVigenciaIni, "Fecha inicial de vigencia*" %><br>
+					                <div class='input-group date' id='datetimepicker1'>
+				                		<%= f.text_field :pqTur_fechaVigenciaIni, options = {class:"form-control"} %>
+				                    	<span class="input-group-addon">
+				                        	<span class="fa fa-calendar"></span>
+				                    	</span>
+				                	</div> 
+								</div>
+								<div class="form-group">
+								    <%= f.label :pqTur_fechaVigenciaFin, "Fecha final de vigencia*" %><br>
+					                <div class='input-group date' id='datetimepicker1'>
+				                		<%= f.text_field :pqTur_fechaVigenciaFin, options = {class:"form-control"} %>
+				                    	<span class="input-group-addon">
+				                        	<span class="fa fa-calendar"></span>
+				                    	</span>
+				                	</div>
+								</div>
+								<div class="form-group">
+								    <%= f.label :pqTur_fechaPromocionIni, "Fecha inicial de promoción" %><br>
+					                <div class='input-group date' id='datetimepicker1'>
+				                		<%= f.text_field :pqTur_fechaPromocionIni, options = {class:"form-control"} %>
+				                    	<span class="input-group-addon">
+				                        	<span class="fa fa-calendar"></span>
+				                    	</span>
+				                	</div>
+								</div>
+								<div class="form-group">
+								    <%= f.label :pqTur_fechaPromocionFin, "Fecha final de promoción" %><br>
+					                <div class='input-group date' id='datetimepicker1'>
+				                		<%= f.text_field :pqTur_fechaPromocionFin, options = {class:"form-control"} %>
+				                    	<span class="input-group-addon">
+				                        	<span class="fa fa-calendar"></span>
+				                    	</span>
+				                	</div>
+								</div>
+								<div class="form-group">
+								    <%= f.label :pqTur_estadoRegistro, "Estado" %><br>
+								    <%= f.select :pqTur_estadoRegistro, options_for_select(@estados.invert), {}, {class:"form-control"} %>
+								</div>
+							</div>
+							<p>&nbsp;</p>
 						</div>
 					</div>
-					<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="itinerario">
-						<div class="tm-search-box">
-							<div class="col-lg-12 tm-white-bg">
+				</div>
+				<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="itinerario">
+					<div class="tm-search-box">
+						<div class="col-lg-12 tm-white-bg">
+							<% if params[:action] == "edit" %>
 								<%= f.fields_for :itinerarios do |h| %>
 									<% for i in 0..7 %>
 										<br>
@@ -173,44 +178,84 @@
 										<%= h.text_area("itinerario_dia" + i.to_s, options={cols:60, rows:5, class:"form-control", name:"itinerario[dia][]", value: valor} ) %>
 									<% end %>
 								<% end %>
-							</div>
+							<% end %>
 						</div>
 					</div>
-					<p>&nbsp;</p>
-					<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="actividades">
-						<div class="tm-search-box">
+				</div>
+				<p>&nbsp;</p>
+				<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="actividades">
+					<div class="tm-search-box">
+						<div class="col-lg-12 tm-white-bg">
 							<p>&nbsp;</p>
-							<table id="indexTable" class="stripe hover" align="center" width="80%">
-								<thead>
-								    <tr>
-								      <th>Selección</th>
-								      <th>Nombre Actividad</th>
-								    </tr>
-								</thead>
-								<tbody>
-									<% @tipos_actividad_turistica.each do |actividad_turistica| %>
-							      		<tr>
-							        		<td><%= check_box_tag(:id, actividad_turistica.id) %></td>
-							        		<td><%= actividad_turistica.tiAcT_nombre %></td>
-      									</tr>
-	    							<% end %>
-	  							</tbody>
-							</table>
-							<p>&nbsp;</p>
+							<% if params[:action] == "edit" %>
+								<table id="indexTable" class="tablaDatos stripe hover" align="center" width="80%">
+									<thead>
+									    <tr>
+									      <th>Descripción</th>
+									      <th>Tipo Actividad</th>
+									      <th>Clasificación</th>
+									    </tr>
+									</thead>
+									<tbody>
+										<% unless @actividad_turisticas.nil? then %>
+										<% @actividad_turisticas.each do |h| %>
+								      		<tr>
+									        	<td><%= h.descripcion %></td>
+									        	<td><%= h.tipo_actividad %></td>
+									        	<td><%= @clasifActividad[h.clasificacion] %></td>
+	      									</tr>
+		    							<% end %>
+		    							<% end %>
+		  							</tbody>
+								</table>
+								<br>
+								<%= link_to 'Nueva Actividad', actividades_plan_turistico_path(@paquete_turistico), class:"button add" %>
+							<% end %>
+						</div>
+						
 						</div>
 					</div>
 					<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="fechas">
 						<div class="tm-search-box">
+							<% if params[:action] == "edit" %>
+								<div class="col-lg-12 tm-white-bg">
+										<p>&nbsp;</p>
+										<div class="col-lg-2 col-md-2"></div>
+										<div class="col-lg-8 col-md-8">
+										<table id="indexTabSalidas" class="tablaDatos stripe hover" align="center" width="80%">
+											<thead>
+											    <tr>
+											      <th>Fechas de salida</th>
+											    </tr>
+											</thead>
+											<tbody>
+												<% @salidas.each do |h| %>
+										      		<tr>
+										        		<td><%= h.sld_fecha %></td>
+			      									</tr>
+				    							<% end %>
+				  							</tbody>
+										</table>
+									</div>	
+									
+									<p>&nbsp;</p>								
+									<%= link_to 'Nueva salida', new_paquete_turistico_salida_path(@paquete_turistico), class:"button add" %>
+							
+								</div>
+							<% end %>
 						</div>
 					</div>
+					<p>&nbsp;</p>
 				</div>
-			</div>
 		</div>
 		<div id="tm-form-footer">
 			<div class="actions">
 				<script>
 					$(document).on('page:update', function() {
 						$("#cmd_aceptar").click(function(e){
+							if ($("#entidadTerrId").val()!=""){
+								$("#paquete_turistico_pqTur_destino").val($("#entidadTerrId").val());
+							}
 							<% if params[:action] == "edit" then %>
 								$('#<%= params[:action] %>_paquete_turistico_<%= @paquete_turistico.id %>').submit();
 							<% elsif params[:action] == "new" or params[:action] == "create"%>
@@ -251,5 +296,14 @@
         	$("#paquete_turistico_pqTur_fechaPromocionIni").val("");
         	$("#paquete_turistico_pqTur_fechaPromocionFin").val("");
         }
+        
+		if ( $.fn.dataTable.isDataTable( '.tablaDatos' ) ) {
+			    table = $('.tablaDatos').DataTable();
+			}
+			else {
+			    table = $('.tablaDatos').DataTable( {
+			        pagingType: "full_numbers"
+			    } );
+			}
 	});
 </script>

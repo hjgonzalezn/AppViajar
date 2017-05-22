@@ -5,12 +5,19 @@ class PersonasController < ApplicationController
   
   before_action :set_persona, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
-  before_action :initialize_vars, only: [:new, :edit, :show]
+  before_action :initialize_vars, only: [:new, :edit, :show, :index]
   
   # GET /personas
   # GET /personas.json
   def index
-    @personas = Persona.all
+    @personas = nil
+    
+    if params.length > 2 then
+      pers_documentoIdentidad = params[:nroDocumIdentificacion].to_s + params[:tipoIdentificacion].to_s
+      pers_nombres = params[:pers_nombres].upcase
+      pers_apellidos = params[:pers_apellidos].upcase
+      @personas = buscar_personas(pers_documentoIdentidad, pers_nombres, pers_apellidos)
+    end
   end
 
   # GET /personas/1

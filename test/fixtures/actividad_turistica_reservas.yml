@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  actividad_turistica_id: 
+  reserva_id: 
+  atr_estadoRegistro: MyString
+  created_by: MyString
+  updated_by: MyString
+
+two:
+  actividad_turistica_id: 
+  reserva_id: 
+  atr_estadoRegistro: MyString
+  created_by: MyString
+  updated_by: MyString

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  about_codigo: MyString
+  about_titulo: MyString
+  about_contenido: MyText
+  about_estadoRegistro: MyString
+
+two:
+  about_codigo: MyString
+  about_titulo: MyString
+  about_contenido: MyText
+  about_estadoRegistro: MyString

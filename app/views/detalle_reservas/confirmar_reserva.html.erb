@@ -79,29 +79,50 @@
 								</tbody>
 							</table>
 							<br>
-							<p class="slider-subtitle">
-								Para viajes operados por Naisa Tours SAS Tenga en cuenta que:
-								<ul>
-									<li>Los datos personales de los pasajeros deben coincidir con su documento de identidad, la corrección de los mismos puede implicar el pago de cargos adicionales.</li>
-									<li>Tiene derecho a 10 kilos de equipaje en bodega y 3 kilos de equipaje de mano. Si se sobrepasan estos pesos, se aplicarán cargos por exceso de equipaje de acuerdo con la tarifa estipulada por la empresa. 
-										Además, el envío de dicha carga en el mismo viaje estará condicionado a la capacidad de la aeronave.</li>
-									<li>Debe presentarse en el aeropuerto para su chequeo con al menos una hora de anticipación a la salida del vuelo. De no llegar a tiempo, el pasajero perderá su cupo y pagará una multa equivalente al 25% del valor del tiquete.</li>
-									<li>Para brindarle un mejor servicio, por favor infórmenos con antelación a la fecha de su viaje si requiere transportar equipaje especial o sobredimensionado: mascotas, silla de ruedas, equipos médicos o de pesca, etc.</li>
-								</ul>
-								<br>
-								Las anteriores condiciones son las más importantes a tener en cuenta pero no las únicas, para conocer el detalle completo del contrato, haga clic <a href="#"><strong>Aquí</strong></a>.
-							</p>
-							<br>
+
+							<% unless @producto.include? "PLAN" then %>
+								<p class="slider-subtitle">
+									Para viajes operados por Naisa Tours SAS Tenga en cuenta que:
+									<ul>
+										<li>Los datos personales de los pasajeros deben coincidir con su documento de identidad, la corrección de los mismos puede implicar el pago de cargos adicionales.</li>
+										<li>Tiene derecho a 10 kilos de equipaje en bodega y 3 kilos de equipaje de mano. Si se sobrepasan estos pesos, se aplicarán cargos por exceso de equipaje de acuerdo con la tarifa estipulada por la empresa. 
+											Además, el envío de dicha carga en el mismo viaje estará condicionado a la capacidad de la aeronave.</li>
+										<li>Debe presentarse en el aeropuerto para su chequeo con al menos una hora de anticipación a la salida del vuelo. De no llegar a tiempo, el pasajero perderá su cupo y pagará una multa equivalente al 25% del valor del tiquete.</li>
+										<li>Para brindarle un mejor servicio, por favor infórmenos con antelación a la fecha de su viaje si requiere transportar equipaje especial o sobredimensionado: mascotas, silla de ruedas, equipos médicos o de pesca, etc.</li>
+									</ul>
+									<br>
+									Las anteriores condiciones son las más importantes a tener en cuenta pero no las únicas, para conocer el detalle completo del contrato, haga clic <a href="#"><strong>Aquí</strong></a>.
+								</p>
+							<% end %>
 					</div>
 					<div class="col-lg-12">
 						<form id="frmConfirmarReserva" action="/detalle_reservas/registrar_reserva" method="post" class="hotel-search-form">
+							<% if @producto.include? "PLAN" then %>
+									<table class="datos-contacto">
+										<thead>
+											<tr>
+												<th colspan="2">SERVICIOS OPCIONALES</th>
+											</tr>
+										</thead>
+										<tbody>
+								<% @actividadesPlan.each do |h| %>
+									<tr>
+										<td><label class="tm-label-radio"><%= check_box_tag "opcionales[]", h.id, checked=false, options={} %> <%= h.actur_descripcion %></label></td>
+									</tr>
+								<% end %>
+									</tbody>
+								</table>
+								<br>
+							<% end %>
 							<%= hidden_field_tag :datos_viaje, @datosViaje %>
 							<%= hidden_field_tag :datos_reserva, @datosReserva %>
 							<%= hidden_field_tag :contacto, @datosContacto %>
 							<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-							<p class="slider-subtitle">
-								<label class="tm-label-radio"><%= check_box_tag :terminos, options={} %> Acepto los términos y condiciones del contrato de transporte de pasajeros</label>
-							</p>
+							<% if !@producto.include? "PLAN" then %>
+								<p class="slider-subtitle">
+									<label class="tm-label-radio"><%= check_box_tag :terminos, options={} %> Acepto los términos y condiciones del contrato de transporte de pasajeros</label>
+								</p>
+							<% end %>
 							<p class="center"><input type="button" value="Enviar" id="cmd_aceptar" class="tm-orange-btn"></p>
 						</form>			
 					</div>	      
@@ -125,11 +146,12 @@
 <script>
 	$(document).on('page:update', function() {
 		$("#cmd_aceptar").click(function(e){
-			if($('input[id="terminos"]:checked').length == 0){
-				swal("Error","Apreciado cliente, debe aceptar los términos del contrato antes de confirmar la reserva", "error");
-				return;
+			if($("#terminos").length > 0){
+				if($('input[id="terminos"]:checked').length == 0){
+					swal("Error","Apreciado cliente, debe aceptar los términos del contrato antes de confirmar la reserva", "error");
+					return;
+				}
 			}
-			
 			$("#frmConfirmarReserva").submit();
 			e.preventDefault();
 		});

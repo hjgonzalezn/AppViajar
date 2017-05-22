@@ -1,4 +1,4 @@
-<section class="tm-white-bg section-padding-bottom" id="contenido">
+	<section class="tm-white-bg section-padding-bottom" id="contenido">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-12 col-sm-12">
@@ -6,274 +6,338 @@
 					<h1>Administración del Sistema</h1>
 				</div>
 				<div id="content-wrapper">
-					<div class="col-xs-3 col-md-3 col-sm-3">
-						<ul class="ca-menu">
-							<li>
-		                        <a href="<%= personas_path %>">
-		                            <span class="ca-icon"><i class="fa fa-odnoklassniki"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Personas</h2>
-		                                <h3 class="ca-sub">Información básica</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="<%= empresas_path %>">
-		                            <span class="ca-icon"><i class="fa fa-bank"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Empresas</h2>
-		                                <h3 class="ca-sub">Información básica</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="<%= sucursal_empresas_path %>">
-		                            <span class="ca-icon"><i class="fa fa-home"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Sucursales</h2>
-		                                <h3 class="ca-sub">Información básica</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="<%= unidad_territorials_path %>">
-		                            <span class="ca-icon"><i class="fa fa-globe"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Unidad Territorial</h2>
-		                                <h3 class="ca-sub">Unidades de división</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="<%= division_pais_path %>">
-		                            <span class="ca-icon"><i class="fa fa-globe"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">División País</h2>
-		                                <h3 class="ca-sub">Div. Político-Admin.</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="<%= entidad_territorials_path %>">
-		                            <span class="ca-icon"><i class="fa fa-globe"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Entidad Territorial</h2>
-		                                <h3 class="ca-sub">Países, Ciudades...</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="<%= regions_path %>">
-		                            <span class="ca-icon"><i class="fa fa-globe"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Regiones</h2>
-		                                <h3 class="ca-sub">División regional</h3>
-		                            </div>
-		                        </a>							
-							</li>
+					<div class="col-lg-12 col-md-12">
+						<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
+						    <li role="presentation" class="active">
+						    	<a href="#turismo" aria-controls="hotel" role="tab" data-toggle="tab">TURISMO</a>
+						    </li>
+						    <li role="presentation">
+						    	<a href="#general" aria-controls="hotel" role="tab" data-toggle="tab">GENERAL</a>
+						    </li>
+						    <li role="presentation">
+						    	<a href="#sistema" aria-controls="hotel" role="tab" data-toggle="tab">SISTEMA</a>
+						    </li>
 						</ul>
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane fade in active tm-gray-bg" id="turismo">
+									<div class="tm-search-box overflow-auto">
+										<div class="col-lg-12 margin-bottom-15">
+											<div class="col-xs-3 col-md-3 col-sm-3">
+												<ul class="ca-menu">
+													<li>
+								                        <a href="<%= reservas_path %>">
+								                            <span class="ca-icon"><i class="fa fa-list-alt"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Reservas</h2>
+								                                <h3 class="ca-sub">Solicitudes</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="<%= viajes_path %>">
+								                            <span class="ca-icon"><i class="fa fa-briefcase"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Viajes</h2>
+								                                <h3 class="ca-sub">Control de itinerarios</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="<%= paquete_turisticos_path %>">
+								                            <span class="ca-icon"><i class="fa fa-ship"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Planes Turísticos</h2>
+								                                <h3 class="ca-sub">Manejo de agenda</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="<%= hotels_path%>">
+								                            <span class="ca-icon"><i class="fa fa-bed"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Hoteles</h2>
+								                                <h3 class="ca-sub">Info. establecimientos</h3>
+								                            </div>
+								                        </a>
+													</li>
+												</ul>
+											</div>
+											<div class="col-xs-3 col-md-3 col-sm-3">
+												<ul class="ca-menu">
+													<li>
+								                        <a href="#">
+								                            <span class="ca-icon"><i class="fa fa-calendar"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Calendario</h2>
+								                                <h3 class="ca-sub">Agenda de Eventos</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="<%= tipo_actividad_turisticas_path %>">
+								                            <span class="ca-icon"><i class="fa fa-picture-o"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Tipos Actividad</h2>
+								                                <h3 class="ca-sub">Tipos Actv. Turismo</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="<%= actividad_turisticas_path %>">
+								                            <span class="ca-icon"><i class="fa fa-map-signs"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Actividades Plan</h2>
+								                                <h3 class="ca-sub">Datos Básicos</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="<%= tipo_actividad_turisticas_path %>">
+								                            <span class="ca-icon"><i class="fa fa-warning"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Recomendaciones</h2>
+								                                <h3 class="ca-sub">Info. de interés</h3>
+								                            </div>
+								                        </a>							
+													</li>
+												</ul>
+											</div>
+											<div class="col-xs-3 col-md-3 col-sm-3">
+												<ul class="ca-menu">
+													<li>
+								                        <a href="<%= ruta_path %>">
+								                            <span class="ca-icon"><i class="fa fa-map-signs"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Rutas</h2>
+								                                <h3 class="ca-sub">Datos Básicos</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="<%= vehiculos_path %>">
+								                            <span class="ca-icon"><i class="fa fa-plane"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Vehículos</h2>
+								                                <h3 class="ca-sub">Aeronaves, lanchas...</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="<%= aeropuertos_path %>">
+								                            <span class="ca-icon"><i class="fa fa-road"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Aeropuertos</h2>
+								                                <h3 class="ca-sub">Datos básicos</h3>
+								                            </div>
+								                        </a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div role="tabpanel" class="tab-pane fade in tm-gray-bg" id="general">
+									<div class="tm-search-box overflow-auto">
+										<div class="col-lg-12 margin-bottom-15">
+											<div class="col-xs-3 col-md-3 col-sm-3">
+												<ul class="ca-menu">
+													<li>
+								                        <a href="<%= personas_path %>">
+								                            <span class="ca-icon"><i class="fa fa-odnoklassniki"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Personas</h2>
+								                                <h3 class="ca-sub">Información básica</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="<%= empresas_path %>">
+								                            <span class="ca-icon"><i class="fa fa-bank"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Empresas</h2>
+								                                <h3 class="ca-sub">Información básica</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="<%= sucursal_empresas_path %>">
+								                            <span class="ca-icon"><i class="fa fa-home"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Sucursales</h2>
+								                                <h3 class="ca-sub">Información básica</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="<%= pagos_path %>">
+								                            <span class="ca-icon"><i class="fa fa-warning"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Pagos</h2>
+								                                <h3 class="ca-sub">Revisión de Pagos</h3>
+								                            </div>
+								                        </a>							
+													</li>
+												</ul>
+											</div>
+											<div class="col-xs-3 col-md-3 col-sm-3">
+												<ul class="ca-menu">
+													<li>
+								                        <a href="<%= unidad_territorials_path %>">
+								                            <span class="ca-icon"><i class="fa fa-globe"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Unidad Territorial</h2>
+								                                <h3 class="ca-sub">Unidades de división</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="<%= division_pais_path %>">
+								                            <span class="ca-icon"><i class="fa fa-globe"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">División País</h2>
+								                                <h3 class="ca-sub">Div. Político-Admin.</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="<%= entidad_territorials_path %>">
+								                            <span class="ca-icon"><i class="fa fa-globe"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Entidad Territorial</h2>
+								                                <h3 class="ca-sub">Países, Ciudades...</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="<%= regions_path %>">
+								                            <span class="ca-icon"><i class="fa fa-globe"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Regiones</h2>
+								                                <h3 class="ca-sub">División regional</h3>
+								                            </div>
+								                        </a>							
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div role="tabpanel" class="tab-pane fade in tm-gray-bg" id="sistema">
+									<div class="tm-search-box overflow-auto">
+										<div class="col-lg-12 margin-bottom-15">
+											<div class="col-xs-3 col-md-3 col-sm-3">
+												<ul class="ca-menu">
+													<li>
+								                        <a href="#">
+								                            <span class="ca-icon"><i class="fa fa-user"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Cuentas</h2>
+								                                <h3 class="ca-sub">Usuarios del sistema</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="#">
+								                            <span class="ca-icon"><i class="fa fa-credit-card"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Perfiles de Usuario</h2>
+								                                <h3 class="ca-sub">Tipos de Usuario</h3>
+								                            </div>
+								                        </a>							
+													</li>		
+													<li>
+								                        <a href="#">
+								                            <span class="ca-icon"><i class="fa fa-key"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Permisos</h2>
+								                                <h3 class="ca-sub">Accesos a los perfiles</h3>
+								                            </div>
+								                        </a>							
+													</li>
+													<li>
+								                        <a href="<%= catalogos_path %>">
+								                            <span class="ca-icon"><i class="fa fa-book"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Catálogo</h2>
+								                                <h3 class="ca-sub">Datos de Referencia</h3>
+								                            </div>
+								                        </a>
+													</li>
+												</ul>
+											</div>
+											<div class="col-xs-3 col-md-3 col-sm-3">
+												<ul class="ca-menu">
+													<li>
+								                        <a href="<%= modelos_path %>">
+								                            <span class="ca-icon"><i class="fa fa-book"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Modelos</h2>
+								                                <h3 class="ca-sub">Entidades BD</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="<%= accions_path %>">
+								                            <span class="ca-icon"><i class="fa fa-book"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Acciones</h2>
+								                                <h3 class="ca-sub">Páginas del portal</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="<%= controls_path %>">
+								                            <span class="ca-icon"><i class="fa fa-book"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Controles</h2>
+								                                <h3 class="ca-sub">Interfaz de Usuario</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="#">
+								                            <span class="ca-icon"><i class="fa fa-book"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Funcionalidades</h2>
+								                                <h3 class="ca-sub">Funciones del sistema</h3>
+								                            </div>
+								                        </a>
+													</li>
+												</ul>
+											</div>
+											<div class="col-xs-3 col-md-3 col-sm-3">
+												<ul class="ca-menu">
+													<li>
+								                        <a href="#">
+								                            <span class="ca-icon"><i class="fa fa-book"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Funcion * Control</h2>
+								                                <h3 class="ca-sub">Acciones de la interfaz</h3>
+								                            </div>
+								                        </a>
+													</li>
+													<li>
+								                        <a href="<%= causals_path %>">
+								                            <span class="ca-icon"><i class="fa fa-book"></i></span>
+								                            <div class="ca-content">
+								                                <h2 class="ca-main">Causales</h2>
+								                                <h3 class="ca-sub">Resultado operación</h3>
+								                            </div>
+								                        </a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 					</div>
-					<div class="col-xs-3 col-md-3 col-sm-3">
-						<ul class="ca-menu">
-							<li>
-		                        <a href="<%= ruta_path %>">
-		                            <span class="ca-icon"><i class="fa fa-map-signs"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Rutas</h2>
-		                                <h3 class="ca-sub">Datos Básicos</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="<%= reservas_path %>">
-		                            <span class="ca-icon"><i class="fa fa-list-alt"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Reservas</h2>
-		                                <h3 class="ca-sub">Solicitudes</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="<%= hotels_path%>">
-		                            <span class="ca-icon"><i class="fa fa-bed"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Hoteles</h2>
-		                                <h3 class="ca-sub">Info. establecimientos</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="<%= viajes_path %>">
-		                            <span class="ca-icon"><i class="fa fa-briefcase"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Viajes</h2>
-		                                <h3 class="ca-sub">Control de itinerarios</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="<%= paquete_turisticos_path %>">
-		                            <span class="ca-icon"><i class="fa fa-picture-o"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Planes Turísticos</h2>
-		                                <h3 class="ca-sub">Manejo de agenda</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="<%= aeropuertos_path %>">
-		                            <span class="ca-icon"><i class="fa fa-road"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Aeropuertos</h2>
-		                                <h3 class="ca-sub">Datos básicos</h3>
-		                            </div>
-		                        </a>
-							</li>						
-							<li>
-		                        <a href="<%= vehiculos_path %>">
-		                            <span class="ca-icon"><i class="fa fa-plane"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Vehículos</h2>
-		                                <h3 class="ca-sub">Aeronaves, lanchas...</h3>
-		                            </div>
-		                        </a>
-							</li>
-						</ul>
-					</div>
-					<div class="col-xs-3 col-md-3 col-sm-3">
-						<ul class="ca-menu">
-							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-user"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Cuentas</h2>
-		                                <h3 class="ca-sub">Usuarios del sistema</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-credit-card"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Perfiles de Usuario</h2>
-		                                <h3 class="ca-sub">Tipos de Usuario</h3>
-		                            </div>
-		                        </a>							
-							</li>		
-							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-key"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Permisos</h2>
-		                                <h3 class="ca-sub">Accesos a los perfiles</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="<%= tipo_actividad_turisticas_path %>">
-		                            <span class="ca-icon"><i class="fa fa-ship"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Ingredientes</h2>
-		                                <h3 class="ca-sub">Tipos Actv. Turismo</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="<%= tipo_actividad_turisticas_path %>">
-		                            <span class="ca-icon"><i class="fa fa-warning"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Recomendaciones</h2>
-		                                <h3 class="ca-sub">Info. de interés</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="<%= pagos_path %>">
-		                            <span class="ca-icon"><i class="fa fa-warning"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Pagos</h2>
-		                                <h3 class="ca-sub">Revisión de Pagos</h3>
-		                            </div>
-		                        </a>							
-							</li>
-							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-calendar"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Calendario</h2>
-		                                <h3 class="ca-sub">Agenda de Eventos</h3>
-		                            </div>
-		                        </a>							
-							</li>
-						</ul>
-					</div>
-					<div class="col-xs-3 col-md-3 col-sm-3">
-						<ul class="ca-menu">
-							<li>
-		                        <a href="<%= catalogos_path %>">
-		                            <span class="ca-icon"><i class="fa fa-book"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Catálogo</h2>
-		                                <h3 class="ca-sub">Datos de Referencia</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="<%= modelos_path %>">
-		                            <span class="ca-icon"><i class="fa fa-book"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Modelos</h2>
-		                                <h3 class="ca-sub">Entidades BD</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="<%= accions_path %>">
-		                            <span class="ca-icon"><i class="fa fa-book"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Acciones</h2>
-		                                <h3 class="ca-sub">Páginas del portal</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="<%= controls_path %>">
-		                            <span class="ca-icon"><i class="fa fa-book"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Controles</h2>
-		                                <h3 class="ca-sub">Interfaz de Usuario</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-book"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Funcionalidades</h2>
-		                                <h3 class="ca-sub">Funciones del sistema</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="#">
-		                            <span class="ca-icon"><i class="fa fa-book"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Funcion * Control</h2>
-		                                <h3 class="ca-sub">Acciones de la interfaz</h3>
-		                            </div>
-		                        </a>
-							</li>
-							<li>
-		                        <a href="<%= causals_path %>">
-		                            <span class="ca-icon"><i class="fa fa-book"></i></span>
-		                            <div class="ca-content">
-		                                <h2 class="ca-main">Causales</h2>
-		                                <h3 class="ca-sub">Resultado operación</h3>
-		                            </div>
-		                        </a>
-							</li>
-						</ul>
-					</div>
+					
+
+
+
+
 					<div class="section-footer">
 						<%= link_to 'Inicio', home_path , class:"button home" %>
 					</div>

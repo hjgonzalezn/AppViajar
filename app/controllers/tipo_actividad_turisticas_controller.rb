@@ -22,6 +22,7 @@ class TipoActividadTuristicasController < ApplicationController
 
   # GET /tipo_actividad_turisticas/1/edit
   def edit
+    @titulo = "Modificar tipo de actividad turística"
   end
 
   # POST /tipo_actividad_turisticas
@@ -76,6 +77,6 @@ class TipoActividadTuristicasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tipo_actividad_turistica_params
-      params.require(:tipo_actividad_turistica).permit(:tiAcT_nombre, :tiAcT_descripcion, :tiAcT_foto, :tiAcT_icono, :tiAcT_estadoRegistro)
+      params.require(:tipo_actividad_turistica).permit(:tiAcT_nombre, :tiAcT_descripcion, :tiAcT_foto, :tiAcT_icono, :tiAcT_visibilidad, :tiAcT_estadoRegistro)
     end
 end

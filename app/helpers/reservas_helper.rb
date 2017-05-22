@@ -9,12 +9,22 @@ module ReservasHelper
     return tarifas
   end
   
+  def tarifas_plan(paquete_turistico)
+    instSQL_Select = "T.trf_detalleAplicacion, T.trf_base, T.trf_conceptoAplicacion"
+    instSQL_Joins = "AS T INNER JOIN paquete_turisticos PT ON (PT.id = T.trf_producto AND T.trf_tipoProducto = 'PAQUETE_TURISTICOS')"
+    instSQL_Where = "PT.id = " + paquete_turistico.to_s + " AND T.trf_conceptoCodigo = 'VPLAN' AND T.trf_unidadCobro = 'PERSONA' AND PT.pqTur_estadoRegistro = 'A' AND T.trf_estadoRegistro = 'A'"
+    tarifas = Tarifa.select(instSQL_Select).joins(instSQL_Joins).where(instSQL_Where)
+    return tarifas
+  end
+  
+  
+  #Calcula el valor de una reserva (reserva=>show de viajes) 
   def reserva_calcular_tarifa(codigoReserva)
     valorAPagar = 0
     parametro = Catalogo.where(ctlg_valorCdg: :BOME).take
     bonoDctoMenor = parametro.ctlg_observacion.to_f
     
-    instSQL_Select = "reservas.rsrv_tipoProducto, reservas.rsrv_productoId, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_fechaNacimiento, P.pers_nombres"
+    instSQL_Select = "reservas.rsrv_tipoProducto, reservas.rsrv_productoId, reservas.rsrv_valorTotal, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_fechaNacimiento, P.pers_nombres, (reservas.rsrv_fechaRegreso - reservas.rsrv_fechaIda) dias"
     instSQL_Where = "reservas.rsrv_estadoRegistro = 'A' AND DR.detRsrv_estadoRegistro = 'A' AND reservas.rsrv_codigo = '#{codigoReserva}'"
     instSQL_Joins = "INNER JOIN detalle_reservas DR ON Reservas.id = DR.reserva_id
                      INNER JOIN personas P ON DR.detRsrv_clienteId = P.pers_documentoIdentidad"
@@ -57,13 +67,59 @@ module ReservasHelper
               if index > 0 && index <= 4 && grupoEdad == "MENOR" then
                 valorAPagar = valorAPagar - bonoDctoMenor
               end    
-              
-              #puts "############>>>>>>"
-              #puts h.pers_nombres + " " + valorAPagar.to_s + " idx " + index.to_s + ", tarifas " + tarifasViaje[index].to_s
+
               tarifasViaje[index] = tarifasViaje[index] - 1
             end #infante
           end
-       end
+        end
+      when "PLAN" then
+        valorAPagar = rsrv.rsrv_valorTotal
+        
+        # index = 0
+#         
+        # claveTarifa = rsrv.dias.to_s + "D/" + (rsrv.dias - 1).to_s + "N"
+        # tarifas = tarifas_plan(rsrv.rsrv_productoId)
+        # tarifaDefMenor = 0
+        # tarifaDefAdulto = 0
+#         
+        # #Obteniendo las tarifas de adulto y menor de edad
+        # tarifas.each do |h|
+          # if h.trf_detalleAplicacion == claveTarifa then
+            # case h.trf_conceptoAplicacion
+              # when "ADULTO" then
+                # tarifaDefAdulto = h.trf_base
+              # when "MENOR" then
+                # tarifaDefMenor = h.trf_base
+            # end
+          # end
+        # end
+#         
+        # #Actividades opcionales
+        # instSQL_select = "T.trf_base"
+        # instSQL_where = "reserva_id = " + rsrv.rsrv_productoId.to_s + " AND atr_estadoRegistro = 'A' AND T.trf_estadoRegistro = 'A'"
+        # instSQL_joins = "AS ATR INNER JOIN tarifas T ON (T.trf_conceptoCodigo = 'VACTUR' AND T.trf_tipoProducto = 'ACTIVIDAD_TURISTICAS' AND T.trf_producto = ATR.actividad_turistica_id)"
+#         
+        # valorOpcionalesAdulto = 0
+        # valorOpcionalesMenor = 0
+        # activOpcionales = ActividadTuristicaReserva.select(instSQL_select).where(instSQL_where).joins(instSQL_joins)
+#         
+        # #Calculando el valor total por individuo de las actividades opcionales
+        # activOpcionales.each do |j|
+          # valorOpcionalesAdulto += j.trf_base
+          # valorOpcionalesMenor += j.trf_base  
+        # end
+#         
+        # reservas.each do |h|
+          # grupoEdad = grupo_edad_persona(h.pers_fechaNacimiento) 
+          # puts grupoEdad
+          # unless grupoEdad == "INFANTE" then
+            # if grupoEdad == "ADULTO" then
+              # valorAPagar += (tarifaDefAdulto + valorOpcionalesAdulto)
+            # elsif grupoEdad == "MENOR" then
+              # valorAPagar += (tarifaDefMenor + valorOpcionalesMenor) 
+            # end
+          # end
+        # end
     end
 
     return valorAPagar  
@@ -74,7 +130,7 @@ module ReservasHelper
     instSQL_Select = "reservas.id, reservas.rsrv_codigo, reservas.rsrv_tipoProducto, reservas.rsrv_fechaIda, reservas.rsrv_fechaRegreso, reservas.rsrv_estadoReserva, reservas.rsrv_trayectoViaje, 'NAISATOURS' vendedor, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_nombres, P.pers_apellidos, P.pers_fechaNacimiento"
     instSQL_Where = "reservas.rsrv_estadoRegistro = 'A' AND DR.detRsrv_estadoRegistro = 'A' "
     instSQL_Joins = "INNER JOIN detalle_reservas DR ON Reservas.id = DR.reserva_id
-                    INNER JOIN personas P ON DR.detRsrv_clienteId = P.pers_documentoIdentidad"
+                     INNER JOIN personas P ON DR.detRsrv_clienteId = P.pers_documentoIdentidad"
                     
                     
     unless documentoIdentidad.blank?
@@ -101,4 +157,18 @@ module ReservasHelper
     return reservas
     
   end
+  
+  def reservas_salida_paquete_turistico(salidaId)
+    instSQL_Select = "reservas.id, reservas.rsrv_codigo, reservas.rsrv_tipoProducto, reservas.rsrv_fechaIda, reservas.rsrv_fechaRegreso, reservas.rsrv_estadoReserva, reservas.rsrv_trayectoViaje, 'NAISATOURS' vendedor, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_nombres, P.pers_apellidos, P.pers_fechaNacimiento"
+    instSQL_Where = "reservas.rsrv_estadoRegistro = 'A' AND DR.detRsrv_estadoRegistro = 'A' AND PT.pqTur_estadoRegistro = 'A' AND reservas.rsrv_tipoProducto = 'PLAN'
+                     AND S.sld_fecha = reservas.rsrv_fechaIda AND S.id = #{salidaId}"
+    instSQL_Joins = "INNER JOIN detalle_reservas DR ON Reservas.id = DR.reserva_id
+                     INNER JOIN personas P ON DR.detRsrv_clienteId = P.pers_documentoIdentidad
+                     INNER JOIN paquete_turisticos PT ON PT.id = reservas.rsrv_productoId
+                     INNER JOIN salidas S ON PT.id = S.paquete_turistico_id"
+                     
+    reservas = Reserva.select(instSQL_Select).where(instSQL_Where).joins(instSQL_Joins).order("P.pers_nombres ASC")
+    return reservas
+  end
+  
 end

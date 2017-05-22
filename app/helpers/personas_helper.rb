@@ -1,4 +1,36 @@
 module PersonasHelper
+  
+  def buscar_personas(pers_documIdentidad, pers_nombres, pers_apellidos)
+    
+    personas = nil
+    
+    unless pers_documIdentidad.blank? then
+      personas = Persona.where(pers_documentoIdentidad: pers_documIdentidad)
+    else
+      instSQL_where = "1 = 1 "
+      unless pers_nombres.blank?
+        if pers_nombres.include? " " then
+          instSQL_where = instSQL_where + " AND pers_nombres = '" + pers_nombres + "'"
+        else
+          instSQL_where = instSQL_where + " AND pers_nombres LIKE '%" + pers_nombres + "%'"
+        end   
+      end
+      
+      unless pers_apellidos.blank?
+        if pers_apellidos.include? " " then
+          instSQL_where = instSQL_where + " AND pers_apellidos = '" + pers_apellidos + "'"
+        else
+          instSQL_where = instSQL_where + " AND pers_apellidos LIKE '%" + pers_apellidos + "%'"
+        end
+      end
+      
+      personas = Persona.where(instSQL_where)
+    end
+    
+    return personas
+    
+  end
+  
   def calcular_edad(fechaNacimiento)
     #fechaNacimiento YYYY-MM-DD
     edad = 200
