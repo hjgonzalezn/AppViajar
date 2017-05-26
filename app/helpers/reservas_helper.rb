@@ -24,7 +24,7 @@ module ReservasHelper
     parametro = Catalogo.where(ctlg_valorCdg: :BOME).take
     bonoDctoMenor = parametro.ctlg_observacion.to_f
     
-    instSQL_Select = "reservas.rsrv_tipoProducto, reservas.rsrv_productoId, reservas.rsrv_valorTotal, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_fechaNacimiento, P.pers_nombres, (reservas.rsrv_fechaRegreso - reservas.rsrv_fechaIda) dias"
+    instSQL_Select = "reservas.rsrv_tipoProducto, reservas.rsrv_productoId, reservas.rsrv_valorTotal, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_fechaNacimiento, P.pers_nombres, (reservas.rsrv_fechaRegreso - reservas.rsrv_fechaIda + 1) dias"
     instSQL_Where = "reservas.rsrv_estadoRegistro = 'A' AND DR.detRsrv_estadoRegistro = 'A' AND reservas.rsrv_codigo = '#{codigoReserva}'"
     instSQL_Joins = "INNER JOIN detalle_reservas DR ON reservas.id = DR.reserva_id
                      INNER JOIN personas P ON DR.detRsrv_clienteId = P.pers_documentoIdentidad"
