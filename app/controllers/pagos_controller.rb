@@ -1,4 +1,4 @@
-class PayController < ApplicationController
+class PagosController < ApplicationController
   include ApplicationHelper
   include ReservasHelper
   

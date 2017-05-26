@@ -26,7 +26,7 @@ module ReservasHelper
     
     instSQL_Select = "reservas.rsrv_tipoProducto, reservas.rsrv_productoId, reservas.rsrv_valorTotal, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_fechaNacimiento, P.pers_nombres, (reservas.rsrv_fechaRegreso - reservas.rsrv_fechaIda) dias"
     instSQL_Where = "reservas.rsrv_estadoRegistro = 'A' AND DR.detRsrv_estadoRegistro = 'A' AND reservas.rsrv_codigo = '#{codigoReserva}'"
-    instSQL_Joins = "INNER JOIN detalle_reservas DR ON Reservas.id = DR.reserva_id
+    instSQL_Joins = "INNER JOIN detalle_reservas DR ON reservas.id = DR.reserva_id
                      INNER JOIN personas P ON DR.detRsrv_clienteId = P.pers_documentoIdentidad"
     reservas = Reserva.select(instSQL_Select).where(instSQL_Where).joins(instSQL_Joins)
     
@@ -129,7 +129,7 @@ module ReservasHelper
     
     instSQL_Select = "reservas.id, reservas.rsrv_codigo, reservas.rsrv_tipoProducto, reservas.rsrv_fechaIda, reservas.rsrv_fechaRegreso, reservas.rsrv_estadoReserva, reservas.rsrv_trayectoViaje, 'NAISATOURS' vendedor, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_nombres, P.pers_apellidos, P.pers_fechaNacimiento"
     instSQL_Where = "reservas.rsrv_estadoRegistro = 'A' AND DR.detRsrv_estadoRegistro = 'A' "
-    instSQL_Joins = "INNER JOIN detalle_reservas DR ON Reservas.id = DR.reserva_id
+    instSQL_Joins = "INNER JOIN detalle_reservas DR ON reservas.id = DR.reserva_id
                      INNER JOIN personas P ON DR.detRsrv_clienteId = P.pers_documentoIdentidad"
                     
                     
@@ -162,7 +162,7 @@ module ReservasHelper
     instSQL_Select = "reservas.id, reservas.rsrv_codigo, reservas.rsrv_tipoProducto, reservas.rsrv_fechaIda, reservas.rsrv_fechaRegreso, reservas.rsrv_estadoReserva, reservas.rsrv_trayectoViaje, 'NAISATOURS' vendedor, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_nombres, P.pers_apellidos, P.pers_fechaNacimiento"
     instSQL_Where = "reservas.rsrv_estadoRegistro = 'A' AND DR.detRsrv_estadoRegistro = 'A' AND PT.pqTur_estadoRegistro = 'A' AND reservas.rsrv_tipoProducto = 'PLAN'
                      AND S.sld_fecha = reservas.rsrv_fechaIda AND S.id = #{salidaId}"
-    instSQL_Joins = "INNER JOIN detalle_reservas DR ON Reservas.id = DR.reserva_id
+    instSQL_Joins = "INNER JOIN detalle_reservas DR ON reservas.id = DR.reserva_id
                      INNER JOIN personas P ON DR.detRsrv_clienteId = P.pers_documentoIdentidad
                      INNER JOIN paquete_turisticos PT ON PT.id = reservas.rsrv_productoId
                      INNER JOIN salidas S ON PT.id = S.paquete_turistico_id"

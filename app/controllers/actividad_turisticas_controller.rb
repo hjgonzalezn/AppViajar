@@ -104,7 +104,9 @@ class ActividadTuristicasController < ApplicationController
     
     def initialize_vars
       @tiposActividadTuristicas = TipoActividadTuristica.select("id, tiAcT_nombre").where("tiAcT_estadoRegistro = 'A'")
-      @tarifa = Tarifa.where("trf_tipoProducto = 'ACTIVIDAD_TURISTICAS' AND trf_producto = ? AND trf_estadoRegistro = 'A'", @actividad_turistica.id.to_s).take
+      unless @actividad_turistica.nil?
+        @tarifa = Tarifa.where("trf_tipoProducto = 'ACTIVIDAD_TURISTICAS' AND trf_producto = ? AND trf_estadoRegistro = 'A'", @actividad_turistica.id.to_s).take
+      end
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.

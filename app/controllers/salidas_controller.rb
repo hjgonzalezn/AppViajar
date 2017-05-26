@@ -3,7 +3,7 @@ include ReservasHelper
 class SalidasController < ApplicationController
   before_action :set_salida, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
-  before_action :initialize_vars, only: [:index, :new, :edit, :create, :update, :destroy]
+  before_action :initialize_vars, only: [:index, :new, :edit, :create, :update, :destroy, :show]
   
   # GET /salidas
   # GET /salidas.json
@@ -79,18 +79,18 @@ class SalidasController < ApplicationController
     end
     
     def initialize_vars
-      @ruta = request.fullpath
-      @ruta = @ruta.split("/")
-      if @ruta.length > 2 then        
-        @parentController = @ruta[1]
-        @parentId = @ruta[2]
-      else
-        @parentController = "paquete_turisticos"
-        @parentId = params[:salida][:paquete_turistico_id]
-      end
-     
-      @parent_path = "/" + @parentController + "/" + @parentId
-      @paqueteTuristico = PaqueteTuristico.find(@parentId)
+      # @ruta = request.fullpath
+      # @ruta = @ruta.split("/")
+      # if @ruta.length > 2 then        
+        # @parentController = @ruta[1]
+        # @parentId = @ruta[2]
+      # # else
+        # # @parentController = "paquete_turisticos"
+        # # @parentId = params[:salida][:paquete_turistico_id]
+      # end
+#      
+      # @parent_path = "/" + @parentController + "/" + @parentId
+      @paqueteTuristico = PaqueteTuristico.find(@salida.paquete_turistico_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -291,7 +291,7 @@ class DetalleReservasController < ApplicationController
       
       if datosViaje.include? "PLAN" then
         
-        rsrv = Reserva.select("(rsrv_fechaRegreso - rsrv_fechaIda) dias").where("id = ?", reserva.id).take
+        rsrv = Reserva.select("(rsrv_fechaRegreso - rsrv_fechaIda + 1) dias").where("id = ?", reserva.id).take
         tarifasPlan = tarifas_plan(reserva.rsrv_productoId)
         claveTarifa = rsrv.dias.to_s + "D/" + (rsrv.dias - 1).to_s + "N"
         idsActivOpcionales = ""
@@ -325,9 +325,9 @@ class DetalleReservasController < ApplicationController
         # puts "###########>>>>>>>>>>>>"
         # puts claveTarifa
         # puts "###########>>>>>>>>>>>>" + reserva.rsrv_productoId.to_s
-        # puts tarifas.length
+        # puts tarifasPlan.length
         # puts "###########>>>>>>>>>>>>***"
-        # puts tarifas
+        # puts tarifasPlan
         
         tarifasPlan.each do |h|
           if h.trf_detalleAplicacion == claveTarifa then
