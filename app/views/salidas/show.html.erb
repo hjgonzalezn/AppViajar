@@ -60,7 +60,7 @@
 							        			</a>
 											</div>
 		  									<p>&nbsp;</p>
-				  							<!--table id="tblReservasActivas" class="stripe hover jqTable">
+				  							<table id="tblReservasConfirmadas" class="stripe hover jqTable">
 												<thead>
 													<tr>
 														<th>RESERVA</th>
@@ -70,18 +70,18 @@
 													</tr>
 												</thead>
 												<tbody>
-													<%# index = 1 %>
-													<%# @confirmadas.each do |h| %>
-														<%# grupoEdad = grupo_edad_persona(h.pers_fechaNacimiento) %>
+													<% index = 1 %>
+													<% @confirmadas.each do |h| %>
+														<% grupoEdad = grupo_edad_persona(h.pers_fechaNacimiento) %>
 														<tr>
-															<td><%#= h.rsrv_codigo %></td>
-															<td><%#= formato_documento_identidad(h.detRsrv_clienteId) %></td>
-															<td><%#= h.pers_nombres %></td>
-															<td><%#= h.pers_apellidos %></td>
+															<td><%= h.rsrv_codigo %></td>
+															<td><%= formato_documento_identidad(h.detRsrv_clienteId) %></td>
+															<td><%= h.pers_nombres %></td>
+															<td><%= h.pers_apellidos %></td>
 														</tr>
-													<%# end %>
+													<% end %>
 												</tbody>
-											</table-->
+											</table>
 										</div>
 									</div>
 								</div>

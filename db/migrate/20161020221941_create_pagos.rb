@@ -2,7 +2,7 @@ class CreatePagos < ActiveRecord::Migration
   def change
     create_table :pagos do |t|
       t.string :pago_tipoProducto
-      t.integer :pago_productoId
+      t.string :pago_productoId
       t.float :pago_valor
       t.string :pago_forma
       t.string :pago_ctaBancDestino

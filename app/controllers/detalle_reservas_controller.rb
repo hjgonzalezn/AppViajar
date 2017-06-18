@@ -288,47 +288,48 @@ class DetalleReservasController < ApplicationController
       reserva.save
       
       tarifaDef = 0
+      valorOpcionalesAdulto = 0
+      valorOpcionalesMenor = 0
       
       if datosViaje.include? "PLAN" then
         
         rsrv = Reserva.select("(rsrv_fechaRegreso - rsrv_fechaIda + 1) dias").where("id = ?", reserva.id).take
         tarifasPlan = tarifas_plan(reserva.rsrv_productoId)
-        claveTarifa = rsrv.dias.to_s + "D/" + (rsrv.dias - 1).to_s + "N"
+        claveTarifa = (rsrv.dias.to_s + "D/" + (rsrv.dias - 1).to_s + "N").gsub(".0", "")
         idsActivOpcionales = ""
-        
-        opcionalesReserva.each do |h|
-          servOpcReserva = ActividadTuristicaReserva.new
-          servOpcReserva.actividad_turistica_id = h.to_i
-          servOpcReserva.reserva_id = reserva.id
-          servOpcReserva.atr_estadoRegistro = "A"
-          servOpcReserva.save
-          idsActivOpcionales = idsActivOpcionales + h + ","  
+        unless opcionalesReserva.nil?
+          opcionalesReserva.each do |h|
+            servOpcReserva = ActividadTuristicaReserva.new
+            servOpcReserva.actividad_turistica_id = h.to_i
+            servOpcReserva.reserva_id = reserva.id
+            servOpcReserva.atr_estadoRegistro = "A"
+            servOpcReserva.save
+            idsActivOpcionales = idsActivOpcionales + h + ","  
+          end
+          
+          #Actividades opcionales
+          
+          idsActivOpcionales = idsActivOpcionales[0, idsActivOpcionales.length - 1] 
+          instSQL_select = "T.trf_base"
+          instSQL_where = "ATR.actividad_turistica_id IN (" + idsActivOpcionales + ") AND ATR.reserva_id = " + reserva.id.to_s + " AND atr_estadoRegistro = 'A' AND T.trf_estadoRegistro = 'A'"
+          instSQL_joins = "AS ATR INNER JOIN tarifas T ON (T.trf_conceptoCodigo = 'VACTUR' AND T.trf_tipoProducto = 'ACTIVIDAD_TURISTICAS' AND T.trf_producto = ATR.actividad_turistica_id)"
+          
+  
+          activOpcionales = ActividadTuristicaReserva.select(instSQL_select).where(instSQL_where).joins(instSQL_joins)
+          
+          #Calculando el valor total por individuo de las actividades opcionales
+          activOpcionales.each do |j|
+            valorOpcionalesAdulto += j.trf_base
+            valorOpcionalesMenor += j.trf_base  
+          end
         end
         
-        #Actividades opcionales
-        
-        idsActivOpcionales = idsActivOpcionales[0, idsActivOpcionales.length - 1] 
-        instSQL_select = "T.trf_base"
-        instSQL_where = "ATR.actividad_turistica_id IN (" + idsActivOpcionales + ") AND ATR.reserva_id = " + reserva.id.to_s + " AND atr_estadoRegistro = 'A' AND T.trf_estadoRegistro = 'A'"
-        instSQL_joins = "AS ATR INNER JOIN tarifas T ON (T.trf_conceptoCodigo = 'VACTUR' AND T.trf_tipoProducto = 'ACTIVIDAD_TURISTICAS' AND T.trf_producto = ATR.actividad_turistica_id)"
-        
-        valorOpcionalesAdulto = 0
-        valorOpcionalesMenor = 0
-        activOpcionales = ActividadTuristicaReserva.select(instSQL_select).where(instSQL_where).joins(instSQL_joins)
-        
-        #Calculando el valor total por individuo de las actividades opcionales
-        activOpcionales.each do |j|
-          valorOpcionalesAdulto += j.trf_base
-          valorOpcionalesMenor += j.trf_base  
-        end
-        
-        # puts "###########>>>>>>>>>>>>"
-        # puts claveTarifa
-        # puts "###########>>>>>>>>>>>>" + reserva.rsrv_productoId.to_s
-        # puts tarifasPlan.length
-        # puts "###########>>>>>>>>>>>>***"
-        # puts tarifasPlan
-        
+        # log = Log.new
+        # log.log_operacion = "ProductoID = " + reserva.rsrv_productoId.to_s
+        # log.log_resultOperacion = "Clave Tarifa = " + claveTarifa 
+        # log.log_equipo = tarifasPlan.length
+        # log.save
+                
         tarifasPlan.each do |h|
           if h.trf_detalleAplicacion == claveTarifa then
             
@@ -341,6 +342,11 @@ class DetalleReservasController < ApplicationController
           end
         end
        end #Plan
+      
+      # log = Log.new
+      # log.log_operacion = "Adulto " + tarifaDefAdulto.to_s
+      # log.log_resultOperacion = "Menor " + tarifaDefMenor.to_s
+      # log.save
       
       #Creando los detalles de la reserva
         index = 0
@@ -359,7 +365,11 @@ class DetalleReservasController < ApplicationController
               end
             end
         
-  
+            # log = Log.new
+            # log.log_operacion = "Grupo Edad " + tarifaDef.to_s
+            # log.log_resultOperacion = "Tarifa Def " + tarifaDef.to_s
+            # log.save
+      
             detalleReserva = DetalleReserva.new
             detalleReserva.reserva_id = reserva.id
             detalleReserva.detRsrv_tipoCliente = "P" #Persona

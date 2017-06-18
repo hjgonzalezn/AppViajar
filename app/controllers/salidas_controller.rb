@@ -16,7 +16,11 @@ class SalidasController < ApplicationController
   def show
     #Estados de una reserva: B - Bloqueada, C - Confirmada, N - Nula, I - Pendiente
     @reservas = reservas_salida_paquete_turistico(@salida.id)
-    @confirmadas = @reservas.select{|h| h.rsrv_estadoReserva == "B" || h.rsrv_estadoReserva == "C"}
+    # @reservas.each do |h|
+      # puts h.rsrv_estadoReserva
+    # end
+    
+    @confirmadas = @reservas.select{|h| h.rsrv_estadoReserva == "C" || h.rsrv_estadoReserva == "B"}
     @pendientes = @reservas.select{|h| h.rsrv_estadoReserva == "I"}
     @nulas = @reservas.select{|h| h.rsrv_estadoReserva == "N"}
   end
@@ -79,18 +83,29 @@ class SalidasController < ApplicationController
     end
     
     def initialize_vars
-      # @ruta = request.fullpath
-      # @ruta = @ruta.split("/")
+      @ruta = request.fullpath
+      @ruta = @ruta.split("/")
+      
+      @parentController = "paquete_turisticos"
+      unless params[:salida].nil?
+        @parentId = params[:salida][:paquete_turistico_id]
+      else
+        unless params[:paquete_turistico_id].nil?
+          @parentId = params[:paquete_turistico_id]
+        else
+          @parentId = @salida.paquete_turistico_id.to_s
+        end
+      end
+        
       # if @ruta.length > 2 then        
         # @parentController = @ruta[1]
         # @parentId = @ruta[2]
-      # # else
-        # # @parentController = "paquete_turisticos"
-        # # @parentId = params[:salida][:paquete_turistico_id]
       # end
-#      
-      # @parent_path = "/" + @parentController + "/" + @parentId
-      @paqueteTuristico = PaqueteTuristico.find(@salida.paquete_turistico_id)
+      
+      @parent_path = "/" + @parentController + "/" + @parentId
+      
+      @paqueteTuristico = PaqueteTuristico.find(@parentId)
+      
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
