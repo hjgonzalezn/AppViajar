@@ -149,7 +149,7 @@
 																	<% if reserva.trayectoViaje == key.gsub("_", "|") then %>
 																			<tr>
 																				<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
-																				<td><%= reserva.codigoReserva %></td>
+																				<td><strong><a href="<%= reserva_path(reserva.id) %>" target="_blank"><%= reserva.codigoReserva %></a></strong></td>
 																				<td><%= formato_documento_identidad(reserva.documIdentCliente) %></td>
 																				<td><%= reserva.nombreCliente %></td>
 																				<td><%= reserva.apellidosCliente %></td>
@@ -206,7 +206,7 @@
 
 														<tr>
 															<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
-															<td><%= reserva.codigoReserva %></td>
+															<td><strong><a href="<%= reserva_path(reserva.id) %>" target="_blank"><%= reserva.codigoReserva %></a></strong></td>
 															<td><%= reserva.documIdentCliente[-2, 2] + " " + documtIdentFormat %></td>
 															<td><%= reserva.nombreCliente %></td>
 															<td><%= reserva.apellidosCliente %></td>
@@ -257,7 +257,7 @@
 
 														<tr>
 															<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
-															<td><%= reserva.codigoReserva %></td>
+															<td><strong><a href="<%= reserva_path(reserva.id) %>" target="_blank"><%= reserva.codigoReserva %></a></strong></td>
 															<td><%= reserva.documIdentCliente[-2, 2] + "-" + documtIdentFormat %></td>
 															<td><%= reserva.nombreCliente %></td>
 															<td><%= reserva.apellidosCliente %></td>
@@ -286,7 +286,7 @@
 </section>
 <script>
 
-	$(document).on('page:update', function() {
+	document.addEventListener("turbolinks:load", function() {
 			$("#cmdRegistrarPago").click(function(e){
 				e.preventDefault();
 				document.location.href ="/viajes/8/pagos/new/" + $("#producto").val();

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   
+  devise_for :users
   resources :actividad_turisticas
   get 'entidad_territorials/actualizar_lista_dependiente' => 'entidad_territorials#actualizar_lista_dependiente', as: :actualizar_lista_dependiente
   get 'empresas/buscar_datos_empresa' => 'empresas#buscar_datos_empresa', as: :buscar_datos_empresa
@@ -32,6 +33,7 @@ Rails.application.routes.draw do
   get 'about/carga' => 'about#carga', as: :carga
   get 'about/alojamiento' => 'about#alojamiento', as: :alojamiento  
   get 'hotels/:id/presentacion' => 'hotels#presentacion', as: :presentacion_hotel
+  get '/viajes' => 'viajes#index'
   
   resources :empresas do
     resources :sucursal_empresas  

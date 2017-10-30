@@ -14,7 +14,32 @@
 						<h1>Viajes</h1>
 					</div>
 					<div class="row">
+						<div class="col-lg-2"></div>
+						<div class="col-lg-8">
+							<%= form_tag(viajes_url, method: :get, id: :frmBuscar) do %>
+								<div class="col-lg-6">
+									<div class="form-group">
+										<%= text_field_tag "txtRangoFechasViaje", @rangoFechas, options = {class:"form-control", placeholder:"RANGO DE FECHAS"} %>
+										<!--i class="glyphicon glyphicon-calendar fa fa-calendar"></i-->
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+					            		<%= select_tag :cboCiudad, options_from_collection_for_select(@ciudadesAeropuertos, :id, :enter_nombreOficial, @ciudadViaje), options={class:"form-control", prompt: "-- CIUDAD --"} %>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-2"></div>
+							<div class="col-lg-12 margin-bottom-30">
+								<center>
+									<%= submit_tag 'Buscar', class:"button find" %>
+								</center>
+							</div>
+						<% end %>
+					</div>
+					<div class="row">
 						<div class="col-lg-11 col-md-11 col-sm-11 center">
+							<% unless @viajes.nil? %>
 							 <% @viajes.each do |viaje| %>
 								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-xxs-12">
 									<div class="tm-tours-box-2">
@@ -66,6 +91,7 @@
 									</div>
 								</div>
 							<% end %>
+							<% end %>
 						</div>
 					</div>
 					<!--table id="indexTable" class="stripe hover">
@@ -82,29 +108,29 @@
   					</thead>
 
   <tbody>
-    <% @viajes.each do |viaje| %>
+    <%# @viajes.each do |viaje| %>
       <tr>
-        <td><%= viaje.viaje_ruta %></td>
-        <td><%= viaje.viaje_fecha %></td>
-        <td><%= viaje.viaje_horaSalida %></td>
-        <td><%= viaje.viaje_estado %></td>
-        <td><%= viaje.vehiculo %></td>
-        <td><%= viaje.viaje_estadoRegistro %></td>
-					        		<td><%= link_to(viaje, class:"btn btn-info") do %>
+        <td><%#= viaje.viaje_ruta %></td>
+        <td><%#= viaje.viaje_fecha %></td>
+        <td><%#= viaje.viaje_horaSalida %></td>
+        <td><%#= viaje.viaje_estado %></td>
+        <td><%#= viaje.vehiculo %></td>
+        <td><%#= viaje.viaje_estadoRegistro %></td>
+					        		<td><%#= link_to(viaje, class:"btn btn-info") do %>
 					        				<i class="fa fa-book"></i>
-					        			<% end %>
+					        			<%# end %>
 					        		</td>
-					        		<td><a href="<%= edit_viaje_path(viaje) %>" class="btn btn-warning">
+					        		<td><a href="<%#= edit_viaje_path(viaje) %>" class="btn btn-warning">
 					        				<i class="fa fa-edit"></i>
 					        			</a>
 					        		</td>
 					        		<td>
-					        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%= "/viajes/#{viaje.id}"%> >
+					        			<a data-confirm="¿Está seguro(a) de eliminar este registro?" class="btn btn-danger" rel="nofollow" data-method="delete" href=<%#= "/viajes/#{viaje.id}"%> >
 					        				<i class="fa fa-trash"></i>
 					        			</a>
 					        		</td>
       							</tr>
-    						<% end %>
+    						<%# end %>
   						</tbody>
 					</table-->
 					<div class="section-footer">
@@ -119,7 +145,28 @@
 
 <script>
 
-	$(document).on('page:update', function() {
+	document.addEventListener("turbolinks:load", function() {
+			
+	$('#txtRangoFechasViaje').daterangepicker({
+	startDate: moment().subtract(5, 'month'),
+	ranges: {
+	           'Hoy': [moment(), moment()],
+	           'Mes actual': [moment().startOf('month'), moment().endOf('month')],
+	           'Mes siguiente >>': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')],
+	           '<< Mes anterior': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	        },
+			"alwaysShowCalendars": true,
+			"startDate": moment(),
+			"endDate": moment().endOf('month'),
+	locale: {
+    		format: 'YYYY-MM-DD',
+    		"separator": " a ",
+    		 "daysOfWeek": ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+  			 "monthNames": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+			}
+    				
+	});
+		
 			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
 			    table = $('#indexTable').DataTable();
 			}

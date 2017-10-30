@@ -1,4 +1,5 @@
 class TarifasController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_tarifa, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   before_action :initialize_vars, only: [:index, :new, :edit, :show]

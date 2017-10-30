@@ -1,4 +1,5 @@
 class ControlsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_control, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   before_action :initialize_vars, only: [:new, :edit, :show]

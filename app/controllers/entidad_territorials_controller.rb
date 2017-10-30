@@ -1,5 +1,6 @@
 class EntidadTerritorialsController < ApplicationController
   include EntidadTerritorialsHelper
+  before_action :authenticate_user!
   before_action :set_entidad_territorial, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   before_action :initialize_vars, only: [:new, :edit, :update, :create, :index, :show]

@@ -70,7 +70,7 @@
 						</div>
 						<div class="col-lg-12 margin-bottom-30">
 							<center>
-								<%= link_to 'Buscar', nil, class:"button find", id: :cmd_buscar %>
+								<%= submit_tag 'Buscar', class:"button find" %>
 							</center>
 						</div>
 					<% end %>
@@ -92,7 +92,7 @@
 						  		<% unless @reservas.nil? %>
 									<% @reservas.each do |reserva| %>
 								    	<tr>
-								        	<td><%= reserva.rsrv_codigo %></td>
+								        	<td><strong><a href="<%= reserva_path(reserva.id) %>" target="_blank"><%= reserva.rsrv_codigo %></a></strong></td>
 								        	<td><%= reserva.rsrv_tipoProducto %></td>
 								        	<td><%= set_descripcion_ruta(reserva.rsrv_trayectoViaje)%> </td>
 									        <td><%= reserva.rsrv_fechaIda %></td>
@@ -131,7 +131,7 @@
 
 <script>
 
-	$(document).on('page:load', function() {
+	document.addEventListener("turbolinks:load", function() {
 			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
 			    table = $('#indexTable').DataTable();
 			}
@@ -146,11 +146,6 @@
 		$('.dateReservas').datetimepicker({
         	format: 'YYYY-MM-DD',
         	defaultDate:false
-        });
-        
-        $('#cmd_buscar').click(function(e){
-        	e.preventDefault();
-        	$("#frmBuscar").submit();
         });
         
        	$("#viaje_fechaIni").val("");

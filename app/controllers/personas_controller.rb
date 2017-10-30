@@ -2,7 +2,8 @@ class PersonasController < ApplicationController
   include PersonasHelper
   include EmpresasHelper
   include EntidadTerritorialsHelper
-  
+
+  before_action :authenticate_user!  
   before_action :set_persona, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   before_action :initialize_vars, only: [:new, :edit, :show, :index]

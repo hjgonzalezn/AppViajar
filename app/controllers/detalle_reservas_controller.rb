@@ -4,6 +4,7 @@ class DetalleReservasController < ApplicationController
   include ActividadTuristicasHelper
   include ReservasHelper
   
+  before_action :authenticate_user!
   before_action :set_detalle_reserva, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit, :solicitar_reserva, :detalle_reserva, :confirmar_reserva, :registrar_reserva]
   before_action :initialize_vars, only: [:new, :edit, :show]

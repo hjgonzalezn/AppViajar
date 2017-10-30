@@ -1,4 +1,5 @@
 class FotosController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_foto, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   

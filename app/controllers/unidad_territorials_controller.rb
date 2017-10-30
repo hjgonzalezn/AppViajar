@@ -1,4 +1,5 @@
 class UnidadTerritorialsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_unidad_territorial, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   

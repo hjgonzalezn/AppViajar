@@ -7,6 +7,14 @@
 				</div>
 				<div id="content-wrapper">
 					<div class="col-lg-12 col-md-12">
+						<% unless notice.nil? %>
+							<br>
+							<div class="alert alert-success">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								<p id="notice"><%= notice %></p>
+							</div>
+						<% end %>
+				
 						<p>&nbsp;</p>
 						<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
 						    <li role="presentation" class="active">
@@ -353,7 +361,7 @@
 	</div>
 </section>
 <script>
-	$(document).on("page:update", function(){
+	document.addEventListener("turbolinks:load", function() {
 	  	$(".mainmenu").removeClass("active");
 	  	$("#mnuAdmin").addClass("active");
 	});

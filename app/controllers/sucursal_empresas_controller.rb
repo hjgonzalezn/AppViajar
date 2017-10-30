@@ -4,6 +4,7 @@ class SucursalEmpresasController < ApplicationController
   include PersonasHelper
   include SucursalEmpresasHelper
   
+  before_action :authenticate_user!  
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   before_action :initialize_vars, only: [:new, :edit, :update, :create, :index, :show]
   before_action :set_sucursal_empresa, only: [:show, :edit, :update, :destroy]

@@ -58,7 +58,7 @@
 
 <script>
 
-	$(document).on('page:update', function() {
+	document.addEventListener("turbolinks:load", function() {
 			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
 			    table = $('#indexTable').DataTable();
 			}

@@ -1,4 +1,5 @@
 class HotelsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_hotel, only: [:show, :edit, :update, :destroy, :presentacion]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit, :presentacion]
   before_action :initialize_vars, only: [:new, :edit, :show]

@@ -2,7 +2,16 @@ class AboutController < ApplicationController
   include AeropuertosHelper
   include PersonasHelper
   
+  before_action :authenticate_user!, only: [:admon]
+  after_action :verify_authorized, only: [:admon]
   before_action :initialize_vars_global, only: [:index, :admon, :somos, :mensaje_contacto, :contacto, :mensaje]
+  
+  
+  def admon
+    if current_user.present?
+      authorize About
+    end
+  end
   
   def index
     @ciudadesAeropuertos = set_ciudades_aeropuertos
@@ -32,7 +41,6 @@ class AboutController < ApplicationController
   end
   
   def contacto
-    
   end
   
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -65,20 +65,27 @@ body { overflow-x: hidden; }
 
 .inline{display:inline-block}
 .tm-login-bar{
-	padding: 5px 0;
+	width:40%;
+	float:right;
+	padding:7px;
 }
 
 .tm-login-bar > form{
 	text-align: right;
-	padding: 0 5%;
+	padding: 0;
 }
 
-.tm-login-bar > form label, .tm-login-bar > form a{
+.tm-login-bar > form label, .tm-login-bar > a, .tm-login-bar > span{
 	color: white;
+	font-weight:bold;
+	font-size:16px;
 }
 
-.tm-login-bar > form a:hover,
-.tm-login-bar > form a:focus
+.tm-login-bar > span > i{
+	color:#FFFF00;
+}
+.tm-login-bar > a:hover,
+.tm-login-bar > a:focus
 {
 	color: #FFFF00;
 }
@@ -817,6 +824,11 @@ footer {
     text-transform: uppercase;
     text-shadow: 0 1px 0 rgba(0,0,0,.8);
 }
+
+.session-link{ 	color:white;
+				font-weight:bold;
+				text-align:right; 
+			}
 
 .footer-box a{color:#ffff00;}
 
@@ -2072,4 +2084,355 @@ ul.navbar-nav li.active .dropdown-menu > .active > a:focus { background: #2dc970
 .pricing-2-container {
     margin-top: 30px;
     padding-bottom: 40px;
+}
+
+/*-- header --*/
+.tm-top-header {
+    background: #2dc970;
+}
+.tm-top-header ul li {
+    display: inline-block;
+    width: 24.5%;
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+    padding: 7px 0;
+    letter-spacing: 1px;
+    border-right: 1px solid #b8efcf;
+}
+.tm-top-header ul li a {
+     color: #fff;
+    text-decoration: none;
+}
+.tm-top-header ul li i {
+    margin-right: 12px;
+    top: 2px;
+    color: #FFFF00;
+}
+.tm-top-header-right {
+    text-align: right;
+}
+.tm-top-header-left{
+    text-align: left;	
+}
+.tm-top-header-bot_inner_wthreeinfo_header_mid {
+    margin: 0 auto;
+    width: 90%;
+}
+/*-- //header --*/
+
+/*-- input-effect --*/
+.styled-input input:focus ~ label, .styled-input input:valid ~ label,.styled-input textarea:focus ~ label ,.styled-input textarea:valid ~ label, .styled-input select ~ label{
+    font-size: .9em;
+    color: #2fdab8;
+    top: -1.3em;
+    -webkit-transition: all 0.125s;
+	-moz-transition: all 0.125s; 
+	-o-transition: all 0.125s;
+	-ms-transition: all 0.125s;
+    transition: all 0.125s;
+}
+.styled-input {
+	width:100%;
+	margin: 2em 0 1em;
+	position: relative;
+}
+.styled-input label {
+	color: #555;
+    padding: 0.5em 0em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    pointer-events: none;
+    font-weight: 400;
+    font-size: 14px;
+	letter-spacing:1px;
+    display: block;
+    line-height: 1em;
+}
+.styled-input input ~ span, .styled-input textarea ~ span {
+    display: block;
+    width: 0;
+    height: 2px;
+    background: rgb(39, 39, 39);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    -webkit-transition: all 0.125s;
+    -moz-transition: all 0.125s;
+    transition: all 0.125s;
+}
+.styled-input textarea ~ span { 
+    bottom: 5px; 
+}
+.styled-input input:focus.styled-input textarea:focus { 
+	outline: 0; 
+} 
+.styled-input input:focus ~ span,.styled-input textarea:focus ~ span {
+	width: 100%;
+	-webkit-transition: all 0.075s;
+	-moz-transition: all 0.075s;  
+	transition: all 0.075s; 
+} 
+.white-w3ls{
+	color:#fff!important;
+}
+.modal-body-sub {
+    padding:2em !important;
+}
+.modal-title {
+    font-size: 1.1em;
+    color: #212121;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-left: 1em;
+    letter-spacing: 2px;
+}
+.modal-body.modal-body-sub_agile input[type="text"],.modal-body.modal-body-sub_agile input[type="email"],.modal-body.modal-body-sub_agile input[type="password"] {
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #777;
+    padding: 0.5em 1em 0.5em 0;
+    border: 0;
+    width: 100%;
+    border-bottom: 1px solid #dcdcdc;
+    background: none;
+    -webkit-appearance: none;
+    outline: none;
+}
+h3.agileinfo_sign {
+    font-size: 1.2em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2em;
+}
+.modal_body_right.modal_body_right1 {
+    padding: 0;
+}
+h3.agileinfo_sign span {
+font-weight:300;
+}
+
+.modal-body.modal-body-sub_agile ::-webkit-input-placeholder{
+	color:#212121 !important;
+}
+.modal-body.modal-body-sub_agile input[type="submit"], .link-button{
+    border: none;
+    padding: 10px 40px 10px;
+    font-size: 14px;
+    outline: none;
+    text-transform: uppercase;
+    margin: 0 0 0 -4px;
+    font-weight: 700;
+    letter-spacing: 1px;
+	background:#111;
+    color: #fff;
+}
+.modal-body.modal-body-sub_agile input[type="submit"]:hover, .link-button:hover{
+   background: #2fdab8;
+   color:#444;
+}
+.modal_body_right.modal_body_right1 img {
+    width: 100%;
+}
+ul.social-nav.model-3d-0.footer-social.w3_agile_social.top_agile_third {
+    float: left;
+}
+.modal-body.modal-body-sub_agile p a {
+    font-size: 0.875em;
+    color: #212121;
+    letter-spacing: 1px;
+}
+.modal-body.modal-body-sub_agile p {
+    font-size: 0.85em;
+    font-weight: 600;
+    line-height: 2em;
+    color: #000;
+}
+ul.social-nav.model-3d-0.footer-social.w3_agile_social.top_agile_third {
+    margin: 2em 0 0.5em 0;
+}
+.modal_body_left.modal_body_left1 {
+  padding-left:0;
+}
+.modal-body.modal-body-sub_agile {
+    padding: 0 1em 2em 2em;
+    margin-top: 1em;
+}
+.modal-content.top_w3lform_agile {
+    padding: 2em 0;
+    border-radius: 0;
+}
+button.close.top_wthree_agile {
+    margin: -34px 0 0 0;
+    color: #000;
+}
+.bb-middle-agileits-w3layouts.forth.grid {
+    margin-top: 0.95em;
+}
+
+/*-- //header --*/
+.social-nav {
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+    margin: 1em 0 0;
+    float: right;
+}
+.social-nav li {
+    display: inline-block;
+    margin: 0 6px;
+}
+.social-nav a {
+    display: inline-block;
+    float: none;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    background: #000;
+    position: relative;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+.model-3d-0 a {
+    background:#5C5B5B;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+.model-3d-0 .front, .model-3d-0 .back {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-transform: translateZ(18px);
+    -moz-transform: translateZ(18px);
+    -ms-transform: translateZ(18px);
+    -o-transform: translateZ(18px);
+    transform: translateZ(18px);
+    -webkit-backface-visibility: visible;
+    -moz-backface-visibility: visible;
+    -ms-backface-visibility: visible;
+    -o-backface-visibility: visible;
+    backface-visibility: visible;
+	color:#212121;
+	font-size:12px;
+}
+.model-3d-0 .back {
+    -webkit-transform: rotateX(90deg) translateZ(18px);
+    -moz-transform: rotateX(90deg) translateZ(18px);
+    -ms-transform: rotateX(90deg) translateZ(18px);
+    -o-transform: rotateX(90deg) translateZ(18px);
+    transform: rotateX(90deg) translateZ(18px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+a.twitter .front {
+    background: #00acee;
+}
+a.facebook .front {
+    background: #3b5998;
+}
+a.instagram .front {
+    background: #f77737;
+}
+a.pinterest .front {
+    background: #bd081c;
+}
+.twitter .back,.facebook .back,.instagram .back,.pinterest .back{
+    background:#fff;
+}
+.model-3d-0 a:hover {
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    -ms-transform: rotateX(-90deg);
+    -o-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+}
+.model-3d-0 a:hover .back {
+    -webkit-backface-visibility: visible;
+    -moz-backface-visibility: visible;
+    -ms-backface-visibility: visible;
+    -o-backface-visibility: visible;
+    backface-visibility: visible;
+}
+.w3_agile_social .front i{
+	color: #fff;
+    font-size: 12px;
+}
+.w3_agile_social .back i{
+	color: #000;
+    font-size: 12px;
+}
+.w3ls_team_grid img {
+    background: #e4e3e3;
+    padding: 7px;
+}
+/*--social icons--*/
+/* Brand Colours */
+.facebook{
+    background: #3b5998;
+}
+.twitter{
+    background: #00acee;
+}
+.google-plus{
+	background:#dd4b39;
+}
+.rss{
+	background:#f26522;
+}
+.social-icon-w3-agile {
+    width: 25%;
+    float: left;
+    text-align: center;
+    padding:1.5em 0;
+}
+.social-icon-w3-agile i {
+    color: #fff;
+    font-size:28px;
+}
+.social-agileinfo a:hover {
+    opacity: 0.8;
+}
+li.share {
+    vertical-align: super;
+    font-size: 1em;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+/*--social-icons--*/
+.logo_agile {
+    text-align: center;
+}
+.logo_agile span {
+    background: #000;
+    padding: 0 17px;
+    font-weight: bold;
+    color: #fff;
+}
+.logo_agile h1 a {
+    font-weight: 300;
+    color: #000;
+    letter-spacing: 1px;
+    font-size: 1.5em;
+	position:relative;
+}
+.logo_agile h1 a:hover {
+  text-decoration:none;
 }

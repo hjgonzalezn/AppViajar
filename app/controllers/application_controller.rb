@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   
   def initialize_vars_global
     @meses = {1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr", 5 => "May", 6 =>  "Jun", 7 => "Jul", 8 => "Ago", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dic" }
@@ -30,5 +33,15 @@ class ApplicationController < ActionController::Base
     modeloAccion.each do |h|
       @slideShow[h.mdl_nombre + "-" + h.acc_nombre] = h.modAcc_sliderShow
     end
+    @about = About.where(about_estadoRegistro: "A")
+    
   end
+  
+ private
+ 
+    def user_not_authorized
+      flash[:warning] = "No está autorizado para relizar la acción solicitada."
+      redirect_to(request.referrer || root_path)
+    end
+  
 end

@@ -2,6 +2,7 @@ class PaqueteTuristicosController < ApplicationController
   include EntidadTerritorialsHelper
   include ActividadTuristicasHelper
   
+  before_action :authenticate_user!  , only: [:index, :show, :edit, :create, :new, :update]
   before_action :set_paquete_turistico, only: [:show, :edit, :update, :destroy, :detalle_plan, :actividades_plan, :registrar_actividades]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit, :detalle_plan, :actividades_plan]
   before_action :initialize_vars, only: [:new, :edit, :show, :detalle_plan]

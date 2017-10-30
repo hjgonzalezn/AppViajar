@@ -1,0 +1,59 @@
+	<section class="container tm-home-section-1" id="more">
+		<div class="row">
+			<!-- slider -->
+			<div class="flexslider flexslider-about effect2">
+			  <ul class="slides">
+			  	<li>
+		      		<%= image_tag("page/change.png") %>
+		      		<div class="flex-caption">
+		      			<h2 class="slider-title">Cambiar contraseña</h2>
+		      			<!--h3 class="slider-subtitle"></h3-->
+		      			<p class="slider-description">
+							<% if notice %>
+								<br>
+								<div class="alert alert-success">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									<p id="notice"><%= notice %></p>
+								</div>
+							<% end %>
+							<% if alert %>
+								<br>
+								<div class="alert alert-danger">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									<p id="alert"><%= alert %></p>
+								</div>
+							<% end %>
+						
+							<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+							  <%= devise_error_messages! %>
+							  <%= f.hidden_field :reset_password_token %>
+							
+							  <div class="form-group">
+							    <%= f.password_field :password, options={class:"form-control", autocomplete: "off", placeholder:"NUEVA CONTRASEÑA (" + @minimum_password_length.to_s + " caracteres mínimo)"} %>
+							  </div>
+							
+							  <div class="form-group">
+							    <%= f.password_field :password_confirmation, {class:"form-control", autocomplete: "off", placeholder:"CONFIRMAR CONTRASEÑA"} %>
+							  </div>
+							
+							  <div class="actions">
+							    <%= f.submit "Cambiar contraseña" %>
+							  </div>
+							<% end %>
+						<br>
+						<strong>
+							<%= render "devise/shared/links" %>
+						</strong>
+		      			</p>
+				      	<div class="slider-social">
+				      		<a href="#" class="tm-social-icon"><i class="fa fa-twitter"></i></a>
+				      		<a href="https://www.facebook.com/naisa.tours" target="_blank"><i class="fa fa-facebook"></i></a>
+				      		<a href="#" class="tm-social-icon"><i class="fa fa-pinterest"></i></a>
+				      		<a href="#" class="tm-social-icon"><i class="fa fa-google-plus"></i></a>
+				      	</div>
+		      		</div>			      
+		    	</li>
+			  </ul>
+			</div>
+		</div>
+	</section>

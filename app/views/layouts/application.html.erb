@@ -22,17 +22,23 @@
   
 </head>
 <body class="tm-gray-bg">
-		<div class="row tm-blue-bg">
-			<div class="col-lg-12 col-md-12 col-sm-12 tm-login-bar">
-				<%= form_tag({controller: "detalle_reservas", action: "registrar_reserva"}, method: "get") do %>
-					<label>Usuario</label> <%= text_field(:user, :name, class: "form-control-inline") %>
-					<label>Contraseña</label> <%= password_field_tag(:password, nil, class: "form-control-inline") %>
-					<%= button_tag "Iniciar sesión", type: "button", class:"inline"%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="#" class="inline"><strong>¿Olvidó su contraseña?</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="#" class="inline"><strong>Registrarse</strong></a>
-				<% end %>
+  		<!-- header -->
+		<div class="tm-top-header" id="home">
+			<div class="container">
+				<ul>
+					<% if user_signed_in? %>
+						<li><i class="fa fa-user" aria-hidden="true"></i><%= (current_user.email) %> &nbsp;&nbsp;&nbsp;</li>
+						<li><i class="fa fa-sign-out" aria-hidden="true"></i><%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete  %></li>
+					<% else %>
+		    			<li><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Iniciar sesión </a></li>
+						<li><a href="#" data-toggle="modal" data-target="#myModal2"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Registrarse </a></li>
+					<% end %>
+					<li><i class="fa fa-phone" aria-hidden="true"></i> Celular : +57 (323) 582 9143</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:info@vitrinadigital.co">agencia@naisatours.co</a></li>
+				</ul>
 			</div>
 		</div>
+		<!-- //header -->
 		<div class="tm-header">
 		<nav class="navbar" role="navigation">
 			<div class="container">
@@ -57,7 +63,11 @@
 							<a href="about.html" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000"><i class="fa fa-user"></i><br>La Agencia<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<%= somos_path %>">Quiénes somos</a></li>
-								<li><a href="<%= administracion_path %>">Administración</a></li>
+								<% if user_signed_in? %>
+									<% if current_user.admin? %>
+										<li><a href="<%= administracion_path %>">Administración</a></li>
+									<% end %>
+								<% end %>
 							</ul>
 						</li>
 						<li>
@@ -79,11 +89,135 @@
 			</div>
 		</nav>
 	</div>
+	<section>
+	<!-- //banner-top -->
+	<!-- Modal1 Inicio de sesión -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body modal-body-sub_agile">
+					<div class="col-md-8 modal_body_left modal_body_left1">
+						<h3 class="agileinfo_sign">Iniciar sesión <span>Ahora</span></h3>
+						<form id="new_user" action="/users/sign_in" method="post">
+							<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+							<div class="styled-input agile-styled-input-top">
+								<input type="text" name="user[email]" id="user_email" required="">
+								<label>Correo electrónico</label>
+								<span></span>
+							</div>
+							<div class="styled-input">
+								<input type="password" name="user[password]" id="user_password" required=""> 
+								<label>Contraseña</label>
+								<span></span>
+							</div> 
+							<input type="submit" value="Iniciar sesión">
+						</form>
+						<ul class="social-nav model-3d-0 footer-social w3_agile_social top_agile_third">
+							<li><a href="#" class="facebook">
+								<div class="front"><i class="fa fa-facebook" aria-hidden="true"></i></div>
+								<div class="back"><i class="fa fa-facebook" aria-hidden="true"></i></div></a></li>
+							<li><a href="#" class="twitter"> 
+							  	<div class="front"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+								<div class="back"><i class="fa fa-twitter" aria-hidden="true"></i></div></a></li>
+							<li><a href="#" class="instagram">
+							  	<div class="front"><i class="fa fa-instagram" aria-hidden="true"></i></div>
+								<div class="back"><i class="fa fa-instagram" aria-hidden="true"></i></div></a></li>
+							<li><a href="#" class="pinterest">
+							  	<div class="front"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
+								<div class="back"><i class="fa fa-linkedin" aria-hidden="true"></i></div></a></li>
+						</ul>
+						<div class="clearfix"></div>
+							<p><a href="#" data-toggle="modal" data-target="#myModal2" > ¿No tienes una cuenta?</a></p>
+							<p><a href="/users/password/new">¿Olvidó su contraseña?</a></p>
+						</div>
+						<div class="col-md-4 modal_body_right modal_body_right1">
+							<img src="/assets/page/log_pic.jpg" alt=" "/>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<!-- //Modal content-->
+			</div>
+		</div>
+	<!-- //Modal1 -->
+	<!-- Modal2 Registro -->
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body modal-body-sub_agile">
+						<div class="col-md-8 modal_body_left modal_body_left1">
+							<h3 class="agileinfo_sign">Registrarse <span>Ahora</span></h3>
+						 	<form id="new_user" action="/users" method="post">
+						 		<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+								<div class="styled-input agile-styled-input-top">
+									<input type="text" name="user[name]" id="user_name" required="required">
+									<label>Nombres</label>
+									<span></span>
+								</div>
+								<div class="styled-input">
+									<input type="text" name="user[lastname]" id="user_lastname" required="required">
+									<label>Apellidos</label>
+									<span></span>
+								</div>
+								<div class="styled-input">
+									<input type="email" name="user[email]" id="user_email" required="required"> 
+									<label>Correo electrónico</label>
+									<span></span>
+								</div> 
+								<div class="styled-input">
+									<input type="password" name="user[password]" id="user_password" required="required"> 
+									<label>Contraseña</label>
+									<span></span>
+								</div> 
+								<div class="styled-input">
+									<input type="password" name="confirm_password" required="required"> 
+									<label>Confirmar contraseña</label>
+									<span></span>
+								</div> 
+								<input type="submit" value="Registrar">
+						</form>
+						<ul class="social-nav model-3d-0 footer-social w3_agile_social top_agile_third">
+							<li><a href="#" class="facebook">
+								<div class="front"><i class="fa fa-facebook" aria-hidden="true"></i></div>
+								<div class="back"><i class="fa fa-facebook" aria-hidden="true"></i></div></a></li>
+							<li><a href="#" class="twitter"> 
+							  	<div class="front"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+								<div class="back"><i class="fa fa-twitter" aria-hidden="true"></i></div></a></li>
+							<li><a href="#" class="instagram">
+							  	<div class="front"><i class="fa fa-instagram" aria-hidden="true"></i></div>
+								<div class="back"><i class="fa fa-instagram" aria-hidden="true"></i></div></a></li>
+							<li><a href="#" class="pinterest">
+							  	<div class="front"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
+								<div class="back"><i class="fa fa-linkedin" aria-hidden="true"></i></div></a></li>
+						</ul>
+						<div class="clearfix"></div>
+							<p><a href="#">Al hacer clic en registrar aceptas los términos de uso.</a></p>
+						</div>
+						<div class="col-md-4 modal_body_right modal_body_right1">
+							<img src="/assets/page/log_pic.jpg" alt=" "/>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<!-- //Modal content-->
+	</section>
 	<%#= puts params[:controller].upcase + "-" + params[:action].upcase %> 
 	<% sliderShowKey = params[:controller].upcase + "-" + params[:action].upcase %>
 	<% varShowSlider = "N" %>
-	<% if @slideShow.has_key? sliderShowKey then %>
-		<% varShowSlider = @slideShow[sliderShowKey] %>
+	<% if sliderShowKey.include? "DEVISE" %>
+		<% varShowSlider = "G" %>
+	<% else %>
+		<% if @slideShow.has_key? sliderShowKey then %>
+			<% varShowSlider = @slideShow[sliderShowKey] %>
+		<% end %>
 	<% end %>
 	<% if varShowSlider == "G" then %>
 		<!-- Banner -->
@@ -157,7 +291,7 @@
 						<p style="text-align:center;"><%= image_tag("page/logo2.png", width: "100") %></p>
 						<br>
                         <p style="text-align:center;color:white;font-weight:bold;">NIT: 900.650.437-8</p>
-						<p style="text-align:center;color:white;font-weight:bold;">RNT: 28540</p><br>
+						<p style="text-align:center;color:white;font-weight:bold;">RNT: <%= @about.select{|h| h.about_codigo == "RNT"}.map{|j| j.about_contenido}.pop %></p><br>
 						<p style="text-align:center;"><%= image_tag("page/marca-pais.png", width:"60") %></p>
 					</div>
 					<div class="col-sm-3 footer-box wow fadeInUp">	
@@ -186,11 +320,11 @@
                         <div class="footer-box-text footer-box-text-contact">
 	                        <p><i class="fa fa-map-marker"></i> Direcci&oacute;n: Via Principal Barrio El Carmen,<br>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bahía Solano (Chocó, Colombia)</p>
-	                        <p><i class="fa fa-mobile"></i> Celular: +57 310 642 2790 <br>
-														&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-																+57 312 540 1840 <br>
-														&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
-																+57 314 866 2358
+	                        <p><i class="fa fa-mobile"></i> Celular: +57 323 582 9143 <br>
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
+																+57 323 425 9361<br>
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
+																+57 315 697 9707
 							</p>
 							<p><i class="fa fa-envelope"></i> Correo: <a href="">agencia@naisatours.co</a></p>
 							<p><i class="fa fa-facebook"></i> Facebook: <a href="https://www.facebook.com/naisa.tours" target="_blank">/naisa.tours</a></p>
@@ -217,11 +351,11 @@
 		</div>		
 	</footer>
 	<script>
-		$(document).on("page:fetch", function(){
+		document.addEventListener("turbolinks:request-start", function() {
 		  $("#cargando").show();
 		});
 		
-		$(document).on("page:update", function(){
+		document.addEventListener("turbolinks:load", function() {
 		  $("#cargando").hide();
 		  $('[data-hover="dropdown"]').dropdownHover();
 			//	For images only

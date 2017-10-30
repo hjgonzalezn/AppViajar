@@ -1,6 +1,7 @@
-include ReservasHelper
-
 class SalidasController < ApplicationController
+  include ReservasHelper
+  
+  before_action :authenticate_user!
   before_action :set_salida, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   before_action :initialize_vars, only: [:index, :new, :edit, :create, :update, :destroy, :show]

@@ -1,6 +1,9 @@
 class ViajesController < ApplicationController
+  include AeropuertosHelper
   include RutaHelper
   
+  before_action :authenticate_user!
+  after_action :verify_authorized
   before_action :set_viaje, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit]
   before_action :initialize_vars, only: [:index, :new, :edit, :show]
@@ -8,12 +11,31 @@ class ViajesController < ApplicationController
   # GET /viajes
   # GET /viajes.json
   def index
-    @viajes = Viaje.all
+    authorize Viaje
+    @periodoViaje = params[:txtRangoFechasViaje].split(" a ")
+    @ciudadViaje = params[:cboCiudad]
+    @rangoFechas = params[:txtRangoFechasViaje]
+    
+    instSQL_Where = "viajes.viaje_estadoRegistro = 'A'"
+    instSQL_joins = "INNER JOIN ruta R ON viaje_ruta = R.id "
+
+    unless @periodoViaje.blank?
+      instSQL_Where = instSQL_Where + " AND viajes.viaje_fecha BETWEEN CAST('#{@periodoViaje[0]}' AS DATE) AND CAST('#{@periodoViaje[1]}' AS DATE)"
+    end
+    
+    unless @ciudadViaje.blank?
+      instSQL_Where = instSQL_Where + " AND  R.ruta_descripcion LIKE '%#{@ciudadViaje}%'"
+    end
+    
+    @ciudadesAeropuertos = set_ciudades_aeropuertos
+    @viajes = Viaje.where(instSQL_Where).joins(instSQL_joins).order(viaje_fecha: :asc)
   end
 
   # GET /viajes/1
   # GET /viajes/1.json
   def show
+    authorize @viaje
+    
     @ruta = Rutum.find(@viaje.viaje_ruta)
     @lugares = set_descripcion_ruta(@ruta.ruta_descripcion)
     
@@ -57,10 +79,12 @@ class ViajesController < ApplicationController
   def new
     @titulo = "Nuevo viaje"
     @viaje = Viaje.new
+    authorize @viaje
   end
 
   # GET /viajes/1/edit
   def edit
+    authorize @viaje
     @titulo = "Modificar viaje"
   end
 
@@ -68,7 +92,8 @@ class ViajesController < ApplicationController
   # POST /viajes.json
   def create
     @viaje = Viaje.new(viaje_params)
-
+    authorize @viaje
+    
     respond_to do |format|
       if @viaje.save
         format.html { redirect_to @viaje, notice: 'Viaje creado exitosamente.' }
@@ -83,6 +108,7 @@ class ViajesController < ApplicationController
   # PATCH/PUT /viajes/1
   # PATCH/PUT /viajes/1.json
   def update
+    authorize current_user
     respond_to do |format|
       if @viaje.update(viaje_params)
         format.html { redirect_to @viaje, notice: 'Viaje actualizado exitosamente.' }
@@ -97,6 +123,7 @@ class ViajesController < ApplicationController
   # DELETE /viajes/1
   # DELETE /viajes/1.json
   def destroy
+    authorize @viaje
     @viaje.destroy
     respond_to do |format|
       format.html { redirect_to viajes_url, notice: 'Viaje eliminado exitosamente.' }
