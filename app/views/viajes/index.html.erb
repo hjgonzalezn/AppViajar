@@ -57,7 +57,7 @@
 											<!--/ul-->
 										</h3>
 										<h3><%= (viaje.viaje_fecha.strftime "%d-") + @meses[(viaje.viaje_fecha.strftime "%m").to_i] + (viaje.viaje_fecha.strftime "-%Y") %><br>
-											<%= viaje.vehiculo.vehi_capacPasajeros.to_s + " Pax" %>
+											<%= viaje.vehi_capacPasajeros.to_s + " Pax" %>
 										</h3>				
 										<div class="tm-tours-box-2-info info-viajes">
 											

@@ -20,13 +20,13 @@ class PaqueteTuristicosController < ApplicationController
 
   # GET /paquete_turisticos/new
   def new
-    @titulo = "Nuevo Paquete Turístico"
+    @titulo = "Nuevo Paquete Turistico"
     @paquete_turistico = PaqueteTuristico.new
   end
 
   # GET /paquete_turisticos/1/edit
   def edit
-    @titulo = "Modificar Paquete Turístico"
+    @titulo = "Modificar Paquete Turistico"
     @tipos_actividad_turistica = TipoActividadTuristica.all
     @itinerario = Itinerario.where("paquete_turistico_id = ? AND itnr_estadoRegistro = 'A'", @paquete_turistico)
   end
@@ -99,7 +99,7 @@ class PaqueteTuristicosController < ApplicationController
     end
 
     respond_to do |format| 
-      format.html { redirect_to @paquete_turistico, notice: 'Actividades turísticas actualizadas exitosamente.' }
+      format.html { redirect_to @paquete_turistico, notice: 'Actividades turisticas actualizadas exitosamente.' }
       format.json { render :show, status: :created, location: @paquete_turistico }
     #else
     #  format.html { render :new }
@@ -139,7 +139,7 @@ class PaqueteTuristicosController < ApplicationController
         @salidas = Salida.select("sld_fecha, salidas.id, (SELECT count(*) FROM paquete_turisticos PT INNER JOIN reservas R ON (R.rsrv_tipoProducto = 'PLAN' AND R.rsrv_productoId = PT.id) INNER JOIN detalle_reservas DR ON R.id = DR.reserva_id WHERE R.rsrv_fechaIda = salidas.sld_fecha) nro_viajeros").where("sld_fecha >= sysdate() AND paquete_turistico_id = ? AND sld_estadoRegistro = ?", @paquete_turistico, 'A')
       end
       
-      @clasifActividad = {"OP" => "OPCIONAL", "PB" => "PLAN BÁSICO"}
+      @clasifActividad = {"OP" => "OPCIONAL", "PB" => "PLAN BASICO"}
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.

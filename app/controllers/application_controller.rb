@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
  private
  
     def user_not_authorized
-      flash[:warning] = "No está autorizado para relizar la acción solicitada."
+      flash[:warning] = "No esta autorizado para relizar la accion solicitada."
       redirect_to(request.referrer || root_path)
     end
   

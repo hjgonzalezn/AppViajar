@@ -18,9 +18,9 @@
 			<div class="col-lg-6 col-md-6">
 				<div class="form-group">
 					<label>Tipo de viaje*</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label class="tm-label-radio"><input type="radio" name="optTipoViaje" value="AÉREO"> Aéreo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label class="tm-label-radio"><input type="radio" name="optTipoViaje" value="AEREO"> Aéreo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<label class="tm-label-radio"><input type="radio" name="optTipoViaje" value="TERRESTRE"> Terrestre</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label class="tm-label-radio"><input type="radio" name="optTipoViaje" value="ACUÁTICO"> Marítimo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label class="tm-label-radio"><input type="radio" name="optTipoViaje" value="ACUATICO"> Marítimo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<div class="tm-invisible">
 						<%= select_tag :rutas, options_for_select(@rutasViaje.invert) %>
 						<%= select_tag :vehiculos, options_for_select(@vehiculos.map{|h|[h.vehi_modeloCodigo, h.id]}) %>
@@ -132,7 +132,7 @@
 		<div id="tm-form-footer">
 			<div class="actions">
 				<script>
-					$(document).on('page:update', function() {
+					document.addEventListener("turbolinks:load", function() {
 						$("#cmd_aceptar").click(function(e){
 							<% if params[:action] == "edit" then %>
 								$('#<%= params[:action] %>_viaje_<%= @viaje.id %>').submit();
@@ -160,7 +160,7 @@
 		 $( document ).trigger( "page:update" );
 	});
 	
-	$(document).on('page:update', function() {
+	document.addEventListener("turbolinks:load", function() {
 		
 		$('.date').datetimepicker({
             	format: 'YYYY-MM-DD',

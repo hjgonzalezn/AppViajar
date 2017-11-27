@@ -34,7 +34,7 @@
 		<div id="tm-form-footer">
 			<div class="actions">
 				<script>
-					$(document).on('page:load', function() {
+					document.addEventListener("turbolinks:load", function() {
 						$("#cmd_aceptar").click(function(e){
 							<% if params[:action] == "edit" then %>
 								$('#<%= params[:action] %>_aeropuerto_<%= @aeropuerto.id %>').submit();

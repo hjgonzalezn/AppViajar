@@ -135,7 +135,7 @@
 							<p><a href="/users/password/new">¿Olvidó su contraseña?</a></p>
 						</div>
 						<div class="col-md-4 modal_body_right modal_body_right1">
-							<img src="/assets/page/log_pic.jpg" alt=" "/>
+							<%= image_tag "page/log_pic.jpg" %>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -209,7 +209,7 @@
 				</div>
 				<!-- //Modal content-->
 	</section>
-	<%#= puts params[:controller].upcase + "-" + params[:action].upcase %> 
+	 
 	<% sliderShowKey = params[:controller].upcase + "-" + params[:action].upcase %>
 	<% varShowSlider = "N" %>
 	<% if sliderShowKey.include? "DEVISE" %>
@@ -219,6 +219,10 @@
 			<% varShowSlider = @slideShow[sliderShowKey] %>
 		<% end %>
 	<% end %>
+
+	<%#= params[:controller].upcase + "**-" + params[:action].upcase + "**-" + varShowSlider %>
+	<%#= @slideShow %>
+	
 	<% if varShowSlider == "G" then %>
 		<!-- Banner -->
 		<section class="tm-banner">
@@ -291,7 +295,7 @@
 						<p style="text-align:center;"><%= image_tag("page/logo2.png", width: "100") %></p>
 						<br>
                         <p style="text-align:center;color:white;font-weight:bold;">NIT: 900.650.437-8</p>
-						<p style="text-align:center;color:white;font-weight:bold;">RNT: <%= @about.select{|h| h.about_codigo == "RNT"}.map{|j| j.about_contenido}.pop %></p><br>
+						<p style="text-align:center;color:white;font-weight:bold;">RNT: 49699<%#= @about.select{|h| h.about_codigo == "RNT"}.map{|j| j.about_contenido}.pop %></p><br>
 						<p style="text-align:center;"><%= image_tag("page/marca-pais.png", width:"60") %></p>
 					</div>
 					<div class="col-sm-3 footer-box wow fadeInUp">	

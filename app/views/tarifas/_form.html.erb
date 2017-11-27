@@ -93,7 +93,7 @@
 		<div id="tm-form-footer">
 			<div class="actions">
 				<script>
-					$(document).on('page:update', function() {
+					document.addEventListener("turbolinks:load", function() {
 						$("#cmd_aceptar").click(function(e){
 							<% if params[:action] == "edit" then %>
 								$('#<%= params[:action] %>_tarifa_<%= @tarifa.id %>').submit();
@@ -122,7 +122,7 @@
 		 $( document ).trigger( "page:update" );
 	});
 	
-	$(document).on('page:update', function() {
+	document.addEventListener("turbolinks:load", function() {
 		
 		$('.date').datetimepicker({
             	format: 'YYYY-MM-DD',

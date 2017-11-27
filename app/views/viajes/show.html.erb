@@ -13,7 +13,6 @@
 						</div>
 					</div>
 				<% end %>
-				
   				<div class="col-lg-12 col-md-12" id="form-wrapper">
 	  				<div id="tm-form-header">
 						<h1>Consultar Viaje</h1>
@@ -71,6 +70,14 @@
 														<td><h3><strong><%= arrHoras[i] %></strong></h3></td>
 													</tr>
 												<% end %>
+												
+												<% if !arrTrayectos.has_key? (arrLugaresCdg[0] + "_" + arrLugaresCdg[arrLugares.length - 1]) then %>
+													<% arrTrayectos[ arrLugaresCdg[0] + "_" + arrLugaresCdg[arrLugares.length - 1] ] = arrLugares[0] + " - " + arrLugares[arrLugares.length - 1] %>
+												<% end %>
+												
+												<% if !arrTrayectos.has_key? (arrLugaresCdg[arrLugares.length - 1] + "_" + arrLugaresCdg[0]) then %>
+													<% arrTrayectos[ arrLugaresCdg[arrLugares.length - 1] + "_" + arrLugaresCdg[0] ] = arrLugares[arrLugares.length - 1] + " - " + arrLugares[0] %>
+												<% end %>
 												<!--td><%#= @viaje.vehiculo.vehi_modeloCodigo %></td-->
 											
 											<% if @viaje.viaje_trayecto == "RT" then %>
@@ -119,8 +126,9 @@
 											<ul class="nav nav-tabs <%= "nav-" + arrTrayectos.length.to_s + "tabs" %> tm-white-bg" role="tablist">
 												<% tabClaCss = "active"%>
 												<% arrTrayectos.each do |key, value| %>
+													<% arrVal = value.split("-") %>
 											    	<li role="presentation" class="<%= tabClaCss %>">
-														<a href="#<%= key %>" aria-controls="datos" role="tab" data-toggle="tab"><%= value %></a>
+														<a href="#<%= key %>" aria-controls="datos" role="tab" data-toggle="tab"><%= arrVal[0] %><br><%= arrVal[1] %></a>
 											    	</li>
 											    	<% tabClaCss = ""%>
 											   	<% end %>
@@ -192,8 +200,7 @@
 														<th>Docum. Identidad</th>
 														<th>Nombres</th>
 														<th>Apellidos</th>
-														<th>Fecha<br>Reserva</th>
-														<th>Vendedor</th>
+														<th>Trayecto</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -203,15 +210,15 @@
 														<% documtIdentFormat = reserva.documIdentCliente[0, reserva.documIdentCliente.length - 2] %>
 														<% documtIdentFormat = documtIdentFormat.insert(-4, ".") %>
 														<% documtIdentFormat = documtIdentFormat.insert(-8, ".") %>
-
+														<% trayecto = set_descripcion_ruta(reserva.trayectoViaje) %>
+														<% arrTrayecto = trayecto.split("-") %>
 														<tr>
 															<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
 															<td><strong><a href="<%= reserva_path(reserva.id) %>" target="_blank"><%= reserva.codigoReserva %></a></strong></td>
 															<td><%= reserva.documIdentCliente[-2, 2] + " " + documtIdentFormat %></td>
 															<td><%= reserva.nombreCliente %></td>
 															<td><%= reserva.apellidosCliente %></td>
-															<td><%= reserva.fechaReserva.strftime("%Y-%m-%d %H:%M") %></td>
-															<td>NAISATOURS</td>
+															<td><%= arrTrayecto[0] + " - " + arrTrayecto[1] %></td>
 														</tr>
 														<% index = index + 1 %>
 													<% end %>
@@ -289,7 +296,7 @@
 	document.addEventListener("turbolinks:load", function() {
 			$("#cmdRegistrarPago").click(function(e){
 				e.preventDefault();
-				document.location.href ="/viajes/8/pagos/new/" + $("#producto").val();
+				document.location.href ="/viajes/<%= @viaje.id %>/pagos/new/" + $("#producto").val();
 			});
 			
 			$("input[name='chkReserva[]']").click(function(){

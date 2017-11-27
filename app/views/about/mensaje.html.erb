@@ -26,7 +26,7 @@
 </section>
 
 <script>
-	$(document).on('page:update', function() {
+	document.addEventListener("turbolinks:load", function() {
 		$("#cmd_aceptar").click(function(e){
 			window.location.href = "/about";
 		});

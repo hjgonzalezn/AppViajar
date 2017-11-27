@@ -12,23 +12,30 @@ class ViajesController < ApplicationController
   # GET /viajes.json
   def index
     authorize Viaje
-    @periodoViaje = params[:txtRangoFechasViaje].split(" a ")
+    
+    @periodoViaje = nil 
+    unless params[:txtRangoFechasViaje].blank?
+      @periodoViaje = params[:txtRangoFechasViaje].split(" a ")
+    end
+    
     @ciudadViaje = params[:cboCiudad]
     @rangoFechas = params[:txtRangoFechasViaje]
     
+    instSQL_Select = "viajes.*, vc.vehi_capacPasajeros" 
     instSQL_Where = "viajes.viaje_estadoRegistro = 'A'"
-    instSQL_joins = "INNER JOIN ruta R ON viaje_ruta = R.id "
+    instSQL_joins = "INNER JOIN ruta R ON viaje_ruta = R.id INNER JOIN vehiculos vc ON viajes.vehiculo_id = vc.id "
 
     unless @periodoViaje.blank?
       instSQL_Where = instSQL_Where + " AND viajes.viaje_fecha BETWEEN CAST('#{@periodoViaje[0]}' AS DATE) AND CAST('#{@periodoViaje[1]}' AS DATE)"
     end
     
     unless @ciudadViaje.blank?
-      instSQL_Where = instSQL_Where + " AND  R.ruta_descripcion LIKE '%#{@ciudadViaje}%'"
+      instSQL_Where = instSQL_Where + " AND  R.ruta_descripcion LIKE '%#{@ciudadViaje}%' AND viajes.viaje_estadoRegistro = 'A' AND vc.vehi_estadoRegistro = 'A'"
     end
     
+    
     @ciudadesAeropuertos = set_ciudades_aeropuertos
-    @viajes = Viaje.where(instSQL_Where).joins(instSQL_joins).order(viaje_fecha: :asc)
+    @viajes = Viaje.select(instSQL_Select).where(instSQL_Where).joins(instSQL_joins).order(viaje_fecha: :asc)
   end
 
   # GET /viajes/1
@@ -146,8 +153,14 @@ class ViajesController < ApplicationController
       end
       
       @estadosViaje = Catalogo.select("ctlg_valorCdg, ctlg_valorDesc").where("ctlg_categoria = 'ESTADO DE VIAJE' AND ctlg_estadoRegistro = 'A'").order(:id)
-      @estadosViaje = @estadosViaje.map{|h| [h.ctlg_valorCdg, h.ctlg_valorDesc]}.to_h
+      #@estadosViaje = @estadosViaje.map{|h| [h.ctlg_valorCdg, h.ctlg_valorDesc]}
+      registros = {}
+      @estadosViaje.each do |h|
+        registros[h.ctlg_valorCdg] = h.ctlg_valorDesc
+      end
       
+      @estadosViaje = registros
+            
       instSQL_select = "vehiculos.id, Concat( IfNull(Concat(C.ctlg_subcategoria
                                               ,'|' 
                                               ,E.empr_nombreCorto
@@ -193,7 +206,7 @@ class ViajesController < ApplicationController
                          ON (E.empr_documentoIdentidad = S.empr_documentoIdentidad AND vehiculos.vehi_sucursalEmpresaPropId = S.id)
                       INNER JOIN catalogos C
                          ON C.ctlg_valorCdg = vehiculos.vehi_tipo
-                      WHERE C.ctlg_categoria = 'TIPO DE VEHÍCULO'
+                      WHERE C.ctlg_categoria = 'TIPO DE VEHICULO'
                         AND vehiculos.vehi_estadoRegistro = 'A'"
       
       @vehiculos = Vehiculo.select(instSQL_select).joins(instSQL_joins)

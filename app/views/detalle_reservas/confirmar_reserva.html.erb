@@ -84,11 +84,11 @@
 								<p class="slider-subtitle">
 									Para viajes operados por Naisa Tours SAS Tenga en cuenta que:
 									<ul>
-										<li>Los datos personales de los pasajeros deben coincidir con su documento de identidad, la corrección de los mismos puede implicar el pago de cargos adicionales.</li>
-										<li>Tiene derecho a 10 kilos de equipaje en bodega y 3 kilos de equipaje de mano. Si se sobrepasan estos pesos, se aplicarán cargos por exceso de equipaje de acuerdo con la tarifa estipulada por la empresa. 
+										<li><strong>Datos personales:</strong> deben coincidir con su documento de identidad, la corrección de los mismos puede implicar el pago de cargos adicionales.</li>
+										<li><strong>Equipaje: </strong>Tiene derecho a 10 kilos en bodega y 3 en cabina. Si se sobrepasan estos pesos, se aplicarán cargos de acuerdo con la tarifa estipulada por la empresa. 
 											Además, el envío de dicha carga en el mismo viaje estará condicionado a la capacidad de la aeronave.</li>
-										<li>Debe presentarse en el aeropuerto para su chequeo con al menos una hora de anticipación a la salida del vuelo. De no llegar a tiempo, el pasajero perderá su cupo y pagará una multa equivalente al 25% del valor del tiquete.</li>
-										<li>Para brindarle un mejor servicio, por favor infórmenos con antelación a la fecha de su viaje si requiere transportar equipaje especial o sobredimensionado: mascotas, silla de ruedas, equipos médicos o de pesca, etc.</li>
+										<li><strong>Chequeo: </strong> Los pasajeros deben presentarse en el aeropuerto para su chequeo con al menos una hora de anticipación a la salida del vuelo. De no llegar a tiempo, el pasajero perderá su cupo y pagará una multa equivalente al 25% del valor del tiquete.</li>
+										<li><strong>Equipaje especial: </strong>Para brindarle un mejor servicio, por favor infórmenos con antelación a la fecha de su viaje si requiere transportar equipaje especial o sobredimensionado: mascotas, silla de ruedas, equipos médicos o de pesca, etc.</li>
 									</ul>
 									<br>
 									Las anteriores condiciones son las más importantes a tener en cuenta pero no las únicas, para conocer el detalle completo del contrato, haga clic <a href="#"><strong>Aquí</strong></a>.
@@ -144,7 +144,7 @@
 </section>
 
 <script>
-	$(document).on('page:update', function() {
+	document.addEventListener("turbolinks:load", function() {
 		$("#cmd_aceptar").click(function(e){
 			if($("#terminos").length > 0){
 				if($('input[id="terminos"]:checked').length == 0){

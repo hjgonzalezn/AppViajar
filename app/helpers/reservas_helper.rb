@@ -1,11 +1,12 @@
 module ReservasHelper
   
-  def tarifas_viaje(viajeId)
-    instSQL_Select = "viajes.viaje_tarifas, T.trf_promo, T.trf_econo, T.trf_base, T.trf_flexi, T.trf_deluxe"
-    instSQL_Joins = "INNER JOIN ruta R ON viajes.viaje_ruta = R.id
-                     INNER JOIN tarifas T ON trf_producto = R.id"
-    instSQL_Where = "T.trf_conceptoCodigo = 'VLPAX' AND T.trf_conceptoAplicacion = 'RUTA' AND T.trf_fechaInicio < viajes.viaje_fecha AND (T.trf_fechaFin IS NULL OR T.trf_fechaFin > viajes.viaje_fecha) AND viajes.id = #{viajeId}"
-    tarifas = Viaje.select(instSQL_Select).where(instSQL_Where).joins(instSQL_Joins).take
+  def tarifas_viaje(viajeId, ruta)
+    viaje = Viaje.find(viajeId)
+    #{viaje.viaje_tarifas}' viaje_tarifas,
+    instSQL_Select = "'#{viaje.viaje_tarifas}' viaje_tarifas, tarifas.trf_promo, tarifas.trf_econo, tarifas.trf_base, tarifas.trf_flexi, tarifas.trf_deluxe"
+    instSQL_Joins = "INNER JOIN ruta ON (ruta.id = tarifas.trf_producto AND tarifas.trf_tipoProducto = 'RUTA')"
+    instSQL_Where = "tarifas.trf_conceptoCodigo = 'VLPAX' AND tarifas.trf_conceptoAplicacion = 'RUTA' AND tarifas.trf_fechaInicio < '#{viaje.viaje_fecha}' AND (tarifas.trf_fechaFin IS NULL OR tarifas.trf_fechaFin > '#{viaje.viaje_fecha}') AND ruta.ruta_descripcion = '#{ruta}'"
+    tarifas = Tarifa.select(instSQL_Select).where(instSQL_Where).joins(instSQL_Joins).take
     return tarifas
   end
   
@@ -24,7 +25,7 @@ module ReservasHelper
     parametro = Catalogo.where(ctlg_valorCdg: :BOME).take
     bonoDctoMenor = parametro.ctlg_observacion.to_f
     
-    instSQL_Select = "reservas.rsrv_tipoProducto, reservas.rsrv_productoId, reservas.rsrv_valorTotal, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_fechaNacimiento, P.pers_nombres, (reservas.rsrv_fechaRegreso - reservas.rsrv_fechaIda + 1) dias"
+    instSQL_Select = "reservas.rsrv_tipoProducto, reservas.rsrv_productoId, reservas.rsrv_valorTotal, reservas.rsrv_trayectoViaje, DR.detRsrv_tipoCliente, DR.detRsrv_clienteId, P.pers_fechaNacimiento, P.pers_nombres, (reservas.rsrv_fechaRegreso - reservas.rsrv_fechaIda + 1) dias"
     instSQL_Where = "reservas.rsrv_estadoRegistro = 'A' AND DR.detRsrv_estadoRegistro = 'A' AND reservas.rsrv_codigo = '#{codigoReserva}'"
     instSQL_Joins = "INNER JOIN detalle_reservas DR ON reservas.id = DR.reserva_id
                      INNER JOIN personas P ON DR.detRsrv_clienteId = P.pers_documentoIdentidad"
@@ -34,8 +35,8 @@ module ReservasHelper
     
     case rsrv.rsrv_tipoProducto
       when "VUELO" then
-        viaje = tarifas_viaje(rsrv.rsrv_productoId)
- 
+        viaje = tarifas_viaje(rsrv.rsrv_productoId, rsrv.rsrv_trayectoViaje)
+        puts viaje.inspect
         if viaje.viaje_tarifas.blank?
           valorAPagar = viaje.trf_base * reservas.length
         else

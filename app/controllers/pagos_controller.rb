@@ -42,11 +42,11 @@ class PagosController < ApplicationController
     case @pago.pago_tipoProducto
       when "RESERVA"
         reserva = Reserva.where("rsrv_codigo = '#{@pago.pago_productoId}'").take
-        detallesReserva = DetalleReserva.where("reserva_id = ? AND detRsrv_estadoReserva = 'P'" ,reserva.id)
+        detallesReserva = DetalleReserva.where("reserva_id = ? AND detRsrv_estadoReserva IN ('I', 'P')" ,reserva.id)
         @parentPath = "/reservas/" + reserva.id.to_s
         if reserva.rsrv_tipoProducto == "VUELO" then
-          tarifasViaje = tarifas_viaje(@pago.pago_productoId)
-          if tarifasViaje.viaje_tarifas.nil?
+          tarifasViaje = tarifas_viaje(reserva.rsrv_productoId, reserva.rsrv_trayectoViaje)
+          if tarifasViaje.viaje_tarifas.blank?
             detallesReserva.each do |h|
               if @pagoPendAplicar > 0 then
                 h.detRsrv_tarifaCodigo = "BASE"

@@ -24,7 +24,7 @@ class VehiculosController < ApplicationController
 
   # GET /vehiculos/new
   def new
-    @titulo = "Nuevo vehículo"
+    @titulo = "Nuevo vehiculo"
     @vehiculo = Vehiculo.new
     @tipoIdPropietario = ""
     @nroIdPropietario = ""
@@ -33,7 +33,7 @@ class VehiculosController < ApplicationController
 
   # GET /vehiculos/1/edit
   def edit
-    @titulo = "Modificar vehículo"
+    @titulo = "Modificar vehiculo"
     @tipoIdPropietario = @vehiculo.vehi_propietarioId[-2,2]
     @nroIdPropietario = @vehiculo.vehi_propietarioId[0,@vehiculo.vehi_propietarioId.length - 2]
     @sucursales = set_sucursales_empresa(@vehiculo.vehi_propietarioId)

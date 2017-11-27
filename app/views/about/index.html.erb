@@ -2,6 +2,9 @@
 	<section class="container tm-home-section-1" id="more">
 		<div class="row">
 			<div class="col-lg-4 col-md-4 col-sm-6">
+					<div class="tm-invisible">
+						<%= select_tag :rutas, options_for_select(@rutasViaje.invert) %>
+					</div>
 				<!-- Nav tabs -->
 				<div class="tm-home-box-1">
 					<ul class="nav nav-tabs tm-white-bg" role="tablist" id="hotelCarTabs">
@@ -17,18 +20,18 @@
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="flight">
 							<div class="tm-search-box effect2">
-								<form id="frmReservarVuelo" action="/detalle_reservas/solicitar_reserva" method="post" class="hotel-search-form">
+								<form id="frmReservarVuelo" action="/detalle_reservas/seleccionar_viaje" method="get" class="hotel-search-form">
 									<div class="tm-form-inner">
 										<div class="form-group">
-											<%= hidden_field_tag :datosProducto, "VUELO|0"  %>
-											<%= select_tag :cboOrigen, options_from_collection_for_select(@ciudadesAeropuertos, :id, :enter_nombreOficial), options={class:"form-control" , required: :required, prompt: "-- ORIGEN --"} %>
+											<%= hidden_field_tag :dPrd, "VUELO|0"  %>
+											<%= select_tag :cboOrg, options_from_collection_for_select(@ciudadesAeropuertos, :id, :enter_nombreOficial), options={class:"form-control" , required: :required, prompt: "-- ORIGEN --"} %>
 							          	</div>
 										<div class="form-group">
-											<%= select_tag :cboDestino, options_from_collection_for_select(@ciudadesAeropuertos, :id, :enter_nombreOficial), options={class:"form-control" , required: :required, prompt: "-- DESTINO --"} %> 
+											<%= select_tag :cboDst, nil, options={class:"form-control" , required: :required, prompt: "-- DESTINO --"} %> 
 							          	</div>										
 							          	<div class="form-group">
 							                <div class='input-group date' id='datetimepicker3'>
-							                    <%= text_field_tag "txtFechaIda", nil, options = {class:"form-control", placeholder:"Fecha de ida", required: :required} %>
+							                    <%= text_field_tag "fchIda", nil, options = {class:"form-control", placeholder:"Fecha de ida", required: :required} %>
 							                    <span class="input-group-addon">
 							                        <span class="fa fa-calendar"></span>
 							                    </span>
@@ -36,7 +39,7 @@
 							            </div>
 							          	<div class="form-group">
 							                <div class='input-group date' id='datetimepicker4'>
-							                	<%= text_field_tag "txtFechaRegreso", nil, options = {class:"form-control", placeholder:"Fecha de regreso"} %>
+							                	<%= text_field_tag "fchRgr", nil, options = {class:"form-control", placeholder:"Fecha de regreso"} %>
 							                    <span class="input-group-addon">
 							                        <span class="fa fa-calendar"></span>
 							                    </span>
@@ -56,13 +59,13 @@
 											</div>
 											<div class="row">
 												<div class="col-xs-4">
-													<%= select_tag "cboAdultos", options_for_select( (1..10).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"12 años o más", class:"form-control" %>
+													<%= select_tag "adt", options_for_select( (1..10).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"12 años o más", class:"form-control" %>
 												</div>
 												<div class="col-xs-4">
-													<%= select_tag "cboMenores", options_for_select( (0..5).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"2 a 11 años", class:"form-control" %> 
+													<%= select_tag "mnr", options_for_select( (0..5).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"2 a 11 años", class:"form-control" %> 
 												</div>
 												<div class="col-xs-4">
-													<%= select_tag "cboInfantes", options_for_select( (0..5).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"0 a 23 meses", class:"form-control" %>
+													<%= select_tag "inf", options_for_select( (0..5).step(1).map{|n| n%1 == 0 ? n.to_i : n} ), title:"0 a 23 meses", class:"form-control" %>
 												</div>
 											</div>
 							          	</div>							           
@@ -387,7 +390,7 @@
 	
 	<script>
 		
-		$(document).on('page:update', function() {
+		document.addEventListener("turbolinks:load", function() {
 		  	$(".mainmenu").removeClass("active");
 		  	$("#mnuHome").addClass("active");
 		  				
@@ -405,35 +408,49 @@
             });
                       
             $('.date-time').datetimepicker();
-            $("#txtFechaIda").val("");
-            $("#txtFechaRegreso").val("");
+            $("#fchIda").val("");
+            $("#fchRgr").val("");
             $("#txtFchIngresoHotel").val("");
             $("#txtFchSalidaHotel").val("");
+            $("#cboOrg").change(function() {
+				$("#cboDst").empty();
+            	opcion = "<option value=''>-- DESTINO --</option>";
+            	$("#cboDst").append(opcion);
+            	
+            	$('#rutas > option').each(function() {
+            		arrRuta = $(this).text().split("-");
+            		if (arrRuta[2].trim() == $('#cboOrg > option:selected').text())
+            		{
+            			opcion = "<option value='" + arrRuta[1] + "'>" + arrRuta[3] + "</option>";
+            			$("#cboDst").append(opcion);
+            		}
+            	});
+            });
 			$("#cmdReservarVuelo").click(function() {
 				
-				if($("#cboOrigen").val() == ""){
+				if($("#cboOrg").val() == ""){
 	     			swal("Error", "Por favor seleccione la ciudad de origen de su viaje","error");
-	     			$("#cboOrigen").focus();
+	     			$("#cboOrg").focus();
 	     			return;					
 				}
 				
-				if($("#cboDestino").val() == ""){
+				if($("#cboDst").val() == ""){
 	     			swal("Error", "Por favor seleccione la ciudad de destino de su viaje","error");
-	     			$("#cboDestino").focus();
+	     			$("#cboDst").focus();
 	     			return;					
 				}				
 				
-				if ($("#txtFechaIda").val().length > 0){
-	     			var arrFecha = $("#txtFechaIda").val().split("/");
+				if ($("#fchIda").val().length > 0){
+	     			var arrFecha = $("#fchIda").val().split("/");
 	     			var dtFechaIda = parseInt(arrFecha[2] + "" + arrFecha[1] + "" + arrFecha[0]);
 	     		}
 	     		else{
 	     			swal("Error", "Por favor seleccione la fecha de salida viaje","error");
-	     			$("#txtFechaIda").focus();
+	     			$("#fchIda").focus();
 	     			return;
 	     		}
-	     		if ($("#txtFechaRegreso").val().length > 0){
-	     			arrFecha = $("#txtFechaRegreso").val().split("/");
+	     		if ($("#fchRgr").val().length > 0){
+	     			arrFecha = $("#fchRgr").val().split("/");
 	     			var dtFechaRegreso = parseInt(arrFecha[2] + "" + arrFecha[1] + "" + arrFecha[0]);
 	 			}
 	     		

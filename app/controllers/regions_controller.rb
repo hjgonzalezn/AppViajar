@@ -26,13 +26,13 @@ class RegionsController < ApplicationController
 
   # GET /regions/new
   def new
-    @titulo = "Nueva región"
+    @titulo = "Nueva region"
     @region = Region.new
   end
 
   # GET /regions/1/edit
   def edit
-    @titulo = "Modificar región"
+    @titulo = "Modificar region"
   end
 
   # POST /regions

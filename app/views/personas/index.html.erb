@@ -97,7 +97,7 @@
 
 <script>
 
-	$(document).on('page:update', function() {
+	document.addEventListener("turbolinks:load", function() {
 		$('#cmd_buscar').click(function(e){
         	e.preventDefault();
         	$("#frmBuscar").submit();

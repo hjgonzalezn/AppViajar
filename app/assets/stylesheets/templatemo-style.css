@@ -738,8 +738,13 @@ input:out-of-range {
 	height: 100%;
 }
 
-#generalTabs li, .nav-5tabs{
+#generalTabs li, .nav-5tabs li{
 	width: 20%;
+	height: 100%;
+}
+
+.nav-6tabs li{
+	width: 16.6666666667%;
 	height: 100%;
 }
 
@@ -747,7 +752,7 @@ input:out-of-range {
 	width: 30%;
 	height: 100%;
 }
-#hotelCarTabs > li > a, #personTabs > li > a, #generalTabs li > a, .nav-2tabs li > a, .nav-3tabs li > a, .nav-4tabs li > a, .nav-5tabs li > a {
+#hotelCarTabs > li > a, #personTabs > li > a, #generalTabs li > a, .nav-2tabs li > a, .nav-3tabs li > a, .nav-4tabs li > a, .nav-5tabs li > a, .nav-6tabs li > a{
 	margin-right: 0;
 	padding-top: 15px;
 	padding-bottom: 15px;
@@ -773,6 +778,8 @@ input:out-of-range {
 .nav-4tabs li > a:focus,
 .nav-5tabs li > a:hover,
 .nav-5tabs li > a:focus
+.nav-6tabs li > a:hover,
+.nav-6tabs li > a:focus
  {
 	border: none;
 	background: #F9E58B;
@@ -792,6 +799,8 @@ input:out-of-range {
 .nav-4tabs > li.active > a:focus,
 .nav-5tabs > li.active > a:hover,
 .nav-5tabs > li.active > a:focus
+.nav-6tabs > li.active > a:hover,
+.nav-6tabs > li.active > a:focus
 {
 	background: transparent;
 	border: none;	
@@ -1242,6 +1251,9 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 	max-width: 532px;
 	margin-bottom: 50px;
 }
+.tm-margin-bottom-0{
+	margin-bottom: 0;
+}
 .tm-tours-box-1-info {
 	background: #f8f8f8;
 	padding: 40px;
@@ -1297,6 +1309,7 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 .tm-tours-box-2 {
 	max-width: 254px;
 	width: 100%;
+	margin-bottom:20px;
 }
 .tm-tours-box-2-info h3 {
 	font-size: 14px;
@@ -1831,7 +1844,7 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 	.tm-section-title {	font-size: 28px; }
 }
 
-.tm-tours-box-2 > h3{
+.tm-tours-box-2 > h3, .titulo-viajes{
 	background-color:rgba(0,0,0,0.8);
 	color:#e0e0e0;
 	border-bottom: 4px solid #2dc970;
@@ -1852,7 +1865,7 @@ hr.vivo{border-top: 3px solid #ffff00; background-color:white; height:2px; margi
 	padding:5px;
 }
 
-.titulo-viajes
+.tm-tours-box-2 .titulo-viajes
 {
 	min-height: 100px;
 	font-weight:bold;

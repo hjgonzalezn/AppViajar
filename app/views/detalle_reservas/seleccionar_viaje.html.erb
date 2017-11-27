@@ -1,0 +1,229 @@
+		<!-- gray bg -->	
+	<section class="container tm-home-section-1" id="more">
+		<div class="row">
+			<!-- slider -->
+			<div class="flexslider effect2 effect2-contact flex-caption">
+				<ul class="slides">
+					<li>
+						<div class="col-lg-12">
+							<div class="col-lg-12">
+								<div class="col-lg-12">
+									<h2 class="slider-title">Disponibilidad de Viajes</h2>
+									<div class="row">
+										<% if @ruta != nil && @sillasDisponIda > @sillasSolicitadas then%>
+											<% lugares = set_descripcion_ruta(@ruta.ruta_descripcion)%>
+											<% arrLugares = lugares.split(" - ") %>
+											<% arrHoras = @viajeIda.viaje_horaSalida.squeeze("|").split("|") %>
+										<% end %>
+										<div class="col-lg-12">
+										<ul class="breadcrumb">
+											<li><a href="#"><h3><strong>IDA</strong></h3></a></li>
+											<li><a href="#">
+												<h3><strong>
+													<% unless @enterOrigen.nil? %>
+														<%= @enterOrigen.enter_nombreCorto %>
+													<% end %>
+												</strong></h3>
+											</a></li>
+											<li><a href="#"><h3><strong>
+												<% unless @enterOrigen.nil? %>
+													<%= @enterDestino.enter_nombreCorto %>
+												<% end %>
+												</strong></h3>
+											</a></li>
+											<li><a href="#"><%= "" %></a></li>
+										</ul>
+									</div>
+								<div class="col-lg-12">
+									<table class="slider-abstract">
+										<thead>
+											<tr>
+												<th width="30%">FECHA</th>
+												<th>HORA</th>
+												<th>TARIFA</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><h4>
+													<%= @viajeIda == nil ? @dtFechaIda : (@viajeIda.viaje_fecha == nil ? @dtFechaIda : @viajeIda.viaje_fecha.strftime("%d/%m/%Y")) %>
+												</h4></td>
+												<% if @ruta != nil && @sillasDisponIda > @sillasSolicitadas then%>
+													<% if @ruta.nil? %>
+														<td>&nbsp;</td>
+														<td>&nbsp;</td>
+													<% else %>
+														<% if @ruta.ruta_descripcion.include? "|#{@enterOrigen.id}|" then %>
+															<td><h4><%= arrHoras[1]%></h4></td>
+														<% elsif @ruta.ruta_descripcion.include? "#{@enterOrigen.id}|" then %>
+															<td><h4><%= arrHoras[0]%></h4></td>
+														<% end %>
+														<td><h4><%= number_to_currency(@ruta.tarifa) %></h4></td>
+													<% end %>
+												<% else %>
+													<td colspan="2"> 
+														<div class="alert alert-danger tm-margin-bottom-0">
+															<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+															<p id="notice"><strong>No hay cupos suficientes en este viaje. <%= @sillasDisponIda %> sillas disponibles.</strong></p>
+														</div>
+													</td>
+												<% end %>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<p>&nbsp;</p>
+								<p>&nbsp;</p>
+								<% unless @dtFechaRegreso.blank? %>
+									<div class="col-lg-12">
+										<ul class="breadcrumb">
+											<li><a href="#"><h3><strong>REGRESO</strong></h3></a></li>
+											<li><a href="#"><h3><strong>
+												<% unless @enterDestino.nil? %>
+													<%= @enterDestino.enter_nombreCorto %>
+												<% end %>
+												</strong></h3>
+											</a></li>
+											<li><a href="#"><h3><strong>
+												<% unless @enterOrigen.nil? %>
+													<%= @enterOrigen.enter_nombreCorto %>
+												<% end %>
+												</strong></h3></a></li>
+											<li><a href="#"><%= "" %></a></li>
+										</ul>
+									</div>
+									<div class="col-lg-12">
+										<table class="slider-abstract">
+											<thead>
+												<tr>
+													<th width="30%">FECHA</th>
+													<th>HORA</th>
+													<th>TARIFA</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><h4>
+														<%= @viajeRegreso == nil ? @dtFechaRegreso : (@viajeRegreso.viaje_fecha == nil ? @dtFechaRegreso : @viajeRegreso.viaje_fecha.strftime("%d/%m/%Y")) %>
+													</h4></td>
+													<% if @ruta != nil && @sillasDisponRgr > @sillasSolicitadas then %>
+														<% arrHoras = @viajeRegreso.viaje_horaSalida.squeeze("|").split("|") %>
+														<% if @ruta.nil? %>
+															<td>&nbsp;</td>
+															<td>&nbsp;</td>
+														<% else %>
+															<% if @ruta.ruta_descripcion.include? "|#{@enterOrigen.id}|" then %>
+																<td><h4><%= arrHoras[1]%></h4></td>
+															<% elsif @ruta.ruta_descripcion.include? "#{@enterOrigen.id}|" then %>
+																<td><h4><%= arrHoras[0]%></h4></td>
+															<% end %>
+															<td><h4><%= number_to_currency(@ruta.tarifa) %></h4></td>
+														<% end %>
+													<% else %>
+														<td colspan="2">
+															<div class="alert alert-danger tm-margin-bottom-0">
+																<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+																<p id="notice"><strong>No hay cupos suficientes en este viaje. <%= @sillasDisponRgr %> sillas disponibles.</strong></p>
+															</div>
+														</td>
+													<% end %> <!-- Sillas disponibles -->
+													</tr>
+												</tbody>
+											</table>
+										</div>
+								<% end %>
+								<p>&nbsp;</p>
+							</div>
+						</div>
+						</div>
+						<div class="col-lg-12">
+							<% if @sillasDisponIda > @sillasSolicitadas || @sillasDisponRgr > @sillasSolicitadas then %>
+								<%= form_tag(solicitar_reserva_path, method: :post, id: :frmViajes) do %>
+									<%= hidden_field_tag :dPrd, @datosProd %>
+									<%= hidden_field_tag :vjIda, @sillasDisponIda <= @sillasSolicitadas ? "" : @viajeIda.id %>
+									<%= hidden_field_tag :vjRgr, @sillasDisponRgr <= @sillasSolicitadas ? "" : @viajeRegreso.id %>
+									<%= hidden_field_tag :org, @origen %>
+									<%= hidden_field_tag :dst, @destino %>
+									<%= hidden_field_tag :fchIda, @dtFechaIda %>
+									<%= hidden_field_tag :fchRgr, @dtFechaRegreso %>
+									<%= hidden_field_tag :adt, @adultos %>
+									<%= hidden_field_tag :mnr, @menores %>
+									<%= hidden_field_tag :inf, @infantes %>
+									<p class="center">
+										<input type="button" value="<< Cancelar" id="cmd_cancelar" class="tm-orange-btn">
+										<input type="submit" value="Continuar >>" id="cmd_aceptar" class="tm-orange-btn">
+									</p>
+								<% end %> <!-- form -->
+							<% else %>
+									<p class="center">
+										<input type="button" value="<< Cancelar" id="cmd_cancelar" class="tm-orange-btn">
+									</p>
+							<% end %>
+						</div>			      
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>	
+	
+	<!-- white bg -->
+	<section class="section-padding-top tm-white-bg">
+		<div class="container">
+			<div class="row">
+				<div class="tm-section-header section-margin-bottom">
+					<br/>
+				</div>	
+			</div>
+		</div>
+	</section>
+	
+<script>
+	document.addEventListener("turbolinks:load", function() {
+		$("#cmd_aceptar").click(function(e){
+			e.preventDefault();
+			if($("#vjIda").val() == "" || $("#vjRgr").val() == ""){
+				if ($("#vjIda").val() == ""){
+					textoAlerta = "La reserva sólo aplicará al viaje de regreso.";
+					aux = $("#org").val();
+					$("#org").val($("#dst").val());
+					$("#dst").val(aux);
+					$("#vjIda").val($("#vjRgr").val());
+					$("#fchIda").val($("#fchRgr").val());
+					$("#vjRgr").val("");
+					$("#fchRgr").val("");
+				}
+				else if($("#vjRgr").val() == ""){
+				 	textoAlerta = "La reserva sólo aplicará al viaje de ida.";
+				 	$("#vjRgr").val("");
+				 	$("#fchRgr").val("");
+				} 	
+				swal({
+				  title: "¿Está seguro?",
+				  text: textoAlerta,
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#5cb85c",
+				  confirmButtonText: "Sí, deseo continuar.",
+				  cancelButtonText: "No, cancelar la reserva.",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+				    $("#frmViajes").submit();
+				  } else {
+				    swal("Reserva cancelada", "Vuelve pronto, gracias por preferirnos.", "error");
+				    window.location.href = "/about";
+				  }
+				});
+			}
+			else{
+				$("#frmViajes").submit();
+			}
+		});
+		
+		$("#cmd_cancelar").click(function(e){
+			window.location.href = "/about";
+		});
+	});
+</script>

@@ -1,6 +1,7 @@
 class AboutController < ApplicationController
   include AeropuertosHelper
   include PersonasHelper
+  include RutaHelper
   
   before_action :authenticate_user!, only: [:admon]
   after_action :verify_authorized, only: [:admon]
@@ -14,6 +15,14 @@ class AboutController < ApplicationController
   end
   
   def index
+      @rutasViaje = {}
+      rutas = Rutum.where(ruta_EstadoRegistro: :A, ruta_medio: :AEREO).order("ruta_prioridad ASC, ruta_descripcion ASC")
+      rutas.each do |h|
+        if h.ruta_descripcion.count("|") == 1 then
+          descripcionRuta = set_descripcion_ruta(h.ruta_descripcion)  
+          @rutasViaje[h.id] = h.ruta_descripcion.gsub("|", "-") + "-" + descripcionRuta
+        end
+      end
     @ciudadesAeropuertos = set_ciudades_aeropuertos
   end
   

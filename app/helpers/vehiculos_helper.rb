@@ -1,7 +1,7 @@
 module VehiculosHelper
   def set_tipos_vehiculo
     tiposVehiculo = Hash.new
-    registros = Catalogo.where("ctlg_categoria = 'TIPO DE VEHÍCULO' AND ctlg_estadoRegistro = 'A'").order(:ctlg_valorDesc)
+    registros = Catalogo.where("ctlg_categoria = 'TIPO DE VEHICULO' AND ctlg_estadoRegistro = 'A'").order(:ctlg_valorDesc)
     registros.each do |h|
       tiposVehiculo[h.ctlg_valorCdg]= h.ctlg_valorDesc
     end

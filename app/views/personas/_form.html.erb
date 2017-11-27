@@ -164,7 +164,7 @@
 		<div id="tm-form-footer">
 			<div class="actions">
 				<script>
-					$(document).on('page:update', function() {
+					document.addEventListener("turbolinks:load", function() {
 						$("#cmd_aceptar").click(function(e){
 							<% if params[:action] == "edit" then %>
 								$('#<%= params[:action] %>_persona_<%= @persona.id %>').submit();

@@ -22,24 +22,24 @@ class AccionsController < ApplicationController
   def new
     @accion = Accion.new
     authorize @accion
-    @titulo = "Nueva Acción"
+    @titulo = "Nueva Accion"
   end
 
   # GET /accions/1/edit
   def edit
     authorize @accion
-    @titulo = "Modificar Acción"
+    @titulo = "Modificar Accion"
   end
 
   # POST /accions
   # POST /accions.json
   def create
-    authorize @accion
     @accion = Accion.new(accion_params)
+    authorize @accion
 
     respond_to do |format|
       if @accion.save
-        format.html { redirect_to @accion, notice: 'Acción creada exitosamente.' }
+        format.html { redirect_to @accion, notice: 'Accion creada exitosamente.' }
         format.json { render :show, status: :created, location: @accion }
       else
         format.html { render :new }

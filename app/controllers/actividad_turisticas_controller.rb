@@ -17,13 +17,13 @@ class ActividadTuristicasController < ApplicationController
 
   # GET /actividad_turisticas/new
   def new
-    @titulo = "Nueva actividad turística"
+    @titulo = "Nueva actividad turistica"
     @actividad_turistica = ActividadTuristica.new
   end
 
   # GET /actividad_turisticas/1/edit
   def edit
-    @titulo = "Modificar actividad turística"
+    @titulo = "Modificar actividad turistica"
   end
 
   # POST /actividad_turisticas

@@ -17,13 +17,13 @@ class DivisionPaisController < ApplicationController
 
   # GET /division_pais/new
   def new
-    @titulo = "Nueva División País"
+    @titulo = "Nueva Division Pais"
     @division_pai = DivisionPai.new
   end
 
   # GET /division_pais/1/edit
   def edit
-    @titulo = "Modificar División País"
+    @titulo = "Modificar Division Pais"
   end
 
   # POST /division_pais

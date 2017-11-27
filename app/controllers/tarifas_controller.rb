@@ -114,7 +114,7 @@ class TarifasController < ApplicationController
     def initialize_vars
       
       @parent_path = set_parent_path
-      @hshNaturalezaConcept = Hash["DB", "DÉBITO", "CR", "CRÉDITO", "IF", "INFORMATIVA"]
+      @hshNaturalezaConcept = Hash["DB", "DEBITO", "CR", "CREDITO", "IF", "INFORMATIVA"]
       
       case @parentController
           when "vehiculos"
