@@ -340,7 +340,7 @@
 						</div>
 					</div>					
 				</div>
-				<!--div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					<div class="tm-tours-box-1">
 						<%= image_tag("sitios/tours-05.jpg", alt:"image", class:"img-responsive") %>
 						<div class="tm-tours-box-1-info">
@@ -390,7 +390,7 @@
 	
 	<script>
 		
-		document.addEventListener("turbolinks:load", function() {
+		$(document).on('turbolinks:load', function () {
 		  	$(".mainmenu").removeClass("active");
 		  	$("#mnuHome").addClass("active");
 		  				

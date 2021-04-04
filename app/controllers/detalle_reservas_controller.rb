@@ -5,7 +5,7 @@ class DetalleReservasController < ApplicationController
   include ReservasHelper
   include ViajesHelper
   
-  before_action :authenticate_user!, except: [:solicitar_reserva, :detalle_reserva, :confirmar_reserva, :registrar_reserva, :seleccionar_viaje]
+  before_action :authenticate_user!, except: [:datos_reserva, :detalle_reserva, :confirmar_reserva, :registrar_reserva, :seleccionar_viaje]
   before_action :set_detalle_reserva, only: [:show, :edit, :update, :destroy]
   before_action :initialize_vars_global, only: [:index, :new, :show, :edit, :solicitar_reserva, :detalle_reserva, :confirmar_reserva, :registrar_reserva, :seleccionar_viaje]
   before_action :initialize_vars, only: [:new, :edit, :show]
@@ -102,10 +102,6 @@ class DetalleReservasController < ApplicationController
     unless @viajeIda.nil?
       @sillasDisponIda = sillas_disponibles(@viajeIda.id, @viajeIda.ruta_descripcion, params[:cboOrg], params[:cboDst])
     end
- 
-    # if @sillasDisponibles >= (params[:cboAdlt] + params[:cboMnr]).to_i then
-    #       
-    # end
     
     instSQL_Where = "1 = 1"
     
@@ -141,7 +137,7 @@ class DetalleReservasController < ApplicationController
     @infantes = params[:inf].to_i
   end
   
-  def solicitar_reserva
+  def datos_reserva
     
     if params[:dPrd].nil?
       respond_to do |format|
@@ -231,7 +227,8 @@ class DetalleReservasController < ApplicationController
     
       msj = "Apreciado(a) cliente, su solicitud de reserva ha sido enviada exitosamente. En breve sera contactado para confirmar su orden."
       
-      datosContacto = params[:contacto]      
+      idContacto = ""
+      datosContacto = params[:contacto] 
       datosReserva = params[:datos_reserva]
       datosViaje = params[:datos_viaje]
       opcionalesReserva = params[:opcionales]
@@ -302,30 +299,30 @@ class DetalleReservasController < ApplicationController
       datosContacto = eval(datosContacto)
       datosReserva = eval(datosReserva)
       
-      idContacto = datosContacto["numero_identificacion"].to_s + datosContacto["tipo_identificacion"]
+      
       
       #Tomando los datos de la reserva
-      persona = Persona.where(pers_documentoIdentidad: idContacto)
+      #persona = Persona.where(pers_documentoIdentidad: idContacto)
       
       #Crear persona > Contacto
-      if persona.size == 0 then
-        persona = Persona.new
-        persona.pers_estadoRegistro = "A"
-        persona.pers_documentoIdentidad = idContacto #reserva.rsrv_contactoId
-        persona.pers_nombres = datosContacto["nombres"]
-        persona.pers_apellidos = datosContacto["apellidos"]
-        persona.pers_telefonoPersonal1 = datosContacto["telefono"]
-        persona.pers_correoElectrPersonal = datosContacto["correo_electronico"]
-        persona.save
-      else
-        persona.first.pers_telefonoPersonal1 = datosContacto["telefono"]
-        persona.first.pers_correoElectrPersonal = datosContacto["correo_electronico"]
-        persona.first.save
-      end
+      # if persona.size == 0 then
+      #   persona = Persona.new
+      #   persona.pers_estadoRegistro = "A"
+      #   persona.pers_documentoIdentidad = idContacto #reserva.rsrv_contactoId
+      #   persona.pers_nombres = datosContacto["nombres"]
+      #   persona.pers_apellidos = datosContacto["apellidos"]
+      #   persona.pers_telefonoPersonal1 = datosContacto["telefono"]
+      #   persona.pers_correoElectrPersonal = datosContacto["correo_electronico"]
+      #   persona.save
+      # else
+        # persona.first.pers_telefonoPersonal1 = datosContacto["telefono"]
+        # persona.first.pers_correoElectrPersonal = datosContacto["correo_electronico"]
+        # persona.first.save
+      #end
       
       #Verificando los datos de personas existentes
       cadenaIds = ""
-      datosReserva["tipo_identificacion"].each_index{|h| cadenaIds = cadenaIds + "'" + datosReserva["numero_identificacion"][h] + datosReserva["tipo_identificacion"][h] + "',"}
+      datosReserva["tipo_identificacion"].each_index{|h| cadenaIds = cadenaIds + "'" + datosReserva["tipo_identificacion"][h]  + datosReserva["numero_identificacion"][h] + "',"}
       
       unless cadenaIds.blank?
         cadenaIds = cadenaIds[0, cadenaIds.length - 1]
@@ -337,7 +334,7 @@ class DetalleReservasController < ApplicationController
         
         for nmIndex in 0..datosReserva["tipo_identificacion"].length - 1
           flagInsert = true
-          personasIds << datosReserva["numero_identificacion"][nmIndex] + datosReserva["tipo_identificacion"][nmIndex]
+          personasIds << datosReserva["tipo_identificacion"][nmIndex] + datosReserva["numero_identificacion"][nmIndex]
           arrFechaNac = datosReserva["fecha_nacimiento"][nmIndex].split("/")
           fechasNacimiento << arrFechaNac[2].to_s + "-" + arrFechaNac[1].to_s + "-" + arrFechaNac[0].to_s  
           
@@ -358,6 +355,19 @@ class DetalleReservasController < ApplicationController
             persona.pers_estadoRegistro = "A"
             persona.save
           end 
+          
+          #Los datos de contacto se asignan a la primera persona de la reserva
+          if nmIndex == 0 then
+            idContacto = personasIds.last
+            persona = Persona.where("pers_documentoIdentidad IN ('#{personasIds.last}')").first
+            datosContacto["numero_identificacion"] = persona.pers_documentoIdentidad
+            datosContacto["nombres"] = persona.pers_nombres
+            datosContacto["apellidos"] = persona.pers_apellidos
+
+            persona.pers_telefonoPersonal2 = datosContacto["telefono"]
+            persona.pers_correoElectrPersonal = datosContacto["correo_electronico"]
+            persona.save
+          end
         end
       end 
       
@@ -367,7 +377,7 @@ class DetalleReservasController < ApplicationController
         reserva = Reserva.new
         reserva.rsrv_codigo = SecureRandom.uuid[0,5].upcase
         reserva.rsrv_tipoContacto = "P"
-        reserva.rsrv_contactoId = datosContacto["numero_identificacion"] + datosContacto["tipo_identificacion"]
+        reserva.rsrv_contactoId = idContacto #datosContacto["numero_identificacion"] + datosContacto["tipo_identificacion"]
         reserva.rsrv_tipoProducto = producto
         reserva.rsrv_productoId = prodId
         reserva.rsrv_estadoReserva = "I"
@@ -495,7 +505,10 @@ class DetalleReservasController < ApplicationController
         reserva.rsrv_valorTotal = valorTotalReserva
         reserva.save 
       end # Ciclo productos_id
-              
+      
+      puts "###########>>>>>>>>>>>>>"
+      puts datosContacto.inspect
+
       UserMailer.correo_reservas(datosViaje, datosContacto, datosReserva).deliver_now
       
       respond_to do |format|

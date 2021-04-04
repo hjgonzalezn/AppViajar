@@ -1,4 +1,4 @@
-class CreateAeropuertos < ActiveRecord::Migration
+class CreateAeropuertos < ActiveRecord::Migration[5.0]
   def change
     create_table :aeropuertos do |t|
       t.string :aeropt_nombre

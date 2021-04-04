@@ -1,4 +1,4 @@
-class CreateSucursalEmpresas < ActiveRecord::Migration
+class CreateSucursalEmpresas < ActiveRecord::Migration[5.0]
   def change
     create_table :sucursal_empresas do |t|
       t.string :empr_documentoIdentidad

@@ -1,4 +1,4 @@
-class AddProgramacionToPaqueteTuristico < ActiveRecord::Migration
+class AddProgramacionToPaqueteTuristico < ActiveRecord::Migration[5.0]
   def change
     add_column :paquete_turisticos, :pqTur_programacion, :string
     add_column :paquete_turisticos, :pqTur_reservaMin, :integer

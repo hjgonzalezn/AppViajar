@@ -12,6 +12,7 @@
 				<div class="tableWrapper">
 					<div class="section-header">
 						<h1>Reservas</h1>
+						<p><%= @params %></p>
 					</div>
 					<div class="col-lg-12">
 						<%= form_tag(reservas_path, method: :get, id: :frmBuscar) do %>
@@ -130,7 +131,6 @@
 
 
 <script>
-
 	document.addEventListener("turbolinks:load", function() {
 			if ( $.fn.dataTable.isDataTable( '#indexTable' ) ) {
 			    table = $('#indexTable').DataTable();

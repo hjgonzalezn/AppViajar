@@ -1,4 +1,4 @@
-class CreateDivisionPais < ActiveRecord::Migration
+class CreateDivisionPais < ActiveRecord::Migration[5.0]
   def change
     create_table :division_pais do |t|
       t.integer :entidad_territorial_id

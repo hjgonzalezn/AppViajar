@@ -1,0 +1,366 @@
+	<div class="section-margin-top"></div>
+		<!-- gray bg -->	
+	<section class="container tm-home-section-1" id="more">
+		<div class="row">
+			<!-- slider -->
+			<div class="flexslider effect2 effect2-contact flex-caption">
+				<ul class="slides">
+					<li>
+						<div class="col-lg-12">
+							<!--div class="col-lg-12">
+								<div class="col-lg-12"-->
+									<div class="row">
+										<div class="btn-group btn-breadcrumb breadcrumb-default">
+											<a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+											<div class="visible-lg-block">
+												<div class="btn btn-warning btn-derecha"><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i></div>
+												<div class="btn btn-default btn-derecha">ATENCIÓN</div>
+											</div>
+											<a href="#" class="btn btn-default visible-lg-block visible-md-block"><strong>Seleccionar viaje</strong></a>
+											<a href="#" class="btn btn-info visible-lg-block visible-md-block">Datos de los pasajeros</a>
+											<a href="#" class="btn btn-default visible-lg-block visible-md-block">Confirmar reserva</a>
+											<a href="#" class="btn btn-default visible-lg-block visible-md-block">Realizar pago</a>
+											<div class="btn btn-default visible-xs-block hidden-xs visible-sm-block ">...</div>
+										</div>
+									</div>
+									<p>&nbsp;</p>
+									<p>&nbsp;</p>
+									<div class="col-lg-12">
+										<div class="alert alert-info">
+											<p class="slider-subtitle">Apreciado cliente, por favor ingrese los datos de los titulares de la reserva teniendo en cuenta adultos, menores e infantes.</p>
+										</div>
+										<div class="col-lg-8 col-md-12 col-sm-12 center">
+											<div class="row tm-bg-lblue tm-padding-dv">
+												<h3 class="tm-white"><strong><%= @producto %></strong><h3>
+											</div>
+											<div class="row">
+												<div class="col-lg-3 tm-bg-lgreen">
+													<p>ORIGEN</p>
+												</div>
+												<div class="col-lg-3">
+													<p><%= @enterOrigen.enter_nombreCorto %></p>
+												</div>
+												<div class="col-lg-3 tm-bg-lgreen">
+													<p>DESTINO</p>
+												</div>
+												<div class="col-lg-3">
+													<p><%= @enterDestino.enter_nombreCorto %></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-3 tm-bg-lgreen">
+													<p>FECHA DE IDA</p>
+												</div>
+												<div class="col-lg-3">
+													<p><%= @dtFechaIda %></p>
+												</div>
+												<div class="col-lg-3 tm-bg-lgreen">
+													<p>FECHA DE REGRESO</p>
+												</div>
+												<div class="col-lg-3">
+													<p><%= @dtFechaRegreso %></p>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-4 col-md-12 col-sm-12">
+											<div class="row tm-bg-dgray tm-padding-dv center">
+												<h3 class="tm-white"><strong>PASAJEROS</strong></h3>
+											</div>
+											<div class="row">
+												<div class="col-lg-4 col-md-12 col-sm-12 center">
+													<div class="row tm-bg-lgreen">
+														<p>ADULTOS</p>
+													</div>
+													<div class="row">
+														<p><%= @adultos %></p>
+													</div>
+												</div>
+											
+												<div class="col-lg-4 col-md-12 col-sm-12 center">
+													<div class="row tm-bg-lgreen">
+														<p>MENORES</p>
+													</div>
+													<div class="row">
+														<p><%= @menores %></p>
+													</div>
+												</div>
+
+												<div class="col-lg-4 col-md-12 col-sm-12 center">
+													<div class="row tm-bg-lgreen">
+														<p>ADULTOS</p>
+													</div>
+													<div class="row">
+														<p><%= @infantes %></p>
+													</div>
+												</div>
+
+											</div>
+										</div>
+
+										<p>&nbsp;</p>
+									<!--/div>
+								</div-->
+							</div>
+							<div class="col-lg-12">
+								<form id="frmConfirmarReserva" action="/detalle_reservas/confirmar_reserva" method="get" class="formulario">
+
+									<div class="form-group">
+										<%= text_field_tag "reserva_nombres", nil, options={class:"form-control", placeholder:"Nombres", name:"reserva[nombres][]"} %>
+									</div>
+									<div class="form-group">
+										<%= text_field_tag "reserva_apellidos", nil, options={class:"form-control", placeholder:"Apellidos", name:"reserva[apellidos][]"} %>
+									</div>
+									<!--div class="col-lg-12">
+										<div class="col-lg-12"-->
+											<h3>ADULTOS (12 años en adelante)</h3>
+											<br>
+										<!--/div>
+									</div-->
+									<!--div class="col-lg-12">
+										<div class="col-lg-12"-->
+											<% nmIndex = 0 %>
+											<% for i in 1..@adultos %>
+												<% nmIndex = nmIndex + 1 %>
+												<div class="card">
+													<header class="card-header">
+														<h4 class="title"><%= "Adulto #{i}" %></h4>
+													</header>
+
+													<div class="col-lg-12">
+														<div class="col-lg-6">
+															<div class="form-group">
+																<%= hidden_field_tag "reserva_fecha_nacimiento" + nmIndex.to_s, "", options={name:"reserva[fecha_nacimiento][]"} %>
+																<%= hidden_field_tag "reserva_tipo_pax" + nmIndex.to_s, "ADULTO", options={name:"reserva[tipo_pax][]"} %> 
+																<%= select_tag("reserva_tipo_identificacion" + nmIndex.to_s, options_for_select(@tiposIdAdulto.invert), options={class:"form-control", prompt: "-- TIPO DOCUM. IDENTIDAD --", name:"reserva[tipo_identificacion][]"})%>
+															</div>
+														</div>
+														<div class="col-lg-6">
+															<div class="form-group">
+																<%= text_field_tag "reserva_numero_identificacion" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Número de Identificación", name:"reserva[numero_identificacion][]"} %>
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-12">
+														<div class="col-lg-6">
+															<div class="form-group">
+																<%= text_field_tag "reserva_nombres" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Nombres", name:"reserva[nombres][]"} %>
+															</div>
+														</div>
+														<div class="col-lg-6">
+															<div class="form-group">
+																<%= text_field_tag "reserva_apellidos" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Apellidos", name:"reserva[apellidos][]"} %>
+															</div>
+														</div>
+													</div>
+												</div>
+												<br/>
+											<% end %>
+										<!--/div>
+									</div-->
+									<!--div class="col-lg-12">
+										<div class="col-lg-12"-->
+											<h3>MENORES (2 a 12 años)</h3>
+											<br>
+										<!--/div>
+									</div>
+									<div class="col-lg-12">
+										<div class="col-lg-12"-->
+											<% for i in 1..@menores %>
+												<% nmIndex = nmIndex + 1 %>
+												<div class="card">
+													<header class="card-header">
+														<h4 class="title"><%= "Menor #{i}" %></h4>
+													</header>
+
+													<div class="col-lg-12">
+														<div class="col-lg-6">
+															<div class="form-group">
+																<div class='input-group date' id='datetimepicker4'>
+																	<%= text_field_tag "reserva_fecha_nacimiento", nil, options = {class:"form-control", placeholder:"Fecha de nacimiento", name: "reserva[fecha_nacimiento][]"} %>
+																	<span class="input-group-addon">
+																		<span class="fa fa-calendar"></span>
+																	</span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-12">
+														<div class="col-lg-6">
+															<div class="form-group">
+																<%= hidden_field_tag "reserva_tipo_pax" + nmIndex.to_s, "MENOR", options={name:"reserva[tipo_pax][]"} %>
+																<%= select_tag("reserva_tipo_identificacion" + nmIndex.to_s, options_for_select(@tiposIdMenor.invert), options={class:"form-control", prompt: "-- TIPO DOCUM. IDENTIDAD --", name:"reserva[tipo_identificacion][]"})%>
+															</div>
+														</div>
+														<div class="col-lg-6">
+															<div class="form-group">
+																<%= text_field_tag "reserva_numero_identificacion" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Número de identificación", name:"reserva[numero_identificacion][]"} %>
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-12">
+														<div class="col-lg-6">
+															<div class="form-group">
+																<%= text_field_tag "reserva_nombres" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Nombres", name: "reserva[nombres][]"} %>
+															</div>
+														</div>
+														<div class="col-lg-6">
+															<div class="form-group">
+																<%= text_field_tag "reserva_apellidos" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Apellidos", name:"reserva[apellidos][]"} %>
+															</div>
+														</div>
+													</div>
+													</div>
+													<br/>
+												<% end %>
+											<!--/div>
+										</div>
+										<div class="col-lg-12">
+											<div class="col-lg-12"-->
+												<h3>INFANTES (0 a 23 meses)</h3>
+												<br>
+											</div>
+										</div>
+										
+										<div class="col-lg-12">
+											<div class="col-lg-12">
+												<% for i in 1..@infantes %>
+													<% nmIndex = nmIndex + 1 %>
+													<div class="card">
+														<header class="card-header">
+															<h4 class="title"><%= "Infante #{i}" %></h4>
+														</header>
+
+														<div class="col-lg-12">
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<div class='input-group date' id='datetimepicker4'>
+																		<%= text_field_tag "reserva_fecha_nacimiento", nil, options = {class:"form-control", placeholder:"Fecha de nacimiento", name: "reserva[fecha_nacimiento][]"} %>
+																		<span class="input-group-addon">
+																			<span class="fa fa-calendar"></span>
+																		</span>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-12">
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= hidden_field_tag "reserva_tipo_pax" + nmIndex.to_s, "INFANTE", options={name:"reserva[tipo_pax][]"} %>
+																	<%= select_tag("reserva_tipo_identificacion" + nmIndex.to_s, options_for_select(@tiposIdInfante.invert), options={class:"form-control", prompt: "-- TIPO DOCUM. IDENTIDAD --", name:"reserva[tipo_identificacion][]"})%>
+																</div>
+															</div>
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_numero_identificacion" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Número de identificación", name:"reserva[numero_identificacion][]"} %>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-12">
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_nombres" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Nombres", name:"reserva[nombres][]"} %>
+																</div>
+															</div>
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<%= text_field_tag "reserva_apellidos" + nmIndex.to_s, nil, options={class:"form-control", placeholder:"Apellidos", name:"reserva[apellidos][]"} %>
+																</div>
+															</div>
+														</div>
+													</div>
+													<br/>
+												<% end %>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="col-lg-12">
+												<h3>INFORMACIÓN DE CONTACTO</h3>
+												<br>
+											</div>								
+										</div>
+								
+										<div class="col-lg-12">
+											<div class="col-lg-6">
+												<div class="form-group">
+													<%= text_field_tag "contacto_telefono", nil, options={class:"form-control", placeholder:"Teléfono", name:"contacto[telefono]"} %>
+												</div>
+											</div>
+											<div class="col-lg-6">
+												<div class="form-group">
+													<%= text_field_tag "contacto_correo", nil, options={class:"form-control", placeholder:"Correo electrónico", name:"contacto[correo_electronico]"} %>
+												</div>
+											</div>
+										</div>  
+									<div class="col-lg-12 center">
+										<!--div class="form-group tm-yellow-gradient-bg text-center"-->
+											<%= hidden_field_tag :datos_viaje, @producto + "|" + @enterOrigen.id.to_s + "|" + @enterDestino.id.to_s + "|" + @dtFechaIda + "|" + @dtFechaRegreso + "|" + @adultos.to_s + "|" + @menores.to_s + "|" + @infantes.to_s + "|" + @idProducto %>
+											<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+											<input type="button" id="cmdEnviar" value="Enviar" class="tm-orange-btn">
+										<!--/div-->
+									</div>
+								</div>
+							</form>
+						</div>			      
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>	
+	
+	<!-- white bg -->
+	<section class="section-padding-top tm-white-bg">
+		<div class="container">
+			<div class="row">
+				<div class="tm-section-header section-margin-bottom">
+					<br/>
+				</div>	
+			</div>
+		</div>
+	</section>
+	
+<script>
+		document.addEventListener("turbolinks:load", function() {
+		
+			$('.date').datetimepicker({
+            	format: 'DD/MM/YYYY',
+            	defaultDate:false,
+            	maxDate: moment()
+            	
+            });
+            
+            $('input[id*="reserva_fechaNacimiento"]').val("");
+            
+		/*$("#contacto_pax").click(function(){
+			if($('input[id="contacto_pax"]:checked').length > 0){
+				$("#reserva_tipo_identificacion1").val($("#contacto_tipo_identificacion option:selected").val());
+				$("#reserva_numero_identificacion1").val($("#contacto_numero_identificacion").val());
+				$("#reserva_nombres1").val($("#contacto_nombres").val());
+				$("#reserva_apellidos1").val($("#contacto_apellidos").val());
+				$("#reserva_numero_identificacion1").val($("#contacto_numero_identificacion").val());
+			}
+			else{
+				$("#reserva_tipo_identificacion1").val("");
+				$("#reserva_numero_identificacion1").val("");
+				$("#reserva_nombres1").val("");
+				$("#reserva_apellidos1").val("");
+			}
+		});*/
+		
+		$("#cmdEnviar").click(function(e){
+			e.preventDefault();
+			
+			/*$("#contacto_nombres").val($("#contacto_nombres").val().toUpperCase());
+			$("#contacto_apellidos").val($("#contacto_apellidos").val().toUpperCase());*/
+			
+			$("input[name='reserva[nombres][]']").each(function(){
+				$(this).val($(this).val().toUpperCase());	
+			});
+			
+			$("input[name*='reserva[apellidos][]']").each(function(){
+				$(this).val($(this).val().toUpperCase());	
+			});
+
+			$("#frmConfirmarReserva").submit();
+		});
+	});
+</script>

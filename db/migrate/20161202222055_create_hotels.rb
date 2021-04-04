@@ -1,4 +1,4 @@
-class CreateHotels < ActiveRecord::Migration
+class CreateHotels < ActiveRecord::Migration[5.0]
   def change
     create_table :hotels do |t|
       t.references :empresa, index: true, foreign_key: true

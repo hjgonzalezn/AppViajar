@@ -1,4 +1,4 @@
-class CreateModeloAccions < ActiveRecord::Migration
+class CreateModeloAccions < ActiveRecord::Migration[5.0]
   def change
     create_table :modelo_accions do |t|
       t.references :modelo, index: true, foreign_key: true

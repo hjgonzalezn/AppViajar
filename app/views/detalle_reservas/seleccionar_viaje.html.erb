@@ -1,4 +1,5 @@
-		<!-- gray bg -->	
+	<div class="section-margin-top"></div>
+	<!-- gray bg -->
 	<section class="container tm-home-section-1" id="more">
 		<div class="row">
 			<!-- slider -->
@@ -8,137 +9,129 @@
 						<div class="col-lg-12">
 							<div class="col-lg-12">
 								<div class="col-lg-12">
-									<h2 class="slider-title">Disponibilidad de Viajes</h2>
+									<!--h2 class="slider-title">Disponibilidad de Viajes</h2-->
+									<div class="row">
+										<!--h2>Breadcrumb Primary</h2-->
+										<div class="btn-group btn-breadcrumb breadcrumb-default">
+											<a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+											<div class="visible-lg-block">
+												<div class="btn btn-warning btn-derecha"><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i></div>
+												<div class="btn btn-default btn-derecha">ATENCIÓN</div>
+											</div>
+											<a href="#" class="btn btn-info visible-lg-block visible-md-block"><strong>Seleccionar viaje</strong></a>
+											<a href="#" class="btn btn-default visible-lg-block visible-md-block">Datos de los pasajeros</a>
+											<a href="#" class="btn btn-default visible-lg-block visible-md-block">Confirmar reserva</a>
+											<a href="#" class="btn btn-default visible-lg-block visible-md-block">Realizar pago</a>
+											<div class="btn btn-default visible-xs-block hidden-xs visible-sm-block ">...</div>
+										</div>
+									</div>
+									<p>&nbsp;</p>
+									<p>&nbsp;</p>
 									<div class="row">
 										<% if @ruta != nil && @sillasDisponIda > @sillasSolicitadas then%>
 											<% lugares = set_descripcion_ruta(@ruta.ruta_descripcion)%>
 											<% arrLugares = lugares.split(" - ") %>
 											<% arrHoras = @viajeIda.viaje_horaSalida.squeeze("|").split("|") %>
 										<% end %>
-										<div class="col-lg-12">
-										<ul class="breadcrumb">
-											<li><a href="#"><h3><strong>IDA</strong></h3></a></li>
-											<li><a href="#">
-												<h3><strong>
-													<% unless @enterOrigen.nil? %>
-														<%= @enterOrigen.enter_nombreCorto %>
-													<% end %>
-												</strong></h3>
-											</a></li>
-											<li><a href="#"><h3><strong>
-												<% unless @enterOrigen.nil? %>
-													<%= @enterDestino.enter_nombreCorto %>
-												<% end %>
-												</strong></h3>
-											</a></li>
-											<li><a href="#"><%= "" %></a></li>
-										</ul>
-									</div>
-								<div class="col-lg-12">
-									<table class="slider-abstract">
-										<thead>
-											<tr>
-												<th width="30%">FECHA</th>
-												<th>HORA</th>
-												<th>TARIFA</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><h4>
-													<%= @viajeIda == nil ? @dtFechaIda : (@viajeIda.viaje_fecha == nil ? @dtFechaIda : @viajeIda.viaje_fecha.strftime("%d/%m/%Y")) %>
-												</h4></td>
-												<% if @ruta != nil && @sillasDisponIda > @sillasSolicitadas then%>
-													<% if @ruta.nil? %>
-														<td>&nbsp;</td>
-														<td>&nbsp;</td>
-													<% else %>
-														<% if @ruta.ruta_descripcion.include? "|#{@enterOrigen.id}|" then %>
-															<td><h4><%= arrHoras[1]%></h4></td>
-														<% elsif @ruta.ruta_descripcion.include? "#{@enterOrigen.id}|" then %>
-															<td><h4><%= arrHoras[0]%></h4></td>
+										
+										<div class="col-lg-6 col-md-12 col-sm-12 tm-tab-itinerario">
+											<div class="col-lg-12 col-md-12 col-sm-12">
+												<div class="row">
+													<h4><strong>IDA</strong></h4>
+												</div>
+												<div class="row"> <!-- Origen - Destino -->
+													<div class="col-lg-12 col-md-12 col-sm-12">
+														<% unless @enterOrigen.nil? %>
+															<h4><strong><%= @enterOrigen.enter_nombreCorto %> >
+																<%= @enterDestino.enter_nombreCorto %></strong></h4>
 														<% end %>
-														<td><h4><%= number_to_currency(@ruta.tarifa) %></h4></td>
-													<% end %>
-												<% else %>
-													<td colspan="2"> 
-														<div class="alert alert-danger tm-margin-bottom-0">
-															<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-															<p id="notice"><strong>No hay cupos suficientes en este viaje. <%= @sillasDisponIda %> sillas disponibles.</strong></p>
-														</div>
-													</td>
-												<% end %>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-								<% unless @dtFechaRegreso.blank? %>
-									<div class="col-lg-12">
-										<ul class="breadcrumb">
-											<li><a href="#"><h3><strong>REGRESO</strong></h3></a></li>
-											<li><a href="#"><h3><strong>
-												<% unless @enterDestino.nil? %>
-													<%= @enterDestino.enter_nombreCorto %>
-												<% end %>
-												</strong></h3>
-											</a></li>
-											<li><a href="#"><h3><strong>
-												<% unless @enterOrigen.nil? %>
-													<%= @enterOrigen.enter_nombreCorto %>
-												<% end %>
-												</strong></h3></a></li>
-											<li><a href="#"><%= "" %></a></li>
-										</ul>
-									</div>
-									<div class="col-lg-12">
-										<table class="slider-abstract">
-											<thead>
-												<tr>
-													<th width="30%">FECHA</th>
-													<th>HORA</th>
-													<th>TARIFA</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td><h4>
-														<%= @viajeRegreso == nil ? @dtFechaRegreso : (@viajeRegreso.viaje_fecha == nil ? @dtFechaRegreso : @viajeRegreso.viaje_fecha.strftime("%d/%m/%Y")) %>
-													</h4></td>
-													<% if @ruta != nil && @sillasDisponRgr > @sillasSolicitadas then %>
-														<% arrHoras = @viajeRegreso.viaje_horaSalida.squeeze("|").split("|") %>
-														<% if @ruta.nil? %>
-															<td>&nbsp;</td>
-															<td>&nbsp;</td>
-														<% else %>
-															<% if @ruta.ruta_descripcion.include? "|#{@enterOrigen.id}|" then %>
-																<td><h4><%= arrHoras[1]%></h4></td>
-															<% elsif @ruta.ruta_descripcion.include? "#{@enterOrigen.id}|" then %>
-																<td><h4><%= arrHoras[0]%></h4></td>
+													</div>
+												</div>
+												<div class="row"> <!-- Fecha -->
+													<div class="col-lg-12 col-md-12 col-sm-12">
+														<h4><strong><%= @viajeIda == nil ? @dtFechaIda : (@viajeIda.viaje_fecha == nil ? @dtFechaIda : @viajeIda.viaje_fecha.strftime("%d/%m/%Y")) %></strong></h4>
+													</div>
+												</div>
+												<div class="row"> <!-- Hora y Precio -->
+													<div class="col-lg-6 col-md-6 col-sm-6">
+														<% if @ruta != nil && @sillasDisponIda > @sillasSolicitadas then%>
+															<% if @ruta.nil? %>
+																<p>&nbsp;</p>
+															<% else %>
+																<% if @ruta.ruta_descripcion.include? "|#{@enterOrigen.id}|" then %>
+																	<h4 align="center"><strong><%= arrHoras[1]%></strong></h4>
+																<% elsif @ruta.ruta_descripcion.include? "#{@enterOrigen.id}|" then %>
+																	<h4 align="center"><strong><%= arrHoras[0]%></strong></h4>
+																<% end %>
 															<% end %>
-															<td><h4><%= number_to_currency(@ruta.tarifa) %></h4></td>
-														<% end %>
-													<% else %>
-														<td colspan="2">
+														<% else %>
 															<div class="alert alert-danger tm-margin-bottom-0">
 																<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-																<p id="notice"><strong>No hay cupos suficientes en este viaje. <%= @sillasDisponRgr %> sillas disponibles.</strong></p>
+																<p id="notice"><strong>No hay cupos suficientes en este viaje. <%= @sillasDisponIda %> sillas disponibles.</strong></p>
 															</div>
-														</td>
-													<% end %> <!-- Sillas disponibles -->
-													</tr>
-												</tbody>
-											</table>
+														<% end %>
+													</div>
+
+													<div class="col-lg-6 col-md-6 col-sm-6">
+														<h4 align="center"><strong><%= number_to_currency(@ruta.tarifa) %></strong></h4>
+													</div>
+												</div>
+											</div>
 										</div>
-								<% end %>
-								<p>&nbsp;</p>
+										<% unless @dtFechaRegreso.blank? %>
+											<div class="col-lg-6 col-md-12 col-sm-12 tm-tab-itinerario">
+												<div class="col-lg-12 col-md-12 col-sm-12">
+													<div class="row">
+														<h4><strong>REGRESO</strong></h4>
+													</div>
+													<div class="row"><!-- Origen - Destino -->
+														<div class="col-lg-12 col-md-12 col-sm-12">
+															<% unless @enterDestino.nil? %>
+																<h4><strong><%= @enterDestino.enter_nombreCorto %> >
+																	<%= @enterOrigen.enter_nombreCorto %></strong></h4>
+															<% end %>
+														</div>
+													</div>
+													<div class="row"> <!-- Fecha y Hora -->
+														<div class="col-lg-12 col-md-12 col-sm-12">
+															<h4><strong><%= @viajeRegreso == nil ? @dtFechaRegreso : (@viajeRegreso.viaje_fecha == nil ? @dtFechaRegreso : @viajeRegreso.viaje_fecha.strftime("%d/%m/%Y")) %></strong></h4>
+														</div>
+													</div>	
+													<div class="row">
+														<div class="col-lg-6 col-md-6 col-sm-6">
+															<% if @ruta != nil && @sillasDisponRgr > @sillasSolicitadas then %>
+																<% arrHoras = @viajeRegreso.viaje_horaSalida.squeeze("|").split("|") %>
+																<% if @ruta.nil? %>
+																	<p>&nbsp;</p>
+																<% else %>
+																	<% if @ruta.ruta_descripcion.include? "|#{@enterOrigen.id}|" then %>
+																		<h4 align="center"><strong><%= arrHoras[1]%></strong></h4>
+																	<% elsif @ruta.ruta_descripcion.include? "#{@enterOrigen.id}|" then %>
+																		<h4 align="center"><strong><%= arrHoras[0]%></strong></h4>
+																	<% end %>
+																<% end %>
+															<% else %>
+																<div class="alert alert-danger tm-margin-bottom-0">
+																	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+																	<p id="notice"><strong>No hay cupos suficientes en este viaje. <%= @sillasDisponRgr %> sillas disponibles.</strong></p>
+																</div>
+															<% end %> <!-- Sillas disponibles -->
+														</div>
+													
+														<div class="col-lg-6 col-md-6 col-sm-6">
+															<h4 align="center"><strong><%= number_to_currency(@ruta.tarifa) %></strong></h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										<% end %>
+										<p>&nbsp;</p>
+								</div>
 							</div>
-						</div>
 						</div>
 						<div class="col-lg-12">
 							<% if @sillasDisponIda > @sillasSolicitadas || @sillasDisponRgr > @sillasSolicitadas then %>
-								<%= form_tag(solicitar_reserva_path, method: :post, id: :frmViajes) do %>
+								<%= form_tag(datos_reserva_path, method: :post, id: :frmViajes) do %>
 									<%= hidden_field_tag :dPrd, @datosProd %>
 									<%= hidden_field_tag :vjIda, @sillasDisponIda <= @sillasSolicitadas ? "" : @viajeIda.id %>
 									<%= hidden_field_tag :vjRgr, @sillasDisponRgr <= @sillasSolicitadas ? "" : @viajeRegreso.id %>

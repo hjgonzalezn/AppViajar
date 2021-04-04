@@ -1,4 +1,4 @@
-class CreateCausals < ActiveRecord::Migration
+class CreateCausals < ActiveRecord::Migration[5.0]
   def change
     create_table :causals do |t|
       t.string :causal_tipo

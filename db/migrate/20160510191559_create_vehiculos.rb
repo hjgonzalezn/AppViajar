@@ -1,4 +1,4 @@
-class CreateVehiculos < ActiveRecord::Migration
+class CreateVehiculos < ActiveRecord::Migration[5.0]
   def change
     create_table :vehiculos do |t|
       t.string :vehi_tipo

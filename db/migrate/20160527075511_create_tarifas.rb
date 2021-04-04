@@ -1,8 +1,8 @@
-class CreateTarifas < ActiveRecord::Migration
+class CreateTarifas < ActiveRecord::Migration[5.0]
   def change
     create_table :tarifas do |t|
       t.string :trf_concepto
-      t.string :tfr_conceptoCodigo
+      t.string :trf_conceptoCodigo
       t.string :trf_conceptoAplicacion
       t.string :trf_detalleAplicacion
       t.string :trf_naturaleza

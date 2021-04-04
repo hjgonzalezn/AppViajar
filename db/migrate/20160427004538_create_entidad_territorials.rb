@@ -1,4 +1,4 @@
-class CreateEntidadTerritorials < ActiveRecord::Migration
+class CreateEntidadTerritorials < ActiveRecord::Migration[5.0]
   def change
     create_table :entidad_territorials do |t|
       t.string :enter_nombreOficial

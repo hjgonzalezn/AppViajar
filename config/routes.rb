@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   get 'catalogos/cargar_registros_catalogo' => 'catalogos#cargar_registros_catalogo', as: :cargar_registros_catalogo
   get 'about' => 'about#index', as: :home
   get 'about/mensaje' => 'about#mensaje', as: :mensaje
-  get 'detalle_reservas/solicitar_reserva' => 'detalle_reservas#solicitar_reserva' 
-  post 'detalle_reservas/solicitar_reserva' => 'detalle_reservas#solicitar_reserva', as: :solicitar_reserva
+  get 'detalle_reservas/datos_reserva' => 'detalle_reservas#datos_reserva' 
+  post 'detalle_reservas/datos_reserva' => 'detalle_reservas#datos_reserva', as: :datos_reserva
   get 'paquete_turisticos/:id/detalle_plan/' => 'paquete_turisticos#detalle_plan', as: :detalle_plan_turistico
   post 'paquete_turisticos/:id/detalle_plan/' => 'paquete_turisticos#detalle_plan'
   get 'paquete_turisticos/:id/actividades_plan/' => 'paquete_turisticos#actividades_plan', as: :actividades_plan_turistico

@@ -189,7 +189,7 @@
        	});
        	
        	$("input[name='viaje[viaje_trayecto]'][type=radio]").change(function(){
-       		arrLugares = $("option:selected", $("#viaje_viaje_ruta")).text().split(">");
+       		arrLugares = $("option:selected", $("#viaje_viaje_ruta")).text().split("-");
        		if (arrLugares != "-- SELECCIONE --"){
        			if($("input[name='viaje[viaje_trayecto]']:checked").val() == "OW"){ /* SOLO IDA */
 		       		$("#parada3").val("");

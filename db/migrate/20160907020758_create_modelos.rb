@@ -1,4 +1,4 @@
-class CreateModelos < ActiveRecord::Migration
+class CreateModelos < ActiveRecord::Migration[5.0]
   def change
     create_table :modelos do |t|
       t.string :mdl_codigo

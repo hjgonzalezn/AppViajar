@@ -19,268 +19,97 @@
 					</div>
 					<div id="tm-form-content">
 						<%= hidden_field_tag :producto %>
-						<ul class="nav nav-tabs tm-white-bg" role="tablist" id="generalTabs">
-						    <li role="presentation" class="active">
-								<a href="#general" aria-controls="datos" role="tab" data-toggle="tab">GENERAL</a>
-						    </li>
-						    <li role="presentation">
-						    	<a href="#confirmadas" aria-controls="hotel" role="tab" data-toggle="tab">CUPOS CONFIRMADOS</a>
-						    </li>
-						    <li role="presentation">
-						    	<a href="#pendientes" aria-controls="hotel" role="tab" data-toggle="tab">RESERVAS PENDIENTES</a>
-						    </li>
-						    <li role="presentation">
-						    	<a href="#nulas" aria-controls="hotel" role="tab" data-toggle="tab">RESERVAS NULAS</a>
-						    </li>
-						</ul>
-	
-						<!-- Tab panes -->
-						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane fade in active tm-white-bg" id="general">
-								<div class="tm-search-box overflow-auto">
-									<p>&nbsp;</p>
-									<% arrLugares = @lugares.split(" - ")%>
-									<% arrLugaresCdg = @ruta.ruta_descripcion.split("|") %>
-									<% arrHoras = @viaje.viaje_horaSalida.squeeze("|") %>
-									<% arrHoras = arrHoras.split("|") %>
-									<div class="col-lg-2">&nbsp;</div>
-									<div class="col-lg-5 col-md-12">
-										<table class="slider-abstract">
-											<tr>
-												<th colspan="2">
-													<% arrLugares.each do |h| %>
-														<h3><strong><%= h %></strong></h3>
-													<% end %>
-												</th>
-												
-											</tr>
-											<tr>
-												<td colspan="2" class="tm-black-bg"><h3 class="center"><strong><%= (@viaje.viaje_fecha.strftime "%d-") + @meses[(@viaje.viaje_fecha.strftime "%m").to_i].upcase + (@viaje.viaje_fecha.strftime "-%Y") %></strong></h3></td>
-											</tr>
-											<tr>
-												<th colspan="2"><h3><strong>IDA</strong></h3></th>
-											</tr>
-												
-												<% arrTrayectos = {} %>
-												
-												<% for i in 0..arrLugares.length - 2 %>
-													<% arrTrayectos[ arrLugaresCdg[i] + "_" + arrLugaresCdg[i+1] ] = arrLugares[i] + " - " + arrLugares[i + 1] %> 	
-													<tr>
-														<td><h3><strong><%= arrLugares[i] %></strong></h3></td>
-														<td><h3><strong><%= arrHoras[i] %></strong></h3></td>
-													</tr>
-												<% end %>
-												
-												<% if !arrTrayectos.has_key? (arrLugaresCdg[0] + "_" + arrLugaresCdg[arrLugares.length - 1]) then %>
-													<% arrTrayectos[ arrLugaresCdg[0] + "_" + arrLugaresCdg[arrLugares.length - 1] ] = arrLugares[0] + " - " + arrLugares[arrLugares.length - 1] %>
-												<% end %>
-												
-												<% if !arrTrayectos.has_key? (arrLugaresCdg[arrLugares.length - 1] + "_" + arrLugaresCdg[0]) then %>
-													<% arrTrayectos[ arrLugaresCdg[arrLugares.length - 1] + "_" + arrLugaresCdg[0] ] = arrLugares[arrLugares.length - 1] + " - " + arrLugares[0] %>
-												<% end %>
-												<!--td><%#= @viaje.vehiculo.vehi_modeloCodigo %></td-->
-											
-											<% if @viaje.viaje_trayecto == "RT" then %>
-												<% arrLugares = arrLugares.reverse() %>
-												<% arrLugaresCdg = arrLugaresCdg.reverse() %>
-												<% arrLugares2 = arrLugares %>
-												<% arrLugares = arrLugares[0, arrLugares.length - 1]%>
-												<% arrHoras = arrHoras[(arrHoras.length/2), arrHoras.length - 1]%>
-												
-												<tr><th colspan="2"><h3><strong>REGRESO</strong></h3></th></tr>
-												
-												<% for i in 0..arrLugares.length-1 do %>
-													<% arrTrayectos[ arrLugaresCdg[i] + "_" + arrLugaresCdg[i+1] ] =  arrLugares2[i] + " - " + arrLugares2[i + 1] %>
-													<tr>
-														<td><h3><strong><%= arrLugares[i] %></strong></h3></td><td><h3><strong><%= arrHoras[i].to_s %></strong></h3></td>
-													</tr>
-												<% end %>
-											<% end %>
-											<tr>
-												<th colspan="2"><h3><strong><%= "ESTADO: " + @estadosViaje[@viaje.viaje_estado] %></strong></h3></th>
-											</tr>
-										</table>
-									</div>
-									<div class="col-lg-5">&nbsp;</div>
-								</div>
-								<p>&nbsp;</p>
-							</div>
-							<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="confirmadas">
-								<div class="tm-search-box overflow-auto">
-									<br>
-									<div class="col-lg-12">
-										<div class="tableWrapper">
-											<div class="tm-black-bg tm-command-bar">
-							        			<a href="#" class="btn btn-success" id ="cmdDesloquearCupos">
-							        				<i class="fa fa-edit">&nbsp;</i>Desbloquear cupos
-							        			</a>
-												<a href="<%= edit_control_path(1) %>" class="btn btn-danger">
-							        				<i class="fa fa-edit">&nbsp;</i>Anular reserva
-							        			</a>
-							        			<a href="<%= edit_control_path(1) %>" class="btn btn-info">
-							        				<i class="fa fa-edit">&nbsp;</i>Realizar chequeo
-							        			</a>
-											</div>
-											
-											<!-- ###### PESTAÑAS POR TRAYECTO DE VIAJE ###### -->
-											<ul class="nav nav-tabs <%= "nav-" + arrTrayectos.length.to_s + "tabs" %> tm-white-bg" role="tablist">
-												<% tabClaCss = "active"%>
-												<% arrTrayectos.each do |key, value| %>
-													<% arrVal = value.split("-") %>
-											    	<li role="presentation" class="<%= tabClaCss %>">
-														<a href="#<%= key %>" aria-controls="datos" role="tab" data-toggle="tab"><%= arrVal[0] %><br><%= arrVal[1] %></a>
-											    	</li>
-											    	<% tabClaCss = ""%>
-											   	<% end %>
-											</ul>
-											<div class="tab-content">													
-												<% index = 1 %>
-												<% tabClaCss = "active"%>
-												<% arrTrayectos.each do |key, value| %>
-													<div role="tabpanel" class="tab-pane fade <%= tabClaCss %> in tm-white-bg" id="<%= key %>">
-														<div class="tm-search-box overflow-auto">
-															<br>
-															<table id="tblReservasActivas<%= key %>" class="stripe hover jqTable">
-																<thead>
-																	<tr>
-																		<th>Seleccion</th>
-																		<th>Reserva</th>
-																		<th>Docum. Identidad</th>
-																		<th>Nombres</th>
-																		<th>Apellidos</th>
-																		<th>Fecha<br>Reserva</th>
-																		<th>Vendedor</th>
-																	</tr>
-																</thead>
-																<tbody>
-																<% @rsrvsConfirmadas.each do |reserva| %>
-																	<% if reserva.trayectoViaje == key.gsub("_", "|") then %>
-																			<tr>
-																				<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
-																				<td><strong><a href="<%= reserva_path(reserva.id) %>" target="_blank"><%= reserva.codigoReserva %></a></strong></td>
-																				<td><%= formato_documento_identidad(reserva.documIdentCliente) %></td>
-																				<td><%= reserva.nombreCliente %></td>
-																				<td><%= reserva.apellidosCliente %></td>
-																				<td><%= reserva.fechaReserva.strftime("%Y-%m-%d %H:%M") %></td>
-																				<td>NAISATOURS</td>
-																			</tr>
-																	
-																			<% index = index + 1 %>
-																	<% end %>
-																<% end %>
-																		</tbody>
-																	</table>
-																</div>
-															</div>
-															<% tabClaCss = ""%>
-														<% end %>
-													</div>	<!-- Tab Content--> 
-										</div>
-									</div>
-								</div>
-							</div>
-							<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="pendientes">
-								<div class="tm-search-box overflow-auto">
-									<br>
-									<div class="col-lg-12">
-										<div class="tableWrapper">
-											<div class="tm-black-bg tm-command-bar">
-							        			<a href="#" class="btn btn-success" id ="cmdRegistrarPago">
-							        				<i class="fa fa-edit">&nbsp;</i>Registrar pago
-							        			</a>
-												<a href="<%= edit_control_path(1) %>" class="btn btn-danger">
-							        				<i class="fa fa-edit">&nbsp;</i>Bloquear cupos
-							        			</a>
-											</div>
-											<table id="tblReservasPendientes" class="stripe hover jqTable">
-												<thead>
-													<tr>
-														<th>Seleccion</th>
-														<th>Reserva</th>
-														<th>Docum. Identidad</th>
-														<th>Nombres</th>
-														<th>Apellidos</th>
-														<th>Trayecto</th>
-													</tr>
-												</thead>
-												<tbody>
-													<% index = 1 %>
-													<% @rsrvsPendientes.each do |reserva| %>
-														<% tipoDocumIdent = reserva.documIdentCliente[-2, 2] %>
-														<% documtIdentFormat = reserva.documIdentCliente[0, reserva.documIdentCliente.length - 2] %>
-														<% documtIdentFormat = documtIdentFormat.insert(-4, ".") %>
-														<% documtIdentFormat = documtIdentFormat.insert(-8, ".") %>
-														<% trayecto = set_descripcion_ruta(reserva.trayectoViaje) %>
-														<% arrTrayecto = trayecto.split("-") %>
-														<tr>
-															<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
-															<td><strong><a href="<%= reserva_path(reserva.id) %>" target="_blank"><%= reserva.codigoReserva %></a></strong></td>
-															<td><%= reserva.documIdentCliente[-2, 2] + " " + documtIdentFormat %></td>
-															<td><%= reserva.nombreCliente %></td>
-															<td><%= reserva.apellidosCliente %></td>
-															<td><%= arrTrayecto[0] + " - " + arrTrayecto[1] %></td>
-														</tr>
-														<% index = index + 1 %>
-													<% end %>
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<p>&nbsp;</p>
-								</div>
-							</div>
-							<div role="tabpanel" class="tab-pane fade in tm-white-bg" id="nulas">
-								<div class="tm-search-box overflow-auto">
-									<br>
-									<div class="col-lg-12">
-										<div class="tableWrapper">
-											<!--div class="tm-black-bg tm-command-bar">
-							        			<a href="#" class="btn btn-success" id ="cmdRegistrarPago">
-							        				<i class="fa fa-edit">&nbsp;</i>Registrar pago
-							        			</a>
-												<a href="<%= edit_control_path(1) %>" class="btn btn-danger">
-							        				<i class="fa fa-edit">&nbsp;</i>Bloquear cupos
-							        			</a>
-											</div-->
-											<table id="tblReservasNulas" class="stripe hover jqTable">
-												<thead>
-													<tr>
-														<th>Seleccion</th>
-														<th>Reserva</th>
-														<th>Docum. Identidad</th>
-														<th>Nombres</th>
-														<th>Apellidos</th>
-														<th>Fecha<br>Reserva</th>
-														<th>Vendedor</th>
-													</tr>
-												</thead>
-												<tbody>
-													<% index = 1 %>
-													<% @rsrvsCanceladas.each do |reserva| %>
-														<% tipoDocumIdent = reserva.documIdentCliente[-2, 2] %>
-														<% documtIdentFormat = reserva.documIdentCliente[0, reserva.documIdentCliente.length - 2] %>
-														<% documtIdentFormat = documtIdentFormat.insert(-4, ".") %>
-														<% documtIdentFormat = documtIdentFormat.insert(-8, ".") %>
+						<% arrLugares = @lugares.split(" - ")%>
+						<% arrLugaresCdg = @ruta.ruta_descripcion.split("|") %>
+						<% arrHoras = @viaje.viaje_horaSalida.squeeze("|") %>
+						<% arrHoras = arrHoras.split("|") %>
+						<table class="slider-abstract">
+							<tr>
+								<th colspan="<%= (arrLugares.length - 1) * 4 %>">
+									<h3>
+										<% arrLugares.each do |h| %>
+											<strong><%= h %> </strong>
+										<% end %>
+										<strong><%= (@viaje.viaje_fecha.strftime "%d-") + @meses[(@viaje.viaje_fecha.strftime "%m").to_i].upcase + (@viaje.viaje_fecha.strftime "-%Y") %></strong>
+									</h3>
+								</th>
+							</tr>
+							<tr>
+								<th colspan="<%= (arrLugares.length - 1) * 2 %>"><h3><strong>IDA</strong></h3></th>
+								<th colspan="<%= (arrLugares.length - 1) * 2 %>"><h3><strong>REGRESO</strong></h3></th>
+							</tr>
+								
+							<% arrTrayectos = {} %>
 
-														<tr>
-															<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
-															<td><strong><a href="<%= reserva_path(reserva.id) %>" target="_blank"><%= reserva.codigoReserva %></a></strong></td>
-															<td><%= reserva.documIdentCliente[-2, 2] + "-" + documtIdentFormat %></td>
-															<td><%= reserva.nombreCliente %></td>
-															<td><%= reserva.apellidosCliente %></td>
-															<td><%= reserva.fechaReserva.strftime("%Y-%m-%d %H:%M") %></td>
-															<td>NAISATOURS</td>
-														</tr>
-														<% index = index + 1 %>
-													<% end %>
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<p>&nbsp;</p>
-								</div>
+							<tr>	
+								<% for i in 0..arrLugares.length - 2 %>
+									<% arrTrayectos[ arrLugaresCdg[i] + "_" + arrLugaresCdg[i+1] ] = arrLugares[i] + " - " + arrLugares[i + 1] %> 	
+									<td><h3><strong><%= arrLugares[i] %></strong></h3></td>
+									<td><h3><strong><%= arrHoras[i] %></strong></h3></td>
+								<% end %>
+								
+								<% if !arrTrayectos.has_key? (arrLugaresCdg[0] + "_" + arrLugaresCdg[arrLugares.length - 1]) then %>
+									<% arrTrayectos[ arrLugaresCdg[0] + "_" + arrLugaresCdg[arrLugares.length - 1] ] = arrLugares[0] + " - " + arrLugares[arrLugares.length - 1] %>
+								<% end %>
+								
+								<% if !arrTrayectos.has_key? (arrLugaresCdg[arrLugares.length - 1] + "_" + arrLugaresCdg[0]) then %>
+									<% arrTrayectos[ arrLugaresCdg[arrLugares.length - 1] + "_" + arrLugaresCdg[0] ] = arrLugares[arrLugares.length - 1] + " - " + arrLugares[0] %>
+								<% end %>
+							
+								<% if @viaje.viaje_trayecto == "RT" then %>
+									<% arrLugares = arrLugares.reverse() %>
+									<% arrLugaresCdg = arrLugaresCdg.reverse() %>
+									<% arrLugares2 = arrLugares %>
+									<% arrLugares = arrLugares[0, arrLugares.length - 1]%>
+									<% arrHoras = arrHoras[(arrHoras.length/2), arrHoras.length - 1]%>
+									
+									<% for i in 0..arrLugares.length-1 do %>
+										<% arrTrayectos[ arrLugaresCdg[i] + "_" + arrLugaresCdg[i+1] ] =  arrLugares2[i] + " - " + arrLugares2[i + 1] %>
+										<td><h3><strong><%= arrLugares[i] %></strong></h3></td><td><h3><strong><%= arrHoras[i].to_s %></strong></h3></td>
+									<% end %>
+								<% end %>
+							</tr>
+						</table>
+
+						<% index = 1 %>
+						<% tabClaCss = "active"%>
+						<% arrTrayectos.each do |key, value| %>
+							<p style="background-color:Tomato; color:white"><%= value %></p>
+							<div class="tm-search-box overflow-auto">
+								<br>
+								<table id="tblReservasActivas<%= key %>" class="stripe hover jqTable">
+									<thead>
+										<tr>
+											<th>Seleccion</th>
+											<th>Reserva</th>
+											<th>Docum. Identidad</th>
+											<th>Nombres</th>
+											<th>Apellidos</th>
+											<th>Fecha<br>Reserva</th>
+											<th>Vendedor</th>
+										</tr>
+									</thead>
+									<tbody>
+										<% @rsrvsConfirmadas.each do |reserva| %>
+											<% if reserva.trayectoViaje == key.gsub("_", "|") then %>
+												<tr>
+													<td><%= check_box_tag "chkReserva[]", reserva.codigoReserva, checked = false, {class:"form-control", id:"chkReserva" + index.to_s} %></td>
+													<td><strong><a href="<%= reserva_path(reserva.id) %>" target="_blank"><%= reserva.codigoReserva %></a></strong></td>
+													<td><%= formato_documento_identidad(reserva.documIdentCliente) %></td>
+													<td><%= reserva.nombreCliente %></td>
+													<td><%= reserva.apellidosCliente %></td>
+													<td><%= reserva.fechaReserva.strftime("%Y-%m-%d %H:%M") %></td>
+													<td>NAISATOURS</td>
+												</tr>
+										
+												<% index = index + 1 %>
+											<% end %>
+										<% end %>
+									</tbody>
+								</table>
 							</div>
-						</div>
+							<% tabClaCss = ""%>
+						<% end %>
 					</div>
 					<div id="tm-form-footer">
 						<%= link_to 'Regresar', viajes_path, class:"button back" %> |

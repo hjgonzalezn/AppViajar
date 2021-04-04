@@ -1,4 +1,4 @@
-class CreatePaqueteTuristicos < ActiveRecord::Migration
+class CreatePaqueteTuristicos < ActiveRecord::Migration[5.0]
   def change
     create_table :paquete_turisticos do |t|
       t.string :pqTur_nombre

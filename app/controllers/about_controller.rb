@@ -49,11 +49,11 @@ class AboutController < ApplicationController
       end
   end
   
-  def contacto
-  end
+  #def contacto
+  #end
   
     # Never trust parameters from the scary internet, only allow the white list through.
-    def detalle_reserva_params
-      params.require(:about).permit(:cboOrigen, :cboDestino, :txtFechaSalida, :txtFechaRegreso, :cboAdultos, :cboMenores, :cboInfantes, :pers_nombreCompleto, :pers_correoElectronico, :pers_telefono, :tipo_mensaje, :msj_asunto, :msj_contenido)
-    end  
+  def detalle_reserva_params
+    params.require(:about).permit(:cboOrigen, :cboDestino, :txtFechaSalida, :txtFechaRegreso, :cboAdultos, :cboMenores, :cboInfantes, :pers_nombreCompleto, :pers_correoElectronico, :pers_telefono, :tipo_mensaje, :msj_asunto, :msj_contenido)
+  end
 end

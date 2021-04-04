@@ -1,8 +1,9 @@
-class CreatePersonas < ActiveRecord::Migration
-  def change
+class CreatePersonas < ActiveRecord::Migration[5.0]
+def change
     create_table :personas do |t|
       t.string :pers_documentoIdentidad
-      t.string :pers_nombreCompleto
+      t.string :pers_nombres
+      t.string :pers_apellidos
       t.string :pers_alias
       t.string :pers_sexo
       t.date :pers_fechaNacimiento

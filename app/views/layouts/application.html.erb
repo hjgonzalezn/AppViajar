@@ -4,6 +4,8 @@
   <title>Naisa Tours, Tiquetes Aéreos y Hoteles. Somos operadores de turismo en el Pacífico colombiano (Bahía Solano, Nuquí y Juradó) y el mundo. Responsabilidad y Confianza</title>
   <link rel="shortcut icon" href="/assets/page/naisatours.ico">
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fjalla+One">
+  <!--link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Inconsolata|Droid+Sans"-->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -212,13 +214,17 @@
 	 
 	<% sliderShowKey = params[:controller].upcase + "-" + params[:action].upcase %>
 	<% varShowSlider = "N" %>
-	<% if sliderShowKey.include? "DEVISE" %>
-		<% varShowSlider = "G" %>
-	<% else %>
-		<% if @slideShow.has_key? sliderShowKey then %>
-			<% varShowSlider = @slideShow[sliderShowKey] %>
+		<% if sliderShowKey.include? "DEVISE" %>
+			<% varShowSlider = "G" %>
+		<% else %>
+			<% begin %>
+				<% if @slideShow.has_key? sliderShowKey then %>
+					<% varShowSlider = @slideShow[sliderShowKey] %>
+				<% end %>
+			<% rescue => e %>
+				<p><%= e %></p>
+			<% end %>
 		<% end %>
-	<% end %>
 
 	<%#= params[:controller].upcase + "**-" + params[:action].upcase + "**-" + varShowSlider %>
 	<%#= @slideShow %>

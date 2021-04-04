@@ -15,10 +15,10 @@
    encoding: utf8
    reconnect: false
    #database: db/development.sqlite3
-   database: AppViajar_development
+   database: appviajar_development
    pool: 5
    username: root
-   password: "DevPT#W5H9"
+   password: "4dm1n.World$"
    host: localhost
    socket: /tmp/mysql.sock
 

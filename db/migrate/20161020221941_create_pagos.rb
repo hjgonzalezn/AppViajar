@@ -1,4 +1,4 @@
-class CreatePagos < ActiveRecord::Migration
+class CreatePagos < ActiveRecord::Migration[5.0]
   def change
     create_table :pagos do |t|
       t.string :pago_tipoProducto

@@ -1,4 +1,4 @@
-class CreateActividadTuristicas < ActiveRecord::Migration
+class CreateActividadTuristicas < ActiveRecord::Migration[5.0]
   def change
     create_table :actividad_turisticas do |t|
       t.string :actur_descripcion

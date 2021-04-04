@@ -16,7 +16,8 @@ class ReservasController < ApplicationController
     authorize Reserva
     @reservas = nil
     pers_documentoIdentidad = params[:nroDocumIdentificacion].to_s + params[:tipoIdentificacion].to_s
-    if params.length > 2 then
+
+    if params.permitted? then
       @reservas = reservas_buscar(pers_documentoIdentidad, params[:pers_apellidos], params[:pers_nombres], params[:rsrv_codigo], params[:viaje_fechaIni], params[:viaje_fechaFin], params[:vendedor])
     end
   end

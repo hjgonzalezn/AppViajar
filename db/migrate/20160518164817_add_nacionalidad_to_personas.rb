@@ -1,4 +1,4 @@
-class AddNacionalidadToPersonas < ActiveRecord::Migration
+class AddNacionalidadToPersonas < ActiveRecord::Migration[5.0]
   def change
     add_column :personas, :pers_apellidos, :string, index: true
     add_column :personas, :pers_nombres, :string, index: true

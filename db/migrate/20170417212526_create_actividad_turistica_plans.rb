@@ -1,4 +1,4 @@
-class CreateActividadTuristicaPlans < ActiveRecord::Migration
+class CreateActividadTuristicaPlans < ActiveRecord::Migration[5.0]
   def change
     create_table :actividad_turistica_plans do |t|
       t.references :paquete_turistico, index: true, foreign_key: true

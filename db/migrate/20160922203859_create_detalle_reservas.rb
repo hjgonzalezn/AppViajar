@@ -1,4 +1,4 @@
-class CreateDetalleReservas < ActiveRecord::Migration
+class CreateDetalleReservas < ActiveRecord::Migration[5.0]
   def change
     create_table :detalle_reservas do |t|
       t.references :reserva, index: true, foreign_key: true
