@@ -34,7 +34,7 @@ gem 'devise', '~> 4.3'
 #Pundit
 gem 'pundit', '~> 1.1'
 
-gem 'nokogiri', '~> 1.10.8'
+gem 'nokogiri', '~> 1.13.4'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
